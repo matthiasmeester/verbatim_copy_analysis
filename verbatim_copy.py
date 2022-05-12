@@ -11,10 +11,7 @@ np.set_printoptions(precision=3)
 
 # ----- Verbatim copy statistic: -----
 # --- Custom variables ---
-# filter_radius = 51
 inv_dist_weight_exp = 2
-smoothing_radius = 3
-smoothing_exp = 2
 # ---
 
 directory = "simulations"
