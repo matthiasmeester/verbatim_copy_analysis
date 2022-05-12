@@ -1,40 +1,12 @@
 import os.path
-from io import BytesIO
 from random import randrange
 
 import matplotlib.pyplot as plt
 import numpy as np
-import requests
-from PIL import Image
-from g2s import g2s
 
 from VerbatimAnalysis import VerbatimAnalysis
 
 np.set_printoptions(precision=3)
-
-# load example training image ('stone')
-img_w, img_h = 200, 200
-url = 'https://raw.githubusercontent.com/GAIA-UNIL/TrainingImagesTIFF/master/stone.tiff'
-# url = 'https://raw.githubusercontent.com/GAIA-UNIL/TrainingImagesTIFF/master/concrete.tiff'
-ti = np.array(Image.open(BytesIO(requests.get(url).content)))
-
-index_map_fp = 'index_map.txt'
-simulation_fp = 'simulation.txt'
-new_simulation = False
-if os.path.isfile(index_map_fp) and os.path.isfile(simulation_fp) and not new_simulation:
-    index_map = np.loadtxt(index_map_fp, dtype='int')
-    simulation = np.loadtxt(simulation_fp)
-else:
-    # QS call using G2S
-    simulation, index_map, _ = g2s('-a', 'qs',
-                                   '-ti', ti,
-                                   '-di', np.zeros((200, 200)) * np.nan,
-                                   '-dt', [0],  # Zero for continuous variables
-                                   '-k', 1.2,
-                                   '-n', 50,
-                                   '-j', 0.5)
-    np.savetxt('index_map.txt', index_map, fmt='%i')
-    np.savetxt('simulation.txt', simulation)
 
 
 # --- Display results ---
@@ -98,6 +70,7 @@ for path in os.listdir(d):
         for filter_radius in filter_radi:
             index_map = file['indexMap'][random_index, :, :]
             simulation = file['sim'][random_index, :, :]
+            image_size = index_map.shape[0] * index_map.shape[1]
             ti = file['ti']
             # simulation = ti.copy()
             # index_map = np.arange(0, 40000).reshape((200, 200))
@@ -131,25 +104,22 @@ for path in os.listdir(d):
             #
             non_weighted_sim_map = verbatim_analysis.get_short_range_verbatim_heat_map(filter_radius, 0)
             proportion_above_0_5 = verbatim_analysis.above_treshold_heat_index(non_weighted_sim_map, 0.5)
-            mean_heat_value_with_neighbours = round(verbatim_analysis.mean_heat_value(similarity_map_including_neighbours), 4)
+            mean_heat_value_with_neighbours = round(
+                verbatim_analysis.mean_heat_value(similarity_map_including_neighbours), 4)
 
-            verbatim_analysis.get_number_of_continuous_patches(similarity_map)
+            number_of_patches, largest_box_size = \
+                verbatim_analysis.patch_stats(similarity_map, patch_size_treshold=10, plot=True)
 
             print(f"--- Filter_radius: {filter_radius} ---")
             print(f"Short range statistics:")
             print(f"Proportion of pixels with more than 50% of neighbours being verbatim: {proportion_above_0_5}")
             print(f"Mean heat value: {mean_heat_value}")
             print(f"Mean heat value including close by verbatim: {mean_heat_value_with_neighbours}")
+            print(f"Number of patches: {number_of_patches}")
+            print(f"Largest continuous patch size: {largest_box_size}, proportion: {largest_box_size / image_size}")
             print("---\n")
 
-            # alt_verbatim_indices.append(alt_mean_heat_value)
-            #
-            # av_img = ax4.imshow(av_map, interpolation='none')
-            # ax4.set_title(f'av={alt_mean_heat_value}')
-            # ax4.axis('off')
-            # fig.colorbar(av_img)
             plt.show()
-            np.savetxt('similarity_map.txt', similarity_map)
 
         plt.scatter(filter_radi, verbatim_indices, color="red")
         plt.scatter(filter_radi, alt_verbatim_indices, color="blue")

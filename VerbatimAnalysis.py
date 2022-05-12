@@ -128,41 +128,27 @@ class VerbatimAnalysis:
         return np.sum(similarity_map >= threshold) / similarity_map.size
 
     @staticmethod
-    def get_number_of_continuous_patches(similarity_map, treshold=0.7):
+    def patch_stats(similarity_map, treshold=0.5, patch_size_treshold=1, plot=False):
         smoothed_similarity_map = VerbatimAnalysis.smooth_similarity_map(similarity_map, 2, 1)
         filtered_similarity_map = np.where(smoothed_similarity_map > treshold, 1, 0)
         pixel_map = (np.array(filtered_similarity_map * 255)).astype(np.uint8)
-
-        # -- attempt 1
-        # plt.figure()
-        # plt.imshow(pixel_map)
+        rgb_pixel_map = cv2.cvtColor(pixel_map, cv2.COLOR_GRAY2RGB)
 
         contours, hierarchy = cv2.findContours(pixel_map, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        patch_sizes = []
 
-        print(len(contours))
+        for contour in contours:
+            x, y, w, h = cv2.boundingRect(contour)
+            patch_size = w * h
+            if patch_size > patch_size_treshold:
+                patch_sizes.append(patch_size)
+                if plot:
+                    cv2.rectangle(rgb_pixel_map, (x, y), (x + w, y + h), (0, 255, 0), thickness=1)
 
-        # rgb_pixel_map = cv2.cvtColor(pixel_map, cv2.COLOR_GRAY2RGB)
-        # for contour in contours:
-        #     cv2.drawContours(rgb_pixel_map, contour, -1, (255, 0, 0), -1)
-        # plt.figure()
-        # plt.imshow(rgb_pixel_map)
+        if plot:
+            plt.figure()
+            plt.imshow(rgb_pixel_map)
 
-        # -- attempt 2 -> from https://stackoverflow.com/questions/52087533/how-to-find-number-of-clusters-in-a-image
-        rgb_pixel_map = cv2.cvtColor(pixel_map, cv2.COLOR_GRAY2RGB)
-        ret, thresh = cv2.threshold(pixel_map, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-        n_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(thresh)
+        number_of_boxes, largest_box_size = len(patch_sizes), max(patch_sizes)
 
-        print(n_labels - 1)
-        size_thresh = 1
-
-        for i in range(1, n_labels):
-            if stats[i, cv2.CC_STAT_AREA] >= size_thresh:
-                # print(stats[i, cv2.CC_STAT_AREA])
-                x = stats[i, cv2.CC_STAT_LEFT]
-                y = stats[i, cv2.CC_STAT_TOP]
-                w = stats[i, cv2.CC_STAT_WIDTH]
-                h = stats[i, cv2.CC_STAT_HEIGHT]
-                cv2.rectangle(rgb_pixel_map, (x, y), (x + w, y + h), (0, 255, 0), thickness=1)
-
-        plt.figure()
-        plt.imshow(rgb_pixel_map)
+        return number_of_boxes, largest_box_size
