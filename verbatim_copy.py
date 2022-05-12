@@ -9,36 +9,7 @@ from verbatim_heat_map_creator import VerbatimHeatMapCreator
 
 np.set_printoptions(precision=3)
 
-
-# --- Display results ---
-def plot():
-    sourceIndex = np.stack(
-        np.meshgrid(np.arange(ti.shape[0]) / ti.shape[0], np.arange(ti.shape[1]) / ti.shape[1]) + [
-            np.ones_like(ti)], axis=-1)
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7, 4))
-    fig.suptitle('QS Unconditional simulation', size='xx-large')
-    ax1.imshow(ti)
-    ax1.set_title('Training image')
-    ax1.axis('off')
-    ax2.imshow(simulation)
-    ax2.set_title('Simulation')
-    ax2.axis('off')
-    plt.show()
-
-    fig, (ax1, ax2) = plt.subplots(1, 2)
-    fig.suptitle('Unconditional simulation index map')
-    ax1.imshow(sourceIndex)
-    ax1.set_title('Training image')
-    ax1.axis('off')
-    ax2.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
-    ax2.set_title('Simulation')
-    ax2.axis('off')
-    plt.show()
-
-
 # ----- Verbatim copy statistic: -----
-
 # --- Custom variables ---
 # filter_radius = 51
 inv_dist_weight_exp = 2
@@ -46,10 +17,9 @@ smoothing_radius = 3
 smoothing_exp = 2
 # ---
 
-
-d = "simulations"
-for path in os.listdir(d):
-    full_path = os.path.join(d, path)
+directory = "simulations"
+for path in os.listdir(directory):
+    full_path = os.path.join(directory, path)
     if os.path.isfile(full_path):
         file = np.load(full_path)
         random_index = randrange(200)
@@ -88,7 +58,7 @@ for path in os.listdir(d):
             print(f"Mean heat value: {mean_heat_value}")
             print(f"Mean heat value including close by verbatim: {mean_heat_value_with_neighbours}")
             print(f"Number of patches: {patch_number}")
-            print(f"Largest continuous patch size: {largest_box_size}, proportion: {largest_box_size / image_size}")
+            print(f"Largest continuous patch size: {largest_box_size} pix, proportion: {largest_box_size / image_size}")
             print("---\n")
 
             #  --- Do plotting ---
