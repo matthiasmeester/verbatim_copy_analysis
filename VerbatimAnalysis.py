@@ -1,6 +1,8 @@
 import math
 from functools import lru_cache
 
+import cv2
+import matplotlib.pyplot as plt
 import numpy as np
 import scipy as sp
 import scipy.ndimage
@@ -12,7 +14,8 @@ class VerbatimAnalysis:
         self.index_map = index_map
         self.simulation = simulation
 
-    def get_short_range_verbatim_heat_map(self, filter_radius, inv_dist_weight_exp):
+    def get_short_range_verbatim_heat_map(self, filter_radius, inv_dist_weight_exp, include_neighbors_radius=0,
+                                          neighbor_inv_dist_weight=1):
         # Create verbatim and inverse distance weight matrices
         similarity_map = np.zeros((self.index_map.shape[0], self.index_map.shape[1]))
         adj_matrix_size = filter_radius * 2 + 1
@@ -35,11 +38,38 @@ class VerbatimAnalysis:
             im_selection = self.index_map[y0:y1 + 1, x0:x1 + 1]
             verb_selection = verbatim_adj_matrix[wy0:wy1 + 1, wx0:wx1 + 1] + current_index
             weight_selection = weight_adj_matrix[wy0:wy1 + 1, wx0:wx1 + 1]
-            similarity_adj_matrix = np.equal(im_selection, verb_selection) * weight_selection
+            if include_neighbors_radius > 0:
+                equality_matrix = self._get_verbatim_distance(im_selection, verb_selection, include_neighbors_radius,
+                                                              neighbor_inv_dist_weight)
+            else:
+                equality_matrix = np.equal(im_selection, verb_selection)
+            similarity_adj_matrix = equality_matrix * weight_selection
             similarity_map[iy][ix] = np.sum(similarity_adj_matrix) / sum_adj_weight_slice(wy0, wy1, wx0, wx1)
 
         sum_adj_weight_slice.cache_clear()
         return similarity_map
+
+    @staticmethod
+    def _get_verbatim_distance(im_selection, verb_selection, include_neighbors_radius, neighbor_inv_dist_weight):
+        similarity_map = np.zeros((im_selection.shape[0], im_selection.shape[1]))
+        for iy, ix in np.ndindex(im_selection.shape):
+            if im_selection[iy][ix] == verb_selection[iy][ix]:
+                similarity_map[iy][ix] = 1
+            else:
+                im_x, im_y = VerbatimAnalysis._index_to_coord(im_selection[iy][ix])
+                verb_x, verb_y = VerbatimAnalysis._index_to_coord(verb_selection[iy][ix])
+                distance = math.sqrt((im_x - verb_x) ** 2 + (im_y - verb_y) ** 2)
+                if distance <= include_neighbors_radius:
+                    similarity_map[iy][ix] = math.pow(distance, -neighbor_inv_dist_weight)
+        return similarity_map
+
+    @staticmethod
+    def _index_to_coord(index):
+        index = int(index)
+        import math
+        y = math.floor(index / 200)
+        x = index - y * 200
+        return int(x), int(y)
 
     @staticmethod
     def create_inv_weight_matrix(filter_radius, exponent, middle_weight=0):
@@ -53,7 +83,7 @@ class VerbatimAnalysis:
                     # Inv weight adj
                     distance = math.sqrt(dx ** 2 + dy ** 2)
                     if distance <= filter_radius:
-                        weight_adj_matrix[j][i] = math.pow(math.sqrt(dx ** 2 + dy ** 2), -exponent)
+                        weight_adj_matrix[j][i] = math.pow(distance, -exponent)
         return weight_adj_matrix
 
     @staticmethod
@@ -96,3 +126,43 @@ class VerbatimAnalysis:
     @staticmethod
     def above_treshold_heat_index(similarity_map, threshold=0.7):
         return np.sum(similarity_map >= threshold) / similarity_map.size
+
+    @staticmethod
+    def get_number_of_continuous_patches(similarity_map, treshold=0.7):
+        smoothed_similarity_map = VerbatimAnalysis.smooth_similarity_map(similarity_map, 2, 1)
+        filtered_similarity_map = np.where(smoothed_similarity_map > treshold, 1, 0)
+        pixel_map = (np.array(filtered_similarity_map * 255)).astype(np.uint8)
+
+        # -- attempt 1
+        # plt.figure()
+        # plt.imshow(pixel_map)
+
+        contours, hierarchy = cv2.findContours(pixel_map, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        print(len(contours))
+
+        # rgb_pixel_map = cv2.cvtColor(pixel_map, cv2.COLOR_GRAY2RGB)
+        # for contour in contours:
+        #     cv2.drawContours(rgb_pixel_map, contour, -1, (255, 0, 0), -1)
+        # plt.figure()
+        # plt.imshow(rgb_pixel_map)
+
+        # -- attempt 2 -> from https://stackoverflow.com/questions/52087533/how-to-find-number-of-clusters-in-a-image
+        rgb_pixel_map = cv2.cvtColor(pixel_map, cv2.COLOR_GRAY2RGB)
+        ret, thresh = cv2.threshold(pixel_map, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+        n_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(thresh)
+
+        print(n_labels - 1)
+        size_thresh = 1
+
+        for i in range(1, n_labels):
+            if stats[i, cv2.CC_STAT_AREA] >= size_thresh:
+                # print(stats[i, cv2.CC_STAT_AREA])
+                x = stats[i, cv2.CC_STAT_LEFT]
+                y = stats[i, cv2.CC_STAT_TOP]
+                w = stats[i, cv2.CC_STAT_WIDTH]
+                h = stats[i, cv2.CC_STAT_HEIGHT]
+                cv2.rectangle(rgb_pixel_map, (x, y), (x + w, y + h), (0, 255, 0), thickness=1)
+
+        plt.figure()
+        plt.imshow(rgb_pixel_map)

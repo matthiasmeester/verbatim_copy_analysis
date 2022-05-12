@@ -103,7 +103,10 @@ for path in os.listdir(d):
             # index_map = np.arange(0, 40000).reshape((200, 200))
             verbatim_analysis = VerbatimAnalysis(index_map, simulation)
             similarity_map = verbatim_analysis.get_short_range_verbatim_heat_map(filter_radius, inv_dist_weight_exp)
-            mean_heat_value = verbatim_analysis.mean_heat_value(similarity_map)
+            similarity_map_including_neighbours = verbatim_analysis.get_short_range_verbatim_heat_map(filter_radius,
+                                                                                                      inv_dist_weight_exp,
+                                                                                                      2, 1)
+            mean_heat_value = round(verbatim_analysis.mean_heat_value(similarity_map), 4)
             verbatim_indices.append(mean_heat_value)
             # plt.hist(list(similarity_map.reshape(40000)), bins=100)
             # plt.show()
@@ -125,25 +128,18 @@ for path in os.listdir(d):
             ax3.axis('off')
             fig.colorbar(sim_img, ax=ax3)
 
-            # keep values above treshold
-            # av_map = similarity_map.copy()
-            # treshold = 0.1
-            # av_map[av_map < treshold] = 0
-
             #
             non_weighted_sim_map = verbatim_analysis.get_short_range_verbatim_heat_map(filter_radius, 0)
-            proportion_above_0_25 = verbatim_analysis.above_treshold_heat_index(non_weighted_sim_map, 0.25)
             proportion_above_0_5 = verbatim_analysis.above_treshold_heat_index(non_weighted_sim_map, 0.5)
-            proportion_above_0_75 = verbatim_analysis.above_treshold_heat_index(non_weighted_sim_map, 0.75)
-            proportion_above_1_0 = verbatim_analysis.above_treshold_heat_index(non_weighted_sim_map, 1.0)
+            mean_heat_value_with_neighbours = round(verbatim_analysis.mean_heat_value(similarity_map_including_neighbours), 4)
+
+            verbatim_analysis.get_number_of_continuous_patches(similarity_map)
 
             print(f"--- Filter_radius: {filter_radius} ---")
             print(f"Short range statistics:")
-            print(f"prop_lt_0_25 = {proportion_above_0_25}")
-            print(f"prop_lt_0_50 = {proportion_above_0_5}")
-            print(f"prop_lt_0_75 = {proportion_above_0_75}")
-            print(f"prop_lt_1_00 = {proportion_above_1_0}")
-            print(f"mean_heat_value = {round(mean_heat_value, 4)}")
+            print(f"Proportion of pixels with more than 50% of neighbours being verbatim: {proportion_above_0_5}")
+            print(f"Mean heat value: {mean_heat_value}")
+            print(f"Mean heat value including close by verbatim: {mean_heat_value_with_neighbours}")
             print("---\n")
 
             # alt_verbatim_indices.append(alt_mean_heat_value)
