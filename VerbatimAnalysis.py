@@ -12,7 +12,7 @@ class VerbatimAnalysis:
         self.index_map = index_map
         self.simulation = simulation
 
-    def filter_verbatim_statistic(self, filter_radius, inv_dist_weight_exp, smoothing_radius=0, smoothing_exp=1):
+    def get_short_range_verbatim_heat_map(self, filter_radius, inv_dist_weight_exp):
         # Create verbatim and inverse distance weight matrices
         similarity_map = np.zeros((self.index_map.shape[0], self.index_map.shape[1]))
         adj_matrix_size = filter_radius * 2 + 1
@@ -38,14 +38,8 @@ class VerbatimAnalysis:
             similarity_adj_matrix = np.equal(im_selection, verb_selection) * weight_selection
             similarity_map[iy][ix] = np.sum(similarity_adj_matrix) / sum_adj_weight_slice(wy0, wy1, wx0, wx1)
 
-        if smoothing_radius:
-            smooth_weights = self.create_inv_weight_matrix(smoothing_radius, smoothing_exp, middle_weight=1)
-            similarity_map = sp.ndimage.filters.convolve(similarity_map, smooth_weights / np.sum(smooth_weights),
-                                                         mode='constant')
-
-        verbatim_index = np.mean(similarity_map)
         sum_adj_weight_slice.cache_clear()
-        return verbatim_index, similarity_map
+        return similarity_map
 
     @staticmethod
     def create_inv_weight_matrix(filter_radius, exponent, middle_weight=0):
@@ -87,3 +81,18 @@ class VerbatimAnalysis:
             y1 = map_h - 1
 
         return x0, x1, y0, y1, wx0, wx1, wy0, wy1
+
+    @staticmethod
+    def smooth_similarity_map(similarity_map, smoothing_radius, smoothing_exp):
+        smooth_weights = VerbatimAnalysis.create_inv_weight_matrix(smoothing_radius, smoothing_exp, middle_weight=1)
+        similarity_map = sp.ndimage.filters.convolve(similarity_map, smooth_weights / np.sum(smooth_weights),
+                                                     mode='constant')
+        return similarity_map
+
+    @staticmethod
+    def mean_heat_value(similarity_map):
+        return np.mean(similarity_map)
+
+    @staticmethod
+    def above_treshold_heat_index(similarity_map, threshold=0.7):
+        return np.sum(similarity_map >= threshold) / similarity_map.size

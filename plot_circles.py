@@ -13,6 +13,8 @@ mpl.rcParams['figure.dpi'] = 300
 ti = np.array(Image.open(BytesIO(requests.get(
     'https://raw.githubusercontent.com/GAIA-UNIL/TrainingImagesTIFF/master/stone.tiff').content)))
 similarity_map = np.loadtxt('similarity_map.txt')
+treshold = 0.7
+similarity_map[similarity_map < treshold] = 0
 index_map = np.loadtxt('index_map.txt')
 simulation = np.loadtxt('simulation.txt')
 # Cluster
@@ -92,6 +94,6 @@ for i in range(n_clusters_):
 plt.savefig('Circles.png')
 plt.show()
 
-# plt.imshow(clustered_image.reshape((200, 200, 1)), interpolation='none')
-# plt.colorbar()
-# plt.show()
+plt.imshow(clustered_image.reshape((200, 200, 1)), interpolation='none')
+plt.colorbar()
+plt.show()
