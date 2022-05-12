@@ -1,14 +1,12 @@
 import math
 from functools import lru_cache
 
-import cv2
-import matplotlib.pyplot as plt
 import numpy as np
 import scipy as sp
 import scipy.ndimage
 
 
-class VerbatimAnalysis:
+class VerbatimHeatMapCreator:
 
     def __init__(self, index_map, simulation):
         self.index_map = index_map
@@ -17,7 +15,7 @@ class VerbatimAnalysis:
     def get_short_range_verbatim_heat_map(self, filter_radius, inv_dist_weight_exp, include_neighbors_radius=0,
                                           neighbor_inv_dist_weight=1):
         # Create verbatim and inverse distance weight matrices
-        similarity_map = np.zeros((self.index_map.shape[0], self.index_map.shape[1]))
+        heat_map = np.zeros((self.index_map.shape[0], self.index_map.shape[1]))
         weight_adj_matrix = self.create_inv_weight_matrix(filter_radius, inv_dist_weight_exp)
 
         @lru_cache(maxsize=2048)
@@ -44,24 +42,24 @@ class VerbatimAnalysis:
             else:
                 equality_matrix = np.equal(im_selection, verb_selection)
             similarity_adj_matrix = equality_matrix * weight_selection
-            similarity_map[iy][ix] = np.sum(similarity_adj_matrix) / sum_adj_weight_slice(wy0, wy1, wx0, wx1)
+            heat_map[iy][ix] = np.sum(similarity_adj_matrix) / sum_adj_weight_slice(wy0, wy1, wx0, wx1)
 
         sum_adj_weight_slice.cache_clear()
-        return similarity_map
+        return heat_map
 
     @staticmethod
     def _get_verbatim_distance(im_selection, verb_selection, include_neighbors_radius, neighbor_inv_dist_weight):
-        similarity_map = np.zeros((im_selection.shape[0], im_selection.shape[1]))
+        heat_map = np.zeros((im_selection.shape[0], im_selection.shape[1]))
         for iy, ix in np.ndindex(im_selection.shape):
             if im_selection[iy][ix] == verb_selection[iy][ix]:
-                similarity_map[iy][ix] = 1
+                heat_map[iy][ix] = 1
             else:
-                im_x, im_y = VerbatimAnalysis._index_to_coord(im_selection[iy][ix])
-                verb_x, verb_y = VerbatimAnalysis._index_to_coord(verb_selection[iy][ix])
+                im_x, im_y = VerbatimHeatMapCreator._index_to_coord(im_selection[iy][ix])
+                verb_x, verb_y = VerbatimHeatMapCreator._index_to_coord(verb_selection[iy][ix])
                 distance = math.sqrt((im_x - verb_x) ** 2 + (im_y - verb_y) ** 2)
                 if distance <= include_neighbors_radius:
-                    similarity_map[iy][ix] = math.pow(distance, -neighbor_inv_dist_weight)
-        return similarity_map
+                    heat_map[iy][ix] = math.pow(distance, -neighbor_inv_dist_weight)
+        return heat_map
 
     @staticmethod
     def _index_to_coord(index):
@@ -113,42 +111,8 @@ class VerbatimAnalysis:
         return x0, x1, y0, y1, wx0, wx1, wy0, wy1
 
     @staticmethod
-    def smooth_similarity_map(similarity_map, smoothing_radius, smoothing_exp):
-        smooth_weights = VerbatimAnalysis.create_inv_weight_matrix(smoothing_radius, smoothing_exp, middle_weight=1)
-        similarity_map = sp.ndimage.filters.convolve(similarity_map, smooth_weights / np.sum(smooth_weights),
-                                                     mode='constant')
-        return similarity_map
-
-    @staticmethod
-    def mean_heat_value(similarity_map):
-        return np.mean(similarity_map)
-
-    @staticmethod
-    def above_treshold_heat_index(similarity_map, threshold=0.7):
-        return np.sum(similarity_map >= threshold) / similarity_map.size
-
-    @staticmethod
-    def patch_stats(similarity_map, treshold=0.5, patch_size_treshold=1, plot=False):
-        smoothed_similarity_map = VerbatimAnalysis.smooth_similarity_map(similarity_map, 2, 1)
-        filtered_similarity_map = np.where(smoothed_similarity_map > treshold, 1, 0)
-        pixel_map = (np.array(filtered_similarity_map * 255)).astype(np.uint8)
-        rgb_pixel_map = cv2.cvtColor(pixel_map, cv2.COLOR_GRAY2RGB)
-
-        contours, hierarchy = cv2.findContours(pixel_map, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        patch_sizes = []
-
-        for contour in contours:
-            x, y, w, h = cv2.boundingRect(contour)
-            patch_size = w * h
-            if patch_size > patch_size_treshold:
-                patch_sizes.append(patch_size)
-                if plot:
-                    cv2.rectangle(rgb_pixel_map, (x, y), (x + w, y + h), (0, 255, 0), thickness=1)
-
-        if plot:
-            plt.figure()
-            plt.imshow(rgb_pixel_map)
-
-        number_of_boxes, largest_box_size = len(patch_sizes), max(patch_sizes)
-
-        return number_of_boxes, largest_box_size
+    def smooth_heat_map(heat_map, smoothing_radius, smoothing_exp):
+        smooth_weights = VerbatimHeatMapCreator.create_inv_weight_matrix(smoothing_radius, smoothing_exp,
+                                                                         middle_weight=1)
+        heat_map = sp.ndimage.filters.convolve(heat_map, smooth_weights / np.sum(smooth_weights), mode='constant')
+        return heat_map
