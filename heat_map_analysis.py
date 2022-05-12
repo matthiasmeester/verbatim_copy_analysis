@@ -25,11 +25,12 @@ class HeatMapAnalysis:
         contours, hierarchy = cv2.findContours(pixel_map, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         patch_sizes = []
 
+        # Loop over the found bounding boxes of patches
         for contour in contours:
             x, y, w, h = cv2.boundingRect(contour)
-            patch_size = w * h
+            # Count the number of activated pixels in the bounding box; this is the patch size
+            patch_size = np.sum(filtered_heat_map[y:y + h, x:x + w])
             if patch_size > patch_size_treshold:
-                # Todo patch size should only count pixel values and not be square
                 patch_sizes.append(patch_size)
                 if plot:
                     cv2.rectangle(rgb_pixel_map, (x, y), (x + w, y + h), (0, 255, 0), thickness=1)
