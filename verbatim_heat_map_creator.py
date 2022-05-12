@@ -11,6 +11,7 @@ class VerbatimHeatMapCreator:
     def __init__(self, index_map, simulation):
         self.index_map = index_map
         self.simulation = simulation
+        assert(self.index_map.shape == self.simulation.shape)
 
     def get_short_range_verbatim_heat_map(self, filter_radius, inv_dist_weight_exp, include_neighbors_radius=0,
                                           neighbor_inv_dist_weight=1):
@@ -47,26 +48,24 @@ class VerbatimHeatMapCreator:
         sum_adj_weight_slice.cache_clear()
         return heat_map
 
-    @staticmethod
-    def _get_verbatim_distance(im_selection, verb_selection, include_neighbors_radius, neighbor_inv_dist_weight):
+    def _get_verbatim_distance(self, im_selection, verb_selection, include_neighbors_radius, neighbor_inv_dist_weight):
         heat_map = np.zeros((im_selection.shape[0], im_selection.shape[1]))
         for iy, ix in np.ndindex(im_selection.shape):
             if im_selection[iy][ix] == verb_selection[iy][ix]:
                 heat_map[iy][ix] = 1
             else:
-                im_x, im_y = VerbatimHeatMapCreator._index_to_coord(im_selection[iy][ix])
-                verb_x, verb_y = VerbatimHeatMapCreator._index_to_coord(verb_selection[iy][ix])
+                im_x, im_y = self._index_to_coord(im_selection[iy][ix])
+                verb_x, verb_y = self._index_to_coord(verb_selection[iy][ix])
                 distance = math.sqrt((im_x - verb_x) ** 2 + (im_y - verb_y) ** 2)
                 if distance <= include_neighbors_radius:
                     heat_map[iy][ix] = math.pow(distance, -neighbor_inv_dist_weight)
         return heat_map
 
-    @staticmethod
-    def _index_to_coord(index):
+    def _index_to_coord(self, index):
         index = int(index)
         import math
-        y = math.floor(index / 200)
-        x = index - y * 200
+        y = math.floor(index / self.index_map.shape[1])
+        x = index - y * self.index_map.shape[1]
         return int(x), int(y)
 
     @staticmethod
