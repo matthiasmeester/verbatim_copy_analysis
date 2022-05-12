@@ -18,17 +18,17 @@ class VerbatimAnalysis:
                                           neighbor_inv_dist_weight=1):
         # Create verbatim and inverse distance weight matrices
         similarity_map = np.zeros((self.index_map.shape[0], self.index_map.shape[1]))
-        adj_matrix_size = filter_radius * 2 + 1
-        verbatim_adj_matrix = np.zeros((adj_matrix_size, adj_matrix_size))
         weight_adj_matrix = self.create_inv_weight_matrix(filter_radius, inv_dist_weight_exp)
 
         @lru_cache(maxsize=2048)
         def sum_adj_weight_slice(wy0, wy1, wx0, wx1):
             return np.sum(weight_adj_matrix[wy0:wy1 + 1, wx0:wx1 + 1])
 
+        # Verbatim adjacency matrix initialisation
+        adj_matrix_size = filter_radius * 2 + 1
+        verbatim_adj_matrix = np.zeros((adj_matrix_size, adj_matrix_size))
         for i, dx in enumerate(range(-filter_radius, filter_radius + 1)):
             for j, dy in enumerate(range(-filter_radius, filter_radius + 1)):
-                # Verbatim adj
                 verbatim_adj_matrix[j][i] = dx + self.index_map.shape[0] * dy
 
         # Loop over all pixels to check if there is any verbatim copy

@@ -84,8 +84,6 @@ for path in os.listdir(d):
             # plt.hist(list(similarity_map.reshape(40000)), bins=100)
             # plt.show()
 
-            # smoothed_map = verbatim_analysis.smooth_similarity_map(similarity_map, smoothing_radius, smoothing_exp)
-
             # Plotting
             fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(11, 4))
             fig.suptitle(f'{file_name}, k={k}, r={filter_radius}, d={inv_dist_weight_exp}', size='xx-large')
@@ -108,7 +106,7 @@ for path in os.listdir(d):
                 verbatim_analysis.mean_heat_value(similarity_map_including_neighbours), 4)
 
             number_of_patches, largest_box_size = \
-                verbatim_analysis.patch_stats(similarity_map, patch_size_treshold=10, plot=True)
+                verbatim_analysis.patch_stats(similarity_map, patch_size_treshold=10, plot=False)
 
             print(f"--- Filter_radius: {filter_radius} ---")
             print(f"Short range statistics:")
