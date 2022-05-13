@@ -25,12 +25,7 @@ class VerbatimHeatMapCreator:
         def sum_adj_weight_slice(wy0, wy1, wx0, wx1):
             return np.sum(weight_adj_matrix[wy0:wy1 + 1, wx0:wx1 + 1])
 
-        # Verbatim adjacency matrix initialisation
-        adj_matrix_size = filter_radius * 2 + 1
-        verbatim_adj_matrix = np.zeros((adj_matrix_size, adj_matrix_size))
-        for i, dx in enumerate(range(-filter_radius, filter_radius + 1)):
-            for j, dy in enumerate(range(-filter_radius, filter_radius + 1)):
-                verbatim_adj_matrix[j][i] = dx + self.index_map.shape[0] * dy
+        verbatim_adj_matrix = self._create_verbatim_adj_matrix(filter_radius)
 
         # Loop over all pixels to check if there is any verbatim copy
         for iy, ix in np.ndindex(self.index_map.shape):
@@ -50,8 +45,39 @@ class VerbatimHeatMapCreator:
         sum_adj_weight_slice.cache_clear()
         return heat_map
 
+    def neighbourhood_verbatim_analysis(self, filter_radius, min_filter_radius):
+        neighbourhood_verbatim = np.zeros((filter_radius * 2 + 1, filter_radius * 2 + 1))
+        verbatim_adj_matrix = self._create_verbatim_adj_matrix(filter_radius)
+
+        # Loop over all pixels to check if there is any verbatim copy
+        for iy, ix in np.ndindex(self.index_map.shape):
+            current_index = self.index_map[iy][ix]
+            x0, x1, y0, y1, wx0, wx1, wy0, wy1 = self._get_filter_bounds(filter_radius, ix, iy, self.index_map.shape)
+            im_selection = self.index_map[y0:y1 + 1, x0:x1 + 1]
+            verb_selection = verbatim_adj_matrix[wy0:wy1 + 1, wx0:wx1 + 1] + current_index
+            equality_matrix = np.equal(im_selection, verb_selection)
+            neighbourhood_verbatim[wy0:wy1 + 1, wx0:wx1 + 1] += equality_matrix
+
+        l, r = filter_radius - min_filter_radius, filter_radius + min_filter_radius
+        neighbourhood_verbatim[l: r, l: r] = 0
+        return neighbourhood_verbatim
+
+    @staticmethod
+    def _sigmoid(m):
+        return 1 / (1 + np.exp(-m))
+
+    def _create_verbatim_adj_matrix(self, filter_radius):
+        # Verbatim adjacency matrix initialisation
+        adj_matrix_size = filter_radius * 2 + 1
+        verbatim_adj_matrix = np.zeros((adj_matrix_size, adj_matrix_size))
+        for i, dx in enumerate(range(-filter_radius, filter_radius + 1)):
+            for j, dy in enumerate(range(-filter_radius, filter_radius + 1)):
+                verbatim_adj_matrix[j][i] = dx + self.index_map.shape[0] * dy
+        return verbatim_adj_matrix
+
     def _get_verbatim_distance(self, im_selection, verb_selection, include_neighbors_radius, neighbor_inv_dist_weight):
         heat_map = np.zeros((im_selection.shape[0], im_selection.shape[1]))
+
         for iy, ix in np.ndindex(im_selection.shape):
             if im_selection[iy][ix] == verb_selection[iy][ix]:
                 heat_map[iy][ix] = 1

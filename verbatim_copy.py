@@ -22,22 +22,25 @@ for path in os.listdir(directory):
         file = np.load(full_path)
         random_index = randrange(200)
         verbatim_indices = []
-        alt_verbatim_indices = []
         filter_radi = range(1, 51)
         fn, fn2, k = path.replace('.npz', '').split('_')
         file_name = f"{fn} {fn2}"
+        index_map = file['indexMap'][random_index, :, :]
+        simulation = file['sim'][random_index, :, :]
+        image_size = index_map.shape[0] * index_map.shape[1]
+        ti = file['ti']
+        heat_map_creator = VerbatimHeatMapCreator(index_map, simulation)
+
+        # Enable these 2 lines to test full verbatim copy:
+        # simulation = ti.copy()
+        # index_map = np.arange(0, 40000).reshape((200, 200))
+
+        plt.imshow(heat_map_creator.neighbourhood_verbatim_analysis(filter_radius=51, min_filter_radius=0), extent=[-51, 51, -51, 51])
+        plt.colorbar()
+        plt.show()
 
         for filter_radius in filter_radi:
-            index_map = file['indexMap'][random_index, :, :]
-            simulation = file['sim'][random_index, :, :]
-            image_size = index_map.shape[0] * index_map.shape[1]
-            ti = file['ti']
-            # Enable these 2 lines to test full verbatim copy:
-            # simulation = ti.copy()
-            # index_map = np.arange(0, 40000).reshape((200, 200))
-
             # --- Do simulations ---
-            heat_map_creator = VerbatimHeatMapCreator(index_map, simulation)
             heat_map = heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, inv_dist_weight_exp)
             non_weighted_sim_map = heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, 0)
             heat_map_including_neighbours = \
@@ -51,7 +54,7 @@ for path in os.listdir(directory):
             verbatim_indices.append(mean_heat_value)
             proportion_above_0_5 = HeatMapAnalysis(non_weighted_sim_map).above_treshold_heat_index(0.5)
             mean_heat_value_with_neighbours = round(HeatMapAnalysis(heat_map_including_neighbours).mean_heat_value(), 4)
-            patch_number, largest_box_size = HeatMapAnalysis(heat_map).patch_stats(patch_size_treshold=10, plot=False)
+            patch_number, largest_box_size = HeatMapAnalysis(heat_map).patch_stats(patch_size_treshold=10, plot=True)
 
             print(f"--- Filter_radius: {filter_radius} ---")
             print(f"Short range statistics:")
@@ -83,7 +86,6 @@ for path in os.listdir(directory):
             # plt.show()
 
         plt.scatter(filter_radi, verbatim_indices, color="red")
-        plt.scatter(filter_radi, alt_verbatim_indices, color="blue")
         plt.xlabel('Filter radius')
         plt.ylabel('Verbatim index')
         plt.title(f'Filter radius to verbatim index - {file_name}, k={k}, d={inv_dist_weight_exp}')
