@@ -48,6 +48,8 @@ class VerbatimHeatMapCreator:
     def neighbourhood_verbatim_analysis(self, filter_radius, min_filter_radius):
         neighbourhood_verbatim = np.zeros((filter_radius * 2 + 1, filter_radius * 2 + 1))
         verbatim_adj_matrix = self._create_verbatim_adj_matrix(filter_radius)
+        index_map_size = self.index_map.shape[0] * self.index_map.shape[1]
+        filter_size = (filter_radius * 2 + 1) ** 2
 
         # Loop over all pixels to check if there is any verbatim copy
         for iy, ix in np.ndindex(self.index_map.shape):
@@ -59,9 +61,14 @@ class VerbatimHeatMapCreator:
 
         l, r = filter_radius - min_filter_radius, filter_radius + min_filter_radius + 1
         neighbourhood_verbatim[l: r, l: r] = 0
-        # for iy, ix in np.ndindex(neighbourhood_verbatim.shape):
-        #     neighbourhood_verbatim[iy][ix] *= math.sqrt((iy - filter_radius) ** 2 + (ix - filter_radius) ** 2)
-        return neighbourhood_verbatim
+        neighbourhood_verbatim /= np.sum(neighbourhood_verbatim)
+        # Calculate average verbatim distance
+        distance_verbatim_value_pairs = []
+        for iy, ix in np.ndindex(neighbourhood_verbatim.shape):
+            distance_to_center = math.sqrt((iy - filter_radius) ** 2 + (ix - filter_radius) ** 2)
+            distance_verbatim_value_pairs.append((distance_to_center, neighbourhood_verbatim[iy][ix]))
+
+        return neighbourhood_verbatim, distance_verbatim_value_pairs
 
     @staticmethod
     def _sigmoid(m):

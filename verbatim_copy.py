@@ -1,5 +1,5 @@
 import os.path
-from random import randrange, seed
+from random import randrange
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,7 +12,7 @@ np.set_printoptions(precision=3)
 # ----- Verbatim copy statistic: -----
 # --- Custom variables ---
 inv_dist_weight_exp = 2
-seed(123456)
+# seed(123456)
 # ---
 
 directory = "simulations"
@@ -35,8 +35,22 @@ for path in os.listdir(directory):
         # simulation = ti.copy()
         # index_map = np.arange(0, 40000).reshape((200, 200))
 
-        plt.imshow(heat_map_creator.neighbourhood_verbatim_analysis(filter_radius=51, min_filter_radius=0), extent=[-51, 51, -51, 51])
-        plt.colorbar()
+        neighbourhood_verbatim, distance_verbatim_value_pairs = heat_map_creator.neighbourhood_verbatim_analysis(
+            filter_radius=51, min_filter_radius=0)
+        distances = [x[0] for x in distance_verbatim_value_pairs]
+        verbatim_values = [x[1] for x in distance_verbatim_value_pairs]
+        mean_verbatim_dist = np.sum([x[0] * x[1] for x in distance_verbatim_value_pairs])
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 5))
+        fig.suptitle(f'NVA - {file_name}, mean_verbatim_dist={round(mean_verbatim_dist, 2)}', size='xx-large')
+        ax1.set_title('Proportion verbatim with distance histogram')
+        ax1.set_xlabel('Distance')
+        ax1.set_ylabel('Proportion sampled')
+        ax1.bar(distances, verbatim_values)
+        neigh_img = ax2.imshow(neighbourhood_verbatim, extent=[-51, 51, -51, 51])
+        fig.colorbar(neigh_img, ax=ax2)
+        ax2.set_title('Proportion verbatim with distance')
+        ax2.set_xlabel('X distance')
+        ax2.set_ylabel('Y distance')
         plt.show()
 
         for filter_radius in filter_radi:
@@ -57,6 +71,8 @@ for path in os.listdir(directory):
             patch_number, largest_box_size = HeatMapAnalysis(heat_map).patch_stats(patch_size_treshold=10, plot=True)
 
             print(f"--- Filter_radius: {filter_radius} ---")
+            print(f"Global statistics:")
+            print(f"Verbatim occurs on average with distance: {round(mean_verbatim_dist, 2)}")
             print(f"Short range statistics:")
             print(f"Proportion of pixels with more than 50% of neighbours being verbatim: {proportion_above_0_5}")
             print(f"Mean heat value: {mean_heat_value}")
