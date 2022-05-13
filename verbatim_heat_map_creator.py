@@ -18,14 +18,14 @@ class VerbatimHeatMapCreator:
         # Create verbatim and inverse distance weight matrices
         heat_map = np.zeros((self.index_map.shape[0], self.index_map.shape[1]))
         weight_adj_matrix = self.create_inv_weight_matrix(filter_radius, inv_dist_weight_exp, middle_weight=1)
+        verbatim_adj_matrix = self._create_verbatim_adj_matrix(filter_radius)
+
         if inverse_distance_weighted:
             weight_adj_matrix = 1 - weight_adj_matrix
 
         @lru_cache(maxsize=2048)
         def sum_adj_weight_slice(wy0, wy1, wx0, wx1):
             return np.sum(weight_adj_matrix[wy0:wy1 + 1, wx0:wx1 + 1])
-
-        verbatim_adj_matrix = self._create_verbatim_adj_matrix(filter_radius)
 
         # Loop over all pixels to check if there is any verbatim copy
         for iy, ix in np.ndindex(self.index_map.shape):
@@ -55,11 +55,12 @@ class VerbatimHeatMapCreator:
             x0, x1, y0, y1, wx0, wx1, wy0, wy1 = self._get_filter_bounds(filter_radius, ix, iy, self.index_map.shape)
             im_selection = self.index_map[y0:y1 + 1, x0:x1 + 1]
             verb_selection = verbatim_adj_matrix[wy0:wy1 + 1, wx0:wx1 + 1] + current_index
-            equality_matrix = np.equal(im_selection, verb_selection)
-            neighbourhood_verbatim[wy0:wy1 + 1, wx0:wx1 + 1] += equality_matrix
+            neighbourhood_verbatim[wy0:wy1 + 1, wx0:wx1 + 1] += np.equal(im_selection, verb_selection)
 
-        l, r = filter_radius - min_filter_radius, filter_radius + min_filter_radius
+        l, r = filter_radius - min_filter_radius, filter_radius + min_filter_radius + 1
         neighbourhood_verbatim[l: r, l: r] = 0
+        # for iy, ix in np.ndindex(neighbourhood_verbatim.shape):
+        #     neighbourhood_verbatim[iy][ix] *= math.sqrt((iy - filter_radius) ** 2 + (ix - filter_radius) ** 2)
         return neighbourhood_verbatim
 
     @staticmethod
