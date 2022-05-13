@@ -1,5 +1,5 @@
 import os.path
-from random import randrange
+from random import randrange, seed
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -12,6 +12,7 @@ np.set_printoptions(precision=3)
 # ----- Verbatim copy statistic: -----
 # --- Custom variables ---
 inv_dist_weight_exp = 2
+seed(123456)
 # ---
 
 directory = "simulations"
@@ -37,13 +38,16 @@ for path in os.listdir(directory):
 
             # --- Do simulations ---
             heat_map_creator = VerbatimHeatMapCreator(index_map, simulation)
-            heat_map = heat_map_creator.get_short_range_verbatim_heat_map(filter_radius, inv_dist_weight_exp)
-            non_weighted_sim_map = heat_map_creator.get_short_range_verbatim_heat_map(filter_radius, 0)
+            heat_map = heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, inv_dist_weight_exp)
+            non_weighted_sim_map = heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, 0)
             heat_map_including_neighbours = \
-                heat_map_creator.get_short_range_verbatim_heat_map(filter_radius, inv_dist_weight_exp, 2, 1)
+                heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, inv_dist_weight_exp, 2, 1)
+            long_range_heat_map = \
+                heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, 1, inverse_distance_weighted=True)
 
             # --- Calculate statistics ---
             mean_heat_value = round(HeatMapAnalysis(heat_map).mean_heat_value(), 4)
+            long_range_mean_heat_value = round(HeatMapAnalysis(long_range_heat_map).mean_heat_value(), 4)
             verbatim_indices.append(mean_heat_value)
             proportion_above_0_5 = HeatMapAnalysis(non_weighted_sim_map).above_treshold_heat_index(0.5)
             mean_heat_value_with_neighbours = round(HeatMapAnalysis(heat_map_including_neighbours).mean_heat_value(), 4)
@@ -53,6 +57,7 @@ for path in os.listdir(directory):
             print(f"Short range statistics:")
             print(f"Proportion of pixels with more than 50% of neighbours being verbatim: {proportion_above_0_5}")
             print(f"Mean heat value: {mean_heat_value}")
+            print(f"Inversely weighted mean heat value: {long_range_mean_heat_value}")
             print(f"Mean heat value including close by verbatim: {mean_heat_value_with_neighbours}")
             print(f"Number of patches: {patch_number}")
             print(f"Largest continuous patch size: {largest_box_size} pix, proportion: {largest_box_size / image_size}")
@@ -66,9 +71,11 @@ for path in os.listdir(directory):
             ax1.axis('off')
             ax2.imshow(simulation)
             ax2.set_title('Simulation')
+            # ax2.imshow(long_range_heat_map)
+            # ax2.set_title(f'LR mean heat value={long_range_mean_heat_value}')
             ax2.axis('off')
             sim_img = ax3.imshow(heat_map, interpolation='none')
-            ax3.set_title(f'v={round(mean_heat_value, 4)}')
+            ax3.set_title(f'Mean heat value={round(mean_heat_value, 4)}')
             ax3.axis('off')
             fig.colorbar(sim_img, ax=ax3)
             plt.show()

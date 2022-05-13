@@ -11,13 +11,18 @@ class VerbatimHeatMapCreator:
     def __init__(self, index_map, simulation):
         self.index_map = index_map
         self.simulation = simulation
-        assert(self.index_map.shape == self.simulation.shape)
+        assert (self.index_map.shape == self.simulation.shape)
 
-    def get_short_range_verbatim_heat_map(self, filter_radius, inv_dist_weight_exp, include_neighbors_radius=0,
-                                          neighbor_inv_dist_weight=1):
+    def get_verbatim_heat_map_filter_basis(self, filter_radius, inv_dist_weight_exp, include_neighbors_radius=0,
+                                           neighbor_inv_dist_weight=1, inverse_distance_weighted=False):
         # Create verbatim and inverse distance weight matrices
         heat_map = np.zeros((self.index_map.shape[0], self.index_map.shape[1]))
-        weight_adj_matrix = self.create_inv_weight_matrix(filter_radius, inv_dist_weight_exp)
+
+        if inverse_distance_weighted:
+            weight_adj_matrix = self.create_inv_weight_matrix(filter_radius, inv_dist_weight_exp, middle_weight=1)
+            weight_adj_matrix = 1 - weight_adj_matrix
+        else:
+            weight_adj_matrix = self.create_inv_weight_matrix(filter_radius, inv_dist_weight_exp)
 
         @lru_cache(maxsize=2048)
         def sum_adj_weight_slice(wy0, wy1, wx0, wx1):
@@ -61,6 +66,7 @@ class VerbatimHeatMapCreator:
                     heat_map[iy][ix] = math.pow(distance, -neighbor_inv_dist_weight)
         return heat_map
 
+    @lru_cache(maxsize=4096)
     def _index_to_coord(self, index):
         index = int(index)
         import math
