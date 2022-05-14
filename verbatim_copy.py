@@ -7,7 +7,7 @@ import numpy as np
 from heat_map_analysis import HeatMapAnalysis
 from verbatim_heat_map_creator import VerbatimHeatMapCreator
 
-np.set_printoptions(precision=3)
+np.set_printoptions(precision=6)
 
 # ----- Verbatim copy statistic: -----
 # --- Custom variables ---
@@ -29,26 +29,38 @@ for path in os.listdir(directory):
         simulation = file['sim'][random_index, :, :]
         image_size = index_map.shape[0] * index_map.shape[1]
         ti = file['ti']
-        heat_map_creator = VerbatimHeatMapCreator(index_map, simulation)
 
-        # Enable these 2 lines to test full verbatim copy:
+        # Enable these lines to test full verbatim copy:
         # simulation = ti.copy()
         # index_map = np.arange(0, 40000).reshape((200, 200))
 
+        # Enable these lines to test full randomness:
+        # random_seed = np.random.randint(0, 1000)
+        # np.random.seed(random_seed)
+        # index_map = np.arange(0, 40000)
+        # np.random.shuffle(index_map)
+        # index_map = index_map.reshape((200, 200))
+        # np.random.seed(random_seed)
+        # simulation = simulation.reshape((40000, -1))
+        # np.random.shuffle(simulation)
+        # simulation = simulation.reshape((200, 200))
+
+        heat_map_creator = VerbatimHeatMapCreator(index_map, simulation)
+        n_fr = 60
         neighbourhood_verbatim, distance_verbatim_value_pairs = heat_map_creator.neighbourhood_verbatim_analysis(
-            filter_radius=51, min_filter_radius=0)
+            filter_radius=n_fr, min_filter_radius=0)
         distances = [x[0] for x in distance_verbatim_value_pairs]
         verbatim_values = [x[1] for x in distance_verbatim_value_pairs]
-        mean_verbatim_dist = np.sum([x[0] * x[1] for x in distance_verbatim_value_pairs])
+        mean_verbatim_dist = np.sum([x[0] * x[1] for x in distance_verbatim_value_pairs]) / np.sum(neighbourhood_verbatim)
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 5))
         fig.suptitle(f'NVA - {file_name}, mean_verbatim_dist={round(mean_verbatim_dist, 2)}', size='xx-large')
-        ax1.set_title('Proportion verbatim with distance histogram')
+        ax1.set_title('Probability verbatim at distance histogram')
         ax1.set_xlabel('Distance')
         ax1.set_ylabel('Proportion sampled')
         ax1.bar(distances, verbatim_values)
-        neigh_img = ax2.imshow(neighbourhood_verbatim, extent=[-51, 51, -51, 51])
+        neigh_img = ax2.imshow(neighbourhood_verbatim, extent=[-n_fr, n_fr, -n_fr, n_fr])
         fig.colorbar(neigh_img, ax=ax2)
-        ax2.set_title('Proportion verbatim with distance')
+        ax2.set_title('Probability verbatim at distance map')
         ax2.set_xlabel('X distance')
         ax2.set_ylabel('Y distance')
         plt.show()
@@ -63,20 +75,22 @@ for path in os.listdir(directory):
                 heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, 1, inverse_distance_weighted=True)
 
             # --- Calculate statistics ---
-            mean_heat_value = round(HeatMapAnalysis(heat_map).mean_heat_value(), 4)
-            long_range_mean_heat_value = round(HeatMapAnalysis(long_range_heat_map).mean_heat_value(), 4)
+            mean_heat_value = round(HeatMapAnalysis(heat_map).mean_heat_value(), 10)
+            # long_range_mean_heat_value = round(HeatMapAnalysis(long_range_heat_map).mean_heat_value(), 4)
             verbatim_indices.append(mean_heat_value)
             proportion_above_0_5 = HeatMapAnalysis(non_weighted_sim_map).above_treshold_heat_index(0.5)
+            proportion_above_1_0 = HeatMapAnalysis(non_weighted_sim_map).above_treshold_heat_index(1.0)
             mean_heat_value_with_neighbours = round(HeatMapAnalysis(heat_map_including_neighbours).mean_heat_value(), 4)
-            patch_number, largest_box_size = HeatMapAnalysis(heat_map).patch_stats(patch_size_treshold=10, plot=True)
+            patch_number, largest_box_size = HeatMapAnalysis(non_weighted_sim_map).patch_stats(patch_size_treshold=10, plot=True)
 
             print(f"--- Filter_radius: {filter_radius} ---")
             print(f"Global statistics:")
             print(f"Verbatim occurs on average with distance: {round(mean_verbatim_dist, 2)}")
             print(f"Short range statistics:")
-            print(f"Proportion of pixels with more than 50% of neighbours being verbatim: {proportion_above_0_5}")
+            print(f"Proportion of pixels >= 50% of neighbours being verbatim: {proportion_above_0_5}")
+            print(f"Proportion of pixels >= 100% of neighbours being verbatim: {proportion_above_1_0}")
             print(f"Mean heat value: {mean_heat_value}")
-            print(f"Inversely weighted mean heat value: {long_range_mean_heat_value}")
+            #print(f"Inversely weighted mean heat value: {long_range_mean_heat_value}")
             print(f"Mean heat value including close by verbatim: {mean_heat_value_with_neighbours}")
             print(f"Number of patches: {patch_number}")
             print(f"Largest continuous patch size: {largest_box_size} pix, proportion: {largest_box_size / image_size}")

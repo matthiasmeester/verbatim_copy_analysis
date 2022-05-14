@@ -17,7 +17,7 @@ class VerbatimHeatMapCreator:
                                            neighbor_inv_dist_weight=1, inverse_distance_weighted=False):
         # Create verbatim and inverse distance weight matrices
         heat_map = np.zeros((self.index_map.shape[0], self.index_map.shape[1]))
-        weight_adj_matrix = self.create_inv_weight_matrix(filter_radius, inv_dist_weight_exp, middle_weight=1)
+        weight_adj_matrix = self.create_inv_weight_matrix(filter_radius, inv_dist_weight_exp, middle_weight=0)
         verbatim_adj_matrix = self._create_verbatim_adj_matrix(filter_radius)
 
         if inverse_distance_weighted:
@@ -48,8 +48,7 @@ class VerbatimHeatMapCreator:
     def neighbourhood_verbatim_analysis(self, filter_radius, min_filter_radius):
         neighbourhood_verbatim = np.zeros((filter_radius * 2 + 1, filter_radius * 2 + 1))
         verbatim_adj_matrix = self._create_verbatim_adj_matrix(filter_radius)
-        index_map_size = self.index_map.shape[0] * self.index_map.shape[1]
-        filter_size = (filter_radius * 2 + 1) ** 2
+        normalization = np.zeros((filter_radius * 2 + 1, filter_radius * 2 + 1))
 
         # Loop over all pixels to check if there is any verbatim copy
         for iy, ix in np.ndindex(self.index_map.shape):
@@ -58,10 +57,11 @@ class VerbatimHeatMapCreator:
             im_selection = self.index_map[y0:y1 + 1, x0:x1 + 1]
             verb_selection = verbatim_adj_matrix[wy0:wy1 + 1, wx0:wx1 + 1] + current_index
             neighbourhood_verbatim[wy0:wy1 + 1, wx0:wx1 + 1] += np.equal(im_selection, verb_selection)
+            normalization[wy0:wy1 + 1, wx0:wx1 + 1] += 1
 
         l, r = filter_radius - min_filter_radius, filter_radius + min_filter_radius + 1
         neighbourhood_verbatim[l: r, l: r] = 0
-        neighbourhood_verbatim /= np.sum(neighbourhood_verbatim)
+        neighbourhood_verbatim /= normalization
         # Calculate average verbatim distance
         distance_verbatim_value_pairs = []
         for iy, ix in np.ndindex(neighbourhood_verbatim.shape):
