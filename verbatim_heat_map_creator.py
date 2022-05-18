@@ -45,7 +45,7 @@ class VerbatimHeatMapCreator:
         sum_adj_weight_slice.cache_clear()
         return heat_map
 
-    def neighbourhood_verbatim_analysis(self, filter_radius, min_filter_radius):
+    def neighbourhood_verbatim_analysis(self, filter_radius, min_filter_radius, normalize=False):
         neighbourhood_verbatim = np.zeros((filter_radius * 2 + 1, filter_radius * 2 + 1))
         verbatim_adj_matrix = self._create_verbatim_adj_matrix(filter_radius)
         normalization = np.zeros((filter_radius * 2 + 1, filter_radius * 2 + 1))
@@ -67,6 +67,11 @@ class VerbatimHeatMapCreator:
         for iy, ix in np.ndindex(neighbourhood_verbatim.shape):
             distance_to_center = math.sqrt((iy - filter_radius) ** 2 + (ix - filter_radius) ** 2)
             distance_verbatim_value_pairs.append((distance_to_center, neighbourhood_verbatim[iy][ix]))
+
+            # Normalize bigger distance to have biger impact
+            if normalize:
+                distance = math.sqrt((iy - filter_radius) ** 2 + (ix - filter_radius) ** 2)
+                neighbourhood_verbatim[iy][ix] *= distance
 
         return neighbourhood_verbatim, distance_verbatim_value_pairs
 

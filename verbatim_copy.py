@@ -20,7 +20,7 @@ for path in os.listdir(directory):
     full_path = os.path.join(directory, path)
     if os.path.isfile(full_path):
         file = np.load(full_path)
-        random_index = randrange(200)
+        random_index = randrange(199)
         verbatim_indices = []
         filter_radi = range(1, 51)
         fn, fn2, k = path.replace('.npz', '').split('_')
@@ -45,18 +45,21 @@ for path in os.listdir(directory):
         # np.random.shuffle(simulation)
         # simulation = simulation.reshape((200, 200))
 
+        # TODO: Test in between for example 50% verbatim copy with different patterns, chessboard for example
+
         heat_map_creator = VerbatimHeatMapCreator(index_map, simulation)
         n_fr = 60
         neighbourhood_verbatim, distance_verbatim_value_pairs = heat_map_creator.neighbourhood_verbatim_analysis(
-            filter_radius=n_fr, min_filter_radius=0)
+            filter_radius=n_fr, min_filter_radius=0, normalize=False)
         distances = [x[0] for x in distance_verbatim_value_pairs]
         verbatim_values = [x[1] for x in distance_verbatim_value_pairs]
-        mean_verbatim_dist = np.sum([x[0] * x[1] for x in distance_verbatim_value_pairs]) / np.sum(neighbourhood_verbatim)
+        mean_verbatim_dist = np.sum([x[0] * x[1] for x in distance_verbatim_value_pairs]) / np.sum(
+            neighbourhood_verbatim)
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 5))
         fig.suptitle(f'NVA - {file_name}, mean_verbatim_dist={round(mean_verbatim_dist, 2)}', size='xx-large')
         ax1.set_title('Probability verbatim at distance histogram')
         ax1.set_xlabel('Distance')
-        ax1.set_ylabel('Proportion sampled')
+        ax1.set_ylabel('Probability')
         ax1.bar(distances, verbatim_values)
         neigh_img = ax2.imshow(neighbourhood_verbatim, extent=[-n_fr, n_fr, -n_fr, n_fr])
         fig.colorbar(neigh_img, ax=ax2)
@@ -81,7 +84,8 @@ for path in os.listdir(directory):
             proportion_above_0_5 = HeatMapAnalysis(non_weighted_sim_map).above_treshold_heat_index(0.5)
             proportion_above_1_0 = HeatMapAnalysis(non_weighted_sim_map).above_treshold_heat_index(1.0)
             mean_heat_value_with_neighbours = round(HeatMapAnalysis(heat_map_including_neighbours).mean_heat_value(), 4)
-            patch_number, largest_box_size = HeatMapAnalysis(non_weighted_sim_map).patch_stats(patch_size_treshold=10, plot=True)
+            patch_number, largest_box_size = HeatMapAnalysis(non_weighted_sim_map).patch_stats(patch_size_treshold=10,
+                                                                                               plot=True)
 
             print(f"--- Filter_radius: {filter_radius} ---")
             print(f"Global statistics:")
@@ -90,7 +94,7 @@ for path in os.listdir(directory):
             print(f"Proportion of pixels >= 50% of neighbours being verbatim: {proportion_above_0_5}")
             print(f"Proportion of pixels >= 100% of neighbours being verbatim: {proportion_above_1_0}")
             print(f"Mean heat value: {mean_heat_value}")
-            #print(f"Inversely weighted mean heat value: {long_range_mean_heat_value}")
+            # print(f"Inversely weighted mean heat value: {long_range_mean_heat_value}")
             print(f"Mean heat value including close by verbatim: {mean_heat_value_with_neighbours}")
             print(f"Number of patches: {patch_number}")
             print(f"Largest continuous patch size: {largest_box_size} pix, proportion: {largest_box_size / image_size}")

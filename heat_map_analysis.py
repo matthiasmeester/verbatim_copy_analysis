@@ -18,7 +18,7 @@ class HeatMapAnalysis:
 
     def patch_stats(self, heat_treshold=0.7, patch_size_treshold=1, plot=False):
         # Todo smooth heat map with a self made function that takes edges in to account
-        smoothed_heat_map = VerbatimHeatMapCreator.smooth_heat_map(self.heat_map, 2, 1)
+        # smoothed_heat_map = VerbatimHeatMapCreator.smooth_heat_map(self.heat_map, 2, 1)
         filtered_heat_map = np.where(self.heat_map >= heat_treshold, 1, 0)
         pixel_map = (np.array(filtered_heat_map * 255)).astype(np.uint8)
         rgb_pixel_map = cv2.cvtColor(pixel_map, cv2.COLOR_GRAY2RGB)
