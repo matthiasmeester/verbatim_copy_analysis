@@ -52,6 +52,20 @@ def put_patches(full_copy, full_random, num_patches, patch_radius, noise=0.05):
     return result, verbatim_copy_proportion
 
 
+def randomly_draw(base, to_sample_from, proportion):
+    result = base.copy()
+    is_verbatim = np.full(result.shape, False)
+    total_size = is_verbatim.shape[0] * is_verbatim.shape[1]
+
+    for iy, ix in np.ndindex(result.shape):
+        if random.random() < proportion:
+            is_verbatim[iy, ix] = True
+            result[iy, ix] = to_sample_from[iy, ix]
+
+    verbatim_copy_proportion = is_verbatim.sum() / total_size
+    return result, verbatim_copy_proportion
+
+
 directory = "simulations"
 for path in os.listdir(directory):
     full_path = os.path.join(directory, path)
@@ -60,7 +74,7 @@ for path in os.listdir(directory):
         random_index = randrange(199)
         verbatim_indices = []
         filter_radi = range(1, 51)
-        filter_radi = [1]
+        # filter_radi = [1]
         fn, fn2, k = path.replace('.npz', '').split('_')
         file_name = f"{fn} {fn2}"
         index_map = file['indexMap'][random_index, :, :]
@@ -106,12 +120,22 @@ for path in os.listdir(directory):
         # index_map = np.arange(0, 40000).reshape((200, 200))
 
         # Patches
-        index_map, verbatim_copy_proportion = put_patches(np.arange(0, 40000).reshape((200, 200)),
-                                                          (np.random.rand(200, 200) * 40000).astype(np.int32), 10, 30)
+        # index_map, verbatim_copy_proportion = put_patches(np.arange(0, 40000).reshape((200, 200)),
+        #                                                   (np.random.rand(200, 200) * 40000).astype(np.int32), 10, 30)
+        # plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
+        # plt.title(f'Patch dummy index map, proportion verbatim = {round(verbatim_copy_proportion, 3)}')
+        # plt.axis('off')
+        # plt.savefig('output/patch_index_map', dpi=150)
+        # plt.show()
+
+        # Long range
+        chance = 0.4
+        index_map, verbatim_copy_proportion = randomly_draw((np.random.rand(200, 200) * 40000).astype(np.int32),
+                                                            np.arange(0, 40000).reshape((200, 200)), chance)
         plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
-        plt.title(f'Patch dummy index map, proportion verbatim = {round(verbatim_copy_proportion, 3)}')
+        plt.title(f'Long range index map, proportion verbatim = {round(verbatim_copy_proportion, 3)}')
         plt.axis('off')
-        plt.savefig('output/patch_index_map', dpi=150)
+        plt.savefig('output/long_range_index_map', dpi=150)
         plt.show()
 
         # Randomness
@@ -179,7 +203,8 @@ for path in os.listdir(directory):
             proportion_above_0_5 = HeatMapAnalysis(non_weighted_sim_map).above_treshold_heat_index(0.5)
             proportion_above_1_0 = HeatMapAnalysis(non_weighted_sim_map).above_treshold_heat_index(1.0)
             mean_heat_value_with_neighbours = round(HeatMapAnalysis(heat_map_including_neighbours).mean_heat_value(), 4)
-            patch_number, largest_patch_size = HeatMapAnalysis(non_weighted_sim_map).patch_stats(patch_size_treshold=10, plot=True)
+            patch_number, largest_patch_size = HeatMapAnalysis(non_weighted_sim_map).patch_stats(patch_size_treshold=10,
+                                                                                                 plot=True)
 
             print(f"--- Filter_radius: {filter_radius} ---")
             print(f"Global statistics:")
