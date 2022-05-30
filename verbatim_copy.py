@@ -1,4 +1,6 @@
 import os.path
+import random
+from random import randint
 from random import randrange
 
 import matplotlib.pyplot as plt
@@ -27,6 +29,29 @@ def make_checkerboard(full_copy, full_random, square_size):
     return checkerboard.astype(np.int32)
 
 
+def put_patches(full_copy, full_random, num_patches, patch_radius, noise=0.05):
+    result = full_random.copy()
+    is_verbatim = np.full(result.shape, False)
+    total_size = is_verbatim.shape[0] * is_verbatim.shape[1]
+    lr, rr = 5, 25
+    for _ in range(num_patches):
+        h, w = full_random.shape[:2]
+        circle_pos_x, circle_pos_y = randrange(w), randrange(h)
+        circle_pos_copy_x, circle_pos_copy_y = randrange(2 * rr, w - 2 * rr), randrange(2 * rr, h - 2 * rr)
+        shift_x = circle_pos_copy_x - circle_pos_x
+        shift_y = circle_pos_copy_y - circle_pos_y
+        circle_r = randint(5, 25)
+
+        for iy, ix in np.ndindex(result.shape):
+            # Check if point is on circle and put some noise
+            if (ix - circle_pos_x) ** 2 + (iy - circle_pos_y) ** 2 <= circle_r ** 2 and random.random() >= noise:
+                result[iy, ix] = full_copy[iy + shift_y, ix + shift_x]
+                is_verbatim[iy, ix] = True
+
+    verbatim_copy_proportion = is_verbatim.sum() / total_size
+    return result, verbatim_copy_proportion
+
+
 directory = "simulations"
 for path in os.listdir(directory):
     full_path = os.path.join(directory, path)
@@ -44,48 +69,68 @@ for path in os.listdir(directory):
         ti = file['ti']
         original_size = ti.shape[0] * ti.shape[1]
         sourceIndex = np.stack(
-            np.meshgrid(np.arange(ti.shape[0]) / ti.shape[0], np.arange(ti.shape[1]) / ti.shape[1]) + [np.ones_like(ti)], axis=-1)
+            np.meshgrid(np.arange(ti.shape[0]) / ti.shape[0], np.arange(ti.shape[1]) / ti.shape[1]) + [
+                np.ones_like(ti)], axis=-1)
 
-        fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(6, 6))
-        fig.suptitle(f'QS stone, k={k}', size='xx-large')
-        ax1.imshow(ti)
-        ax1.set_title('Training image')
-        ax1.axis('off')
-        ax2.imshow(simulation)
-        ax2.set_title('Simulation')
-        ax2.axis('off')
-
-        ax3.imshow(sourceIndex)
-        ax3.set_title('Training image index map')
-        ax3.axis('off')
-        ax4.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
-        ax4.set_title('Simulation index map')
-        ax4.axis('off')
-        plt.savefig('output/input_example_index_map', dpi=150)
-
-        plt.savefig('output/input_example', dpi=150)
-        plt.show()
-
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7, 4))
-        ax1.imshow(sourceIndex)
-        ax1.set_title('Training image')
-        ax1.axis('off')
-        ax2.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
-        ax2.set_title('Simulation')
-        ax2.axis('off')
-        plt.savefig('output/input_example_index_map', dpi=150)
-        plt.show()
+        # fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(6, 6))
+        # fig.suptitle(f'QS stone, k={k}', size='xx-large')
+        # ax1.imshow(ti)
+        # ax1.set_title('Training image')
+        # ax1.axis('off')
+        # ax2.imshow(simulation)
+        # ax2.set_title('Simulation')
+        # ax2.axis('off')
+        #
+        # ax3.imshow(sourceIndex)
+        # ax3.set_title('Training image index map')
+        # ax3.axis('off')
+        # ax4.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
+        # ax4.set_title('Simulation index map')
+        # ax4.axis('off')
+        # plt.savefig('output/input_example_index_map', dpi=150)
+        # plt.savefig('output/input_example', dpi=150)
+        # plt.show()
+        #
+        # fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7, 4))
+        # ax1.imshow(sourceIndex)
+        # ax1.set_title('Training image')
+        # ax1.axis('off')
+        # ax2.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
+        # ax2.set_title('Simulation')
+        # ax2.axis('off')
+        # plt.savefig('output/input_example_index_map', dpi=150)
+        # plt.show()
 
         # verbatim copy:
         # simulation = ti.copy()
         # index_map = np.arange(0, 40000).reshape((200, 200))
 
+        # Patches
+        index_map, verbatim_copy_proportion = put_patches(np.arange(0, 40000).reshape((200, 200)),
+                                                          (np.random.rand(200, 200) * 40000).astype(np.int32), 10, 30)
+        plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
+        plt.title(f'Patch dummy index map, proportion verbatim = {round(verbatim_copy_proportion, 3)}')
+        plt.axis('off')
+        plt.savefig('output/patch_index_map', dpi=150)
+        plt.show()
+
         # Randomness
         # index_map = (np.random.rand(200, 200) * 40000).astype(np.int32)
+        # plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
+        # plt.title('Random dummy index map')
+        # plt.axis('off')
+        # plt.savefig('output/random_index_map', dpi=150)
+        # plt.show()
 
         # Checkerboard
-        index_map = make_checkerboard(np.arange(0, 40000).reshape((200, 200)),
-                                      (np.random.rand(200, 200) * 40000), 10)
+        # index_map = make_checkerboard(np.arange(0, 40000).reshape((200, 200)),
+        #                               (np.random.rand(200, 200) * 40000), 10)
+        #
+        # plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
+        # plt.title('10x10 Checkerboard dummy index map')
+        # plt.axis('off')
+        # plt.savefig('output/checkerboard_index_map', dpi=150)
+        # plt.show()
 
         # shuffled randomness:
         # random_seed = np.random.randint(0, 1000)
@@ -134,8 +179,7 @@ for path in os.listdir(directory):
             proportion_above_0_5 = HeatMapAnalysis(non_weighted_sim_map).above_treshold_heat_index(0.5)
             proportion_above_1_0 = HeatMapAnalysis(non_weighted_sim_map).above_treshold_heat_index(1.0)
             mean_heat_value_with_neighbours = round(HeatMapAnalysis(heat_map_including_neighbours).mean_heat_value(), 4)
-            patch_number, largest_box_size = HeatMapAnalysis(non_weighted_sim_map).patch_stats(patch_size_treshold=10,
-                                                                                               plot=True)
+            patch_number, largest_patch_size = HeatMapAnalysis(non_weighted_sim_map).patch_stats(patch_size_treshold=10, plot=True)
 
             print(f"--- Filter_radius: {filter_radius} ---")
             print(f"Global statistics:")
@@ -148,7 +192,7 @@ for path in os.listdir(directory):
             print(f"Mean heat value including close by verbatim: {mean_heat_value_with_neighbours}")
             print(f"Number of patches: {patch_number}")
             print(
-                f"Largest continuous patch size: {largest_box_size} pix, proportion sim: {largest_box_size / simulation_size}, original: {largest_box_size / original_size}")
+                f"Largest continuous patch size: {largest_patch_size} pix, proportion sim: {largest_patch_size / simulation_size}, original: {largest_patch_size / original_size}")
             print("---\n")
 
             #  --- Do plotting ---
