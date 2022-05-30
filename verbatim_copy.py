@@ -7,13 +7,25 @@ import numpy as np
 from heat_map_analysis import HeatMapAnalysis
 from verbatim_heat_map_creator import VerbatimHeatMapCreator
 
-np.set_printoptions(precision=6)
-
 # ----- Verbatim copy statistic: -----
 # --- Custom variables ---
 inv_dist_weight_exp = 2
+
+
 # seed(123456)
 # ---
+
+# From: https://stackoverflow.com/questions/38083788/turn-grid-into-a-checkerboard-pattern-in-python
+def make_checkerboard(full_copy, full_random, square_size):
+    n_rows, n_columns = full_random.shape[0], full_random.shape[1]
+    n_rows_, n_columns_ = int(n_rows / square_size + 1), int(n_columns / square_size + 1)
+    rows_grid, columns_grid = np.meshgrid(range(n_rows_), range(n_columns_), indexing='ij')
+    high_res_checkerboard = np.mod(rows_grid, 2) + np.mod(columns_grid, 2) == 1
+    square = np.ones((square_size, square_size))
+    checkerboard = np.kron(high_res_checkerboard, square)[:n_rows, :n_columns]
+    checkerboard = np.where(checkerboard, full_copy, full_random)
+    return checkerboard.astype(np.int32)
+
 
 directory = "simulations"
 for path in os.listdir(directory):
@@ -23,18 +35,59 @@ for path in os.listdir(directory):
         random_index = randrange(199)
         verbatim_indices = []
         filter_radi = range(1, 51)
+        filter_radi = [1]
         fn, fn2, k = path.replace('.npz', '').split('_')
         file_name = f"{fn} {fn2}"
         index_map = file['indexMap'][random_index, :, :]
         simulation = file['sim'][random_index, :, :]
-        image_size = index_map.shape[0] * index_map.shape[1]
+        simulation_size = index_map.shape[0] * index_map.shape[1]
         ti = file['ti']
+        original_size = ti.shape[0] * ti.shape[1]
+        sourceIndex = np.stack(
+            np.meshgrid(np.arange(ti.shape[0]) / ti.shape[0], np.arange(ti.shape[1]) / ti.shape[1]) + [np.ones_like(ti)], axis=-1)
 
-        # Enable these lines to test full verbatim copy:
+        fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(6, 6))
+        fig.suptitle(f'QS stone, k={k}', size='xx-large')
+        ax1.imshow(ti)
+        ax1.set_title('Training image')
+        ax1.axis('off')
+        ax2.imshow(simulation)
+        ax2.set_title('Simulation')
+        ax2.axis('off')
+
+        ax3.imshow(sourceIndex)
+        ax3.set_title('Training image index map')
+        ax3.axis('off')
+        ax4.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
+        ax4.set_title('Simulation index map')
+        ax4.axis('off')
+        plt.savefig('output/input_example_index_map', dpi=150)
+
+        plt.savefig('output/input_example', dpi=150)
+        plt.show()
+
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7, 4))
+        ax1.imshow(sourceIndex)
+        ax1.set_title('Training image')
+        ax1.axis('off')
+        ax2.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
+        ax2.set_title('Simulation')
+        ax2.axis('off')
+        plt.savefig('output/input_example_index_map', dpi=150)
+        plt.show()
+
+        # verbatim copy:
         # simulation = ti.copy()
         # index_map = np.arange(0, 40000).reshape((200, 200))
 
-        # Enable these lines to test full randomness:
+        # Randomness
+        # index_map = (np.random.rand(200, 200) * 40000).astype(np.int32)
+
+        # Checkerboard
+        index_map = make_checkerboard(np.arange(0, 40000).reshape((200, 200)),
+                                      (np.random.rand(200, 200) * 40000), 10)
+
+        # shuffled randomness:
         # random_seed = np.random.randint(0, 1000)
         # np.random.seed(random_seed)
         # index_map = np.arange(0, 40000)
@@ -48,19 +101,16 @@ for path in os.listdir(directory):
         # TODO: Test in between for example 50% verbatim copy with different patterns, chessboard for example
 
         heat_map_creator = VerbatimHeatMapCreator(index_map, simulation)
-        n_fr = 60
-        neighbourhood_verbatim, distance_verbatim_value_pairs = heat_map_creator.neighbourhood_verbatim_analysis(
-            filter_radius=n_fr, min_filter_radius=0, normalize=False)
-        distances = [x[0] for x in distance_verbatim_value_pairs]
-        verbatim_values = [x[1] for x in distance_verbatim_value_pairs]
-        mean_verbatim_dist = np.sum([x[0] * x[1] for x in distance_verbatim_value_pairs]) / np.sum(
-            neighbourhood_verbatim)
+        n_fr = 70
+        neighbourhood_verbatim, distances = heat_map_creator.neighbourhood_verbatim_analysis(
+            filter_radius=n_fr)
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 5))
-        fig.suptitle(f'NVA - {file_name}, mean_verbatim_dist={round(mean_verbatim_dist, 2)}', size='xx-large')
+        fig.suptitle(f'NVA - {file_name}', size='xx-large')
         ax1.set_title('Probability verbatim at distance histogram')
         ax1.set_xlabel('Distance')
         ax1.set_ylabel('Probability')
-        ax1.bar(distances, verbatim_values)
+        ax1.scatter(list(distances.keys()), list(distances.values()))
+        # ax1.plot(range(40), [math.sqrt(2 * x ** 2) for x in range(40)], 'r--')
         neigh_img = ax2.imshow(neighbourhood_verbatim, extent=[-n_fr, n_fr, -n_fr, n_fr])
         fig.colorbar(neigh_img, ax=ax2)
         ax2.set_title('Probability verbatim at distance map')
@@ -89,7 +139,7 @@ for path in os.listdir(directory):
 
             print(f"--- Filter_radius: {filter_radius} ---")
             print(f"Global statistics:")
-            print(f"Verbatim occurs on average with distance: {round(mean_verbatim_dist, 2)}")
+            # print(f"Verbatim occurs on average with distance: {round(mean_verbatim_dist, 2)}")
             print(f"Short range statistics:")
             print(f"Proportion of pixels >= 50% of neighbours being verbatim: {proportion_above_0_5}")
             print(f"Proportion of pixels >= 100% of neighbours being verbatim: {proportion_above_1_0}")
@@ -97,7 +147,8 @@ for path in os.listdir(directory):
             # print(f"Inversely weighted mean heat value: {long_range_mean_heat_value}")
             print(f"Mean heat value including close by verbatim: {mean_heat_value_with_neighbours}")
             print(f"Number of patches: {patch_number}")
-            print(f"Largest continuous patch size: {largest_box_size} pix, proportion: {largest_box_size / image_size}")
+            print(
+                f"Largest continuous patch size: {largest_box_size} pix, proportion sim: {largest_box_size / simulation_size}, original: {largest_box_size / original_size}")
             print("---\n")
 
             #  --- Do plotting ---
@@ -116,6 +167,7 @@ for path in os.listdir(directory):
             ax3.axis('off')
             fig.colorbar(sim_img, ax=ax3)
             plt.show()
+
             # plt.hist(list(heat_map.reshape(40000)), bins=100)
             # plt.show()
 

@@ -16,7 +16,7 @@ class HeatMapAnalysis:
     def above_treshold_heat_index(self, threshold=0.7):
         return np.sum(self.heat_map >= threshold) / self.heat_map.size
 
-    def patch_stats(self, heat_treshold=0.7, patch_size_treshold=1, plot=False):
+    def patch_stats(self, heat_treshold=1.0, patch_size_treshold=1, plot=False):
         # Todo smooth heat map with a self made function that takes edges in to account
         # smoothed_heat_map = VerbatimHeatMapCreator.smooth_heat_map(self.heat_map, 2, 1)
         filtered_heat_map = np.where(self.heat_map >= heat_treshold, 1, 0)

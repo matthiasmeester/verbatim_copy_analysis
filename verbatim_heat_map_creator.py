@@ -1,4 +1,5 @@
 import math
+from collections import defaultdict
 from functools import lru_cache
 
 import numpy as np
@@ -45,7 +46,7 @@ class VerbatimHeatMapCreator:
         sum_adj_weight_slice.cache_clear()
         return heat_map
 
-    def neighbourhood_verbatim_analysis(self, filter_radius, min_filter_radius, normalize=False):
+    def neighbourhood_verbatim_analysis(self, filter_radius):
         neighbourhood_verbatim = np.zeros((filter_radius * 2 + 1, filter_radius * 2 + 1))
         verbatim_adj_matrix = self._create_verbatim_adj_matrix(filter_radius)
         normalization = np.zeros((filter_radius * 2 + 1, filter_radius * 2 + 1))
@@ -59,21 +60,20 @@ class VerbatimHeatMapCreator:
             neighbourhood_verbatim[wy0:wy1 + 1, wx0:wx1 + 1] += np.equal(im_selection, verb_selection)
             normalization[wy0:wy1 + 1, wx0:wx1 + 1] += 1
 
-        l, r = filter_radius - min_filter_radius, filter_radius + min_filter_radius + 1
-        neighbourhood_verbatim[l: r, l: r] = 0
+        neighbourhood_verbatim[filter_radius, filter_radius] = 0
         neighbourhood_verbatim /= normalization
+        distances = defaultdict(list)
+
         # Calculate average verbatim distance
-        distance_verbatim_value_pairs = []
         for iy, ix in np.ndindex(neighbourhood_verbatim.shape):
-            distance_to_center = math.sqrt((iy - filter_radius) ** 2 + (ix - filter_radius) ** 2)
-            distance_verbatim_value_pairs.append((distance_to_center, neighbourhood_verbatim[iy][ix]))
+            distance_to_center = int(math.sqrt((iy - filter_radius) ** 2 + (ix - filter_radius) ** 2))
+            if neighbourhood_verbatim[iy][ix] != 0 and distance_to_center <= filter_radius:
+                distances[distance_to_center].append(neighbourhood_verbatim[iy][ix])
 
-            # Normalize bigger distance to have biger impact
-            if normalize:
-                distance = math.sqrt((iy - filter_radius) ** 2 + (ix - filter_radius) ** 2)
-                neighbourhood_verbatim[iy][ix] *= distance
+        for key in distances.keys():
+            distances[key] = np.mean(distances[key])
 
-        return neighbourhood_verbatim, distance_verbatim_value_pairs
+        return neighbourhood_verbatim, distances
 
     @staticmethod
     def _sigmoid(m):
@@ -86,6 +86,8 @@ class VerbatimHeatMapCreator:
         for i, dx in enumerate(range(-filter_radius, filter_radius + 1)):
             for j, dy in enumerate(range(-filter_radius, filter_radius + 1)):
                 verbatim_adj_matrix[j][i] = dx + self.index_map.shape[0] * dy
+
+        verbatim_adj_matrix[filter_radius, filter_radius] = -1
         return verbatim_adj_matrix
 
     def _get_verbatim_distance(self, im_selection, verb_selection, include_neighbors_radius, neighbor_inv_dist_weight):
@@ -111,7 +113,7 @@ class VerbatimHeatMapCreator:
         return int(x), int(y)
 
     @staticmethod
-    def create_inv_weight_matrix(filter_radius, exponent, middle_weight=0):
+    def create_inv_weight_matrix(filter_radius, exponent, middle_weight=0, include_outside_filter_radius=False):
         filter_range = math.ceil(filter_radius)
         weight_adj_matrix = np.zeros((filter_range * 2 + 1, filter_range * 2 + 1))
         for i, dx in enumerate(range(-filter_range, filter_range + 1)):
@@ -121,7 +123,7 @@ class VerbatimHeatMapCreator:
                 else:
                     # Inv weight adj
                     distance = math.sqrt(dx ** 2 + dy ** 2)
-                    if distance <= filter_radius:
+                    if distance <= filter_radius or include_outside_filter_radius:
                         weight_adj_matrix[j][i] = math.pow(distance, -exponent)
         return weight_adj_matrix
 
