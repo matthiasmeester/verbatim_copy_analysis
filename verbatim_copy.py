@@ -74,7 +74,7 @@ for path in os.listdir(directory):
         random_index = randrange(199)
         verbatim_indices = []
         filter_radi = range(1, 51)
-        # filter_radi = [1]
+        filter_radi = [400]
         fn, fn2, k = path.replace('.npz', '').split('_')
         file_name = f"{fn} {fn2}"
         index_map = file['indexMap'][random_index, :, :]
@@ -120,23 +120,23 @@ for path in os.listdir(directory):
         # index_map = np.arange(0, 40000).reshape((200, 200))
 
         # Patches
-        # index_map, verbatim_copy_proportion = put_patches(np.arange(0, 40000).reshape((200, 200)),
-        #                                                   (np.random.rand(200, 200) * 40000).astype(np.int32), 10, 30)
-        # plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
-        # plt.title(f'Patch dummy index map, proportion verbatim = {round(verbatim_copy_proportion, 3)}')
-        # plt.axis('off')
-        # plt.savefig('output/patch_index_map', dpi=150)
-        # plt.show()
+        index_map, verbatim_copy_proportion = put_patches(np.arange(0, 40000).reshape((200, 200)),
+                                                          (np.random.rand(200, 200) * 40000).astype(np.int32), 10, 30)
+        plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
+        plt.title(f'Patch dummy index map, proportion verbatim = {verbatim_copy_proportion}')
+        plt.axis('off')
+        plt.savefig('output/patch_index_map', dpi=150)
+        plt.show()
 
         # Long range
-        chance = 0.4
-        index_map, verbatim_copy_proportion = randomly_draw((np.random.rand(200, 200) * 40000).astype(np.int32),
-                                                            np.arange(0, 40000).reshape((200, 200)), chance)
-        plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
-        plt.title(f'Long range index map, proportion verbatim = {round(verbatim_copy_proportion, 3)}')
-        plt.axis('off')
-        plt.savefig('output/long_range_index_map', dpi=150)
-        plt.show()
+        # chance = 0.8
+        # index_map, verbatim_copy_proportion = randomly_draw((np.random.rand(200, 200) * 40000).astype(np.int32),
+        #                                                     np.arange(0, 40000).reshape((200, 200)), chance)
+        # plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
+        # plt.title(f'Long range index map, proportion verbatim = {round(verbatim_copy_proportion, 3)}')
+        # plt.axis('off')
+        # plt.savefig('output/long_range_index_map', dpi=150)
+        # plt.show()
 
         # Randomness
         # index_map = (np.random.rand(200, 200) * 40000).astype(np.int32)
@@ -190,31 +190,37 @@ for path in os.listdir(directory):
         for filter_radius in filter_radi:
             # --- Do simulations ---
             heat_map = heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, inv_dist_weight_exp)
-            non_weighted_sim_map = heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, 0)
-            heat_map_including_neighbours = \
-                heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, inv_dist_weight_exp, 2, 1)
+            non_weighted_heat_map = heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, 0)
+            # heat_map_including_neighbours = \
+            #    heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, inv_dist_weight_exp, 2, 1)
             long_range_heat_map = \
                 heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, 1, inverse_distance_weighted=True)
 
             # --- Calculate statistics ---
-            mean_heat_value = round(HeatMapAnalysis(heat_map).mean_heat_value(), 10)
+            dist_weighted_mean_heat_value = HeatMapAnalysis(heat_map).mean_heat_value()
+            non_weighted_mean_heat_value = HeatMapAnalysis(non_weighted_heat_map).mean_heat_value()
             # long_range_mean_heat_value = round(HeatMapAnalysis(long_range_heat_map).mean_heat_value(), 4)
-            verbatim_indices.append(mean_heat_value)
-            proportion_above_0_5 = HeatMapAnalysis(non_weighted_sim_map).above_treshold_heat_index(0.5)
-            proportion_above_1_0 = HeatMapAnalysis(non_weighted_sim_map).above_treshold_heat_index(1.0)
-            mean_heat_value_with_neighbours = round(HeatMapAnalysis(heat_map_including_neighbours).mean_heat_value(), 4)
-            patch_number, largest_patch_size = HeatMapAnalysis(non_weighted_sim_map).patch_stats(patch_size_treshold=10,
-                                                                                                 plot=True)
+            verbatim_indices.append(dist_weighted_mean_heat_value)
+            proportion_above_0_001 = HeatMapAnalysis(non_weighted_heat_map).above_treshold_heat_index(0.001)
+            proportion_above_0_5 = HeatMapAnalysis(non_weighted_heat_map).above_treshold_heat_index(0.5)
+            proportion_above_1_0 = HeatMapAnalysis(non_weighted_heat_map).above_treshold_heat_index(1.0)
+            # mean_heat_value_with_neighbours = round(HeatMapAnalysis(heat_map_including_neighbours).mean_heat_value(), 4)
+            patch_number, largest_patch_size = HeatMapAnalysis(non_weighted_heat_map).patch_stats(
+                heat_treshold=0.001,
+                patch_size_treshold=5,
+                plot=True)
 
             print(f"--- Filter_radius: {filter_radius} ---")
             print(f"Global statistics:")
             # print(f"Verbatim occurs on average with distance: {round(mean_verbatim_dist, 2)}")
             print(f"Short range statistics:")
+            print(f"Proportion of pixels >= 0.01% of neighbours being verbatim: {proportion_above_0_001}")
             print(f"Proportion of pixels >= 50% of neighbours being verbatim: {proportion_above_0_5}")
             print(f"Proportion of pixels >= 100% of neighbours being verbatim: {proportion_above_1_0}")
-            print(f"Mean heat value: {mean_heat_value}")
+            print(f"Inverse distance weighted mean heat value: {dist_weighted_mean_heat_value}")
+            print(f"Non weighted mean heat value: {non_weighted_mean_heat_value}")
             # print(f"Inversely weighted mean heat value: {long_range_mean_heat_value}")
-            print(f"Mean heat value including close by verbatim: {mean_heat_value_with_neighbours}")
+            # print(f"Mean heat value including close by verbatim: {mean_heat_value_with_neighbours}")
             print(f"Number of patches: {patch_number}")
             print(
                 f"Largest continuous patch size: {largest_patch_size} pix, proportion sim: {largest_patch_size / simulation_size}, original: {largest_patch_size / original_size}")
@@ -232,7 +238,7 @@ for path in os.listdir(directory):
             # ax2.set_title(f'LR mean heat value={long_range_mean_heat_value}')
             ax2.axis('off')
             sim_img = ax3.imshow(heat_map, interpolation='none')
-            ax3.set_title(f'Mean heat value={round(mean_heat_value, 4)}')
+            ax3.set_title(f'Mean heat value={round(dist_weighted_mean_heat_value, 4)}')
             ax3.axis('off')
             fig.colorbar(sim_img, ax=ax3)
             plt.show()

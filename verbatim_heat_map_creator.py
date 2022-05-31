@@ -10,7 +10,7 @@ import scipy.ndimage
 class VerbatimHeatMapCreator:
 
     def __init__(self, index_map, simulation):
-        self.index_map = index_map
+        self.index_map = index_map.astype(np.int32)
         self.simulation = simulation
         assert (self.index_map.shape == self.simulation.shape)
 
@@ -88,7 +88,7 @@ class VerbatimHeatMapCreator:
                 verbatim_adj_matrix[j][i] = dx + self.index_map.shape[0] * dy
 
         verbatim_adj_matrix[filter_radius, filter_radius] = -1
-        return verbatim_adj_matrix
+        return verbatim_adj_matrix.astype(np.int32)
 
     def _get_verbatim_distance(self, im_selection, verb_selection, include_neighbors_radius, neighbor_inv_dist_weight):
         heat_map = np.zeros((im_selection.shape[0], im_selection.shape[1]))
