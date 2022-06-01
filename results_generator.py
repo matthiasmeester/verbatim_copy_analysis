@@ -15,9 +15,9 @@ for run in tqdm(range(10)):
     patches_05, copy_proportion_05 = index_map_creator.create_patch_map(num_patches=5)
     patches_10, copy_proportion_10 = index_map_creator.create_patch_map(num_patches=10)
     patches_20, copy_proportion_20 = index_map_creator.create_patch_map(num_patches=20)
+    long_range_05, proportion_05 = index_map_creator.create_long_range_map(0.05)
     long_range_10, proportion_10 = index_map_creator.create_long_range_map(0.10)
-    long_range_50, proportion_50 = index_map_creator.create_long_range_map(0.50)
-    long_range_75, proportion_75 = index_map_creator.create_long_range_map(0.75)
+    long_range_15, proportion_15 = index_map_creator.create_long_range_map(0.15)
 
     # Create different test cases
     test_cases = [
@@ -54,37 +54,37 @@ for run in tqdm(range(10)):
         {
             'map': patches_05,
             'real_verbatim': copy_proportion_05,
-            'name': f'Patches {copy_proportion_05}',
+            'name': f'Patches 5',
             'category': 'patches'
         },
         {
             'map': patches_10,
             'real_verbatim': copy_proportion_10,
-            'name': f'Patches {copy_proportion_10}',
+            'name': f'Patches 10',
             'category': 'patches'
         },
         {
             'map': patches_20,
             'real_verbatim': copy_proportion_20,
-            'name': f'Patches {copy_proportion_20}',
+            'name': f'Patches 20',
             'category': 'patches'
+        },
+        {
+            'map': long_range_05,
+            'real_verbatim': proportion_05,
+            'name': f'Long range 0.05',
+            'category': 'long_range'
         },
         {
             'map': long_range_10,
             'real_verbatim': proportion_10,
-            'name': f'Long range {proportion_10}',
+            'name': f'Long range 0.10',
             'category': 'long_range'
         },
         {
-            'map': long_range_50,
-            'real_verbatim': proportion_50,
-            'name': f'Long range {proportion_50}',
-            'category': 'long_range'
-        },
-        {
-            'map': long_range_75,
-            'real_verbatim': proportion_75,
-            'name': f'Long range {proportion_75}',
+            'map': long_range_15,
+            'real_verbatim': proportion_15,
+            'name': f'Long range 0.15',
             'category': 'long_range'
         }
     ]
@@ -98,16 +98,16 @@ for run in tqdm(range(10)):
         category = test_case['category']
         test_case_info = {
             'real_verbatim': real_verbatim,
-            'test_case_name': test_case_name,
+            'test_case': test_case_name,
             'category': category,
             'run': run
         }
 
         # Mean heat algorithms
-        mean_heat_d1_r1 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=1, inv_dist_weight_exp=1)).mean_heat_value()
-        mean_heat_d2_r1 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=1, inv_dist_weight_exp=2)).mean_heat_value()
-        mean_heat_d1_r2 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=2, inv_dist_weight_exp=1)).mean_heat_value()
-        mean_heat_d2_r2 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=2, inv_dist_weight_exp=2)).mean_heat_value()
+        mean_heat_d1_r1 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(inv_dist_weight_exp=1, filter_radius=1)).mean_heat_value()
+        mean_heat_d2_r1 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(inv_dist_weight_exp=2, filter_radius=1)).mean_heat_value()
+        mean_heat_d1_r2 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(inv_dist_weight_exp=1, filter_radius=2)).mean_heat_value()
+        mean_heat_d2_r2 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(inv_dist_weight_exp=2, filter_radius=2)).mean_heat_value()
         result_df = result_df.append(
             dict(test_case_info, **{
                 'algorithm_name': "mean_heat_d=1|r=1",
