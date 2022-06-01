@@ -71,12 +71,17 @@ class DummyIndexMapCreator:
         result = self.create_full_random_map()
         full_verbatim = self.create_full_verbatim_map()
         is_verbatim = np.full(result.shape, False)
+        group_index = 0
+        pixels_left_in_group = 0
         total_size = is_verbatim.shape[0] * is_verbatim.shape[1]
 
         for iy, ix in np.ndindex(result.shape):
+            if pixels_left_in_group == 0:
+                pixels_left_in_group = randint(20, 100)
+                group_index += 100000
             if random.random() < proportion:
                 is_verbatim[iy, ix] = True
-                result[iy, ix] = full_verbatim[iy, ix]
+                result[iy, ix] = full_verbatim[iy, ix] + group_index
 
         verbatim_copy_proportion = is_verbatim.sum() / total_size
 
