@@ -4,9 +4,9 @@ from random import randrange
 import matplotlib.pyplot as plt
 import numpy as np
 
-from dummy_index_map_creator import DummyIndexMapCreator
-from heat_map_analysis import HeatMapAnalysis
-from verbatim_heat_map_creator import VerbatimHeatMapCreator
+from src.dummy_index_map_creator import DummyIndexMapCreator
+from src.heat_map_analysis import HeatMapAnalysis
+from src.verbatim_heat_map_creator import VerbatimHeatMapCreator
 
 # ----- Verbatim copy statistic: -----
 # --- Custom variables ---

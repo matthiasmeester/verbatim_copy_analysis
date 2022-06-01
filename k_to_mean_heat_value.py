@@ -1,11 +1,11 @@
 import os.path
-from random import randrange, seed
+from random import seed
 
 import matplotlib.pyplot as plt
 import numpy as np
 
-from heat_map_analysis import HeatMapAnalysis
-from verbatim_heat_map_creator import VerbatimHeatMapCreator
+from src.heat_map_analysis import HeatMapAnalysis
+from src.verbatim_heat_map_creator import VerbatimHeatMapCreator
 
 # ----- Verbatim copy statistic: -----
 # --- Custom variables ---

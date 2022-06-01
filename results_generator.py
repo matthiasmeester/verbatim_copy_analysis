@@ -2,9 +2,9 @@ from math import sqrt
 
 import pandas as pd
 
-from dummy_index_map_creator import DummyIndexMapCreator
-from heat_map_analysis import HeatMapAnalysis
-from verbatim_heat_map_creator import VerbatimHeatMapCreator
+from src.dummy_index_map_creator import DummyIndexMapCreator
+from src.heat_map_analysis import HeatMapAnalysis
+from src.verbatim_heat_map_creator import VerbatimHeatMapCreator
 
 index_map_creator = DummyIndexMapCreator((200, 200))
 max_range = int(sqrt(200 ** 2 + 200 * 2))

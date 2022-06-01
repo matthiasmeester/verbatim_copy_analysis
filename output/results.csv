@@ -1,0 +1,649 @@
+run,real_verbatim,predicted_verbatim,test_case_name,category,algorithm_name
+0,0,3.75e-05,Full random,full_random,mean_heat_d=1|r=1
+0,0,3.214285714285714e-05,Full random,full_random,mean_heat_d=2|r=2
+0,0,3.066352299152466e-05,Full random,full_random,mean_heat_d=1|r=2
+0,0,3.75e-05,Full random,full_random,mean_heat_d=2|r=1
+0,0,0.00015,Full random,full_random,prop_r=1|T=0.1
+0,0,0.00035,Full random,full_random,prop_r=2|T=0.1
+0,0,0.0,Full random,full_random,prop_r=max|T=0.1
+0,0,0.0,Full random,full_random,prop_r=max|T=0.01
+0,0,0.0,Full random,full_random,prop_r=max|T=0.001
+0,1,1.0,Full verbatim,full_verbatim,mean_heat_d=1|r=1
+0,1,1.0,Full verbatim,full_verbatim,mean_heat_d=2|r=2
+0,1,1.0,Full verbatim,full_verbatim,mean_heat_d=1|r=2
+0,1,1.0,Full verbatim,full_verbatim,mean_heat_d=2|r=1
+0,1,1.0,Full verbatim,full_verbatim,prop_r=1|T=0.1
+0,1,1.0,Full verbatim,full_verbatim,prop_r=2|T=0.1
+0,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.1
+0,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.01
+0,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.001
+0,0.5,0.33441249999999995,Checkerboard 3x3,checkerboard,mean_heat_d=1|r=1
+0,0.5,0.2947234231411862,Checkerboard 3x3,checkerboard,mean_heat_d=2|r=2
+0,0.5,0.27876809746793074,Checkerboard 3x3,checkerboard,mean_heat_d=1|r=2
+0,0.5,0.33441249999999995,Checkerboard 3x3,checkerboard,mean_heat_d=2|r=1
+0,0.5,0.5,Checkerboard 3x3,checkerboard,prop_r=1|T=0.1
+0,0.5,0.5001,Checkerboard 3x3,checkerboard,prop_r=2|T=0.1
+0,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.1
+0,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.01
+0,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.001
+0,0.5,0.0,Checkerboard 1x1,checkerboard,mean_heat_d=1|r=1
+0,0.5,0.2134812782490414,Checkerboard 1x1,checkerboard,mean_heat_d=2|r=2
+0,0.5,0.2726551628842504,Checkerboard 1x1,checkerboard,mean_heat_d=1|r=2
+0,0.5,0.0,Checkerboard 1x1,checkerboard,mean_heat_d=2|r=1
+0,0.5,0.0,Checkerboard 1x1,checkerboard,prop_r=1|T=0.1
+0,0.5,0.50015,Checkerboard 1x1,checkerboard,prop_r=2|T=0.1
+0,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.1
+0,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.01
+0,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.001
+0,0.5,0.3344,Checkerboard 5x5,checkerboard,mean_heat_d=1|r=1
+0,0.5,0.2947144945697577,Checkerboard 5x5,checkerboard,mean_heat_d=2|r=2
+0,0.5,0.2787612609909222,Checkerboard 5x5,checkerboard,mean_heat_d=1|r=2
+0,0.5,0.3344,Checkerboard 5x5,checkerboard,mean_heat_d=2|r=1
+0,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=1|T=0.1
+0,0.5,0.50005,Checkerboard 5x5,checkerboard,prop_r=2|T=0.1
+0,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.1
+0,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.01
+0,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.001
+0,0.06035,0.0548625,Patches 0.06035,patches,mean_heat_d=1|r=1
+0,0.06035,0.054207142857142857,Patches 0.06035,patches,mean_heat_d=2|r=2
+0,0.06035,0.05395594812936016,Patches 0.06035,patches,mean_heat_d=1|r=2
+0,0.06035,0.0548625,Patches 0.06035,patches,mean_heat_d=2|r=1
+0,0.06035,0.06035,Patches 0.06035,patches,prop_r=1|T=0.1
+0,0.06035,0.0606,Patches 0.06035,patches,prop_r=2|T=0.1
+0,0.06035,0.0,Patches 0.06035,patches,prop_r=max|T=0.1
+0,0.06035,0.046825,Patches 0.06035,patches,prop_r=max|T=0.01
+0,0.06035,0.0605,Patches 0.06035,patches,prop_r=max|T=0.001
+0,0.213675,0.19529583333333334,Patches 0.213675,patches,mean_heat_d=1|r=1
+0,0.213675,0.1935229079643553,Patches 0.213675,patches,mean_heat_d=2|r=2
+0,0.213675,0.1928429494328228,Patches 0.213675,patches,mean_heat_d=1|r=2
+0,0.213675,0.19529583333333334,Patches 0.213675,patches,mean_heat_d=2|r=1
+0,0.213675,0.213425,Patches 0.213675,patches,prop_r=1|T=0.1
+0,0.213675,0.2137,Patches 0.213675,patches,prop_r=2|T=0.1
+0,0.213675,0.0,Patches 0.213675,patches,prop_r=max|T=0.1
+0,0.213675,0.202625,Patches 0.213675,patches,prop_r=max|T=0.01
+0,0.213675,0.21385,Patches 0.213675,patches,prop_r=max|T=0.001
+0,0.292875,0.261825,Patches 0.292875,patches,mean_heat_d=1|r=1
+0,0.292875,0.25895850737956,Patches 0.292875,patches,mean_heat_d=2|r=2
+0,0.292875,0.25786326305680374,Patches 0.292875,patches,mean_heat_d=1|r=2
+0,0.292875,0.261825,Patches 0.292875,patches,mean_heat_d=2|r=1
+0,0.292875,0.28915,Patches 0.292875,patches,prop_r=1|T=0.1
+0,0.292875,0.2911,Patches 0.292875,patches,prop_r=2|T=0.1
+0,0.292875,0.0,Patches 0.292875,patches,prop_r=max|T=0.1
+0,0.292875,0.262,Patches 0.292875,patches,prop_r=max|T=0.01
+0,0.292875,0.292825,Patches 0.292875,patches,prop_r=max|T=0.001
+0,0.0974,0.0097875,Long range 0.0974,long_range,mean_heat_d=1|r=1
+0,0.0974,0.00982567529935951,Long range 0.0974,long_range,mean_heat_d=2|r=2
+0,0.0974,0.009791523106454897,Long range 0.0974,long_range,mean_heat_d=1|r=2
+0,0.0974,0.0097875,Long range 0.0974,long_range,mean_heat_d=2|r=1
+0,0.0974,0.033225,Long range 0.0974,long_range,prop_r=1|T=0.1
+0,0.0974,0.068275,Long range 0.0974,long_range,prop_r=2|T=0.1
+0,0.0974,0.0,Long range 0.0974,long_range,prop_r=max|T=0.1
+0,0.0974,0.097425,Long range 0.0974,long_range,prop_r=max|T=0.01
+0,0.0974,0.097425,Long range 0.0974,long_range,prop_r=max|T=0.001
+0,0.499025,0.24945833333333334,Long range 0.499025,long_range,mean_heat_d=1|r=1
+0,0.499025,0.24927806723004092,Long range 0.499025,long_range,mean_heat_d=2|r=2
+0,0.499025,0.2492467921801627,Long range 0.499025,long_range,mean_heat_d=1|r=2
+0,0.499025,0.24945833333333334,Long range 0.499025,long_range,mean_heat_d=2|r=1
+0,0.499025,0.4687,Long range 0.499025,long_range,prop_r=1|T=0.1
+0,0.499025,0.4988,Long range 0.499025,long_range,prop_r=2|T=0.1
+0,0.499025,0.49905,Long range 0.499025,long_range,prop_r=max|T=0.1
+0,0.499025,0.49905,Long range 0.499025,long_range,prop_r=max|T=0.01
+0,0.499025,0.49905,Long range 0.499025,long_range,prop_r=max|T=0.001
+0,0.748625,0.5609458333333333,Long range 0.748625,long_range,mean_heat_d=1|r=1
+0,0.748625,0.5606946854315276,Long range 0.748625,long_range,mean_heat_d=2|r=2
+0,0.748625,0.5606161064063169,Long range 0.748625,long_range,mean_heat_d=1|r=2
+0,0.748625,0.5609458333333333,Long range 0.748625,long_range,mean_heat_d=2|r=1
+0,0.748625,0.74515,Long range 0.748625,long_range,prop_r=1|T=0.1
+0,0.748625,0.748675,Long range 0.748625,long_range,prop_r=2|T=0.1
+0,0.748625,0.748625,Long range 0.748625,long_range,prop_r=max|T=0.1
+0,0.748625,0.748625,Long range 0.748625,long_range,prop_r=max|T=0.01
+0,0.748625,0.748625,Long range 0.748625,long_range,prop_r=max|T=0.001
+1,0,1.25e-05,Full random,full_random,mean_heat_d=1|r=1
+1,0,1.9642857142857138e-05,Full random,full_random,mean_heat_d=2|r=2
+1,0,2.216823850423767e-05,Full random,full_random,mean_heat_d=1|r=2
+1,0,1.25e-05,Full random,full_random,mean_heat_d=2|r=1
+1,0,5e-05,Full random,full_random,prop_r=1|T=0.1
+1,0,0.0003,Full random,full_random,prop_r=2|T=0.1
+1,0,0.0,Full random,full_random,prop_r=max|T=0.1
+1,0,0.0,Full random,full_random,prop_r=max|T=0.01
+1,0,0.0,Full random,full_random,prop_r=max|T=0.001
+1,1,1.0,Full verbatim,full_verbatim,mean_heat_d=1|r=1
+1,1,1.0,Full verbatim,full_verbatim,mean_heat_d=2|r=2
+1,1,1.0,Full verbatim,full_verbatim,mean_heat_d=1|r=2
+1,1,1.0,Full verbatim,full_verbatim,mean_heat_d=2|r=1
+1,1,1.0,Full verbatim,full_verbatim,prop_r=1|T=0.1
+1,1,1.0,Full verbatim,full_verbatim,prop_r=2|T=0.1
+1,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.1
+1,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.01
+1,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.001
+1,0.5,0.33441249999999995,Checkerboard 3x3,checkerboard,mean_heat_d=1|r=1
+1,0.5,0.2947189118629908,Checkerboard 3x3,checkerboard,mean_heat_d=2|r=2
+1,0.5,0.27876431514161437,Checkerboard 3x3,checkerboard,mean_heat_d=1|r=2
+1,0.5,0.33441249999999995,Checkerboard 3x3,checkerboard,mean_heat_d=2|r=1
+1,0.5,0.5,Checkerboard 3x3,checkerboard,prop_r=1|T=0.1
+1,0.5,0.50005,Checkerboard 3x3,checkerboard,prop_r=2|T=0.1
+1,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.1
+1,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.01
+1,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.001
+1,0.5,0.0,Checkerboard 1x1,checkerboard,mean_heat_d=1|r=1
+1,0.5,0.21347949253475568,Checkerboard 1x1,checkerboard,mean_heat_d=2|r=2
+1,0.5,0.27265398993023343,Checkerboard 1x1,checkerboard,mean_heat_d=1|r=2
+1,0.5,0.0,Checkerboard 1x1,checkerboard,mean_heat_d=2|r=1
+1,0.5,0.0,Checkerboard 1x1,checkerboard,prop_r=1|T=0.1
+1,0.5,0.50015,Checkerboard 1x1,checkerboard,prop_r=2|T=0.1
+1,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.1
+1,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.01
+1,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.001
+1,0.5,0.33441249999999995,Checkerboard 5x5,checkerboard,mean_heat_d=1|r=1
+1,0.5,0.29472878028404337,Checkerboard 5x5,checkerboard,mean_heat_d=2|r=2
+1,0.5,0.278776592752418,Checkerboard 5x5,checkerboard,mean_heat_d=1|r=2
+1,0.5,0.33441249999999995,Checkerboard 5x5,checkerboard,mean_heat_d=2|r=1
+1,0.5,0.499975,Checkerboard 5x5,checkerboard,prop_r=1|T=0.1
+1,0.5,0.499975,Checkerboard 5x5,checkerboard,prop_r=2|T=0.1
+1,0.5,0.499975,Checkerboard 5x5,checkerboard,prop_r=max|T=0.1
+1,0.5,0.499975,Checkerboard 5x5,checkerboard,prop_r=max|T=0.01
+1,0.5,0.499975,Checkerboard 5x5,checkerboard,prop_r=max|T=0.001
+1,0.0448,0.040777083333333325,Patches 0.0448,patches,mean_heat_d=1|r=1
+1,0.0448,0.04026071428571429,Patches 0.0448,patches,mean_heat_d=2|r=2
+1,0.0448,0.04006895702260803,Patches 0.0448,patches,mean_heat_d=1|r=2
+1,0.0448,0.040777083333333325,Patches 0.0448,patches,mean_heat_d=2|r=1
+1,0.0448,0.0449,Patches 0.0448,patches,prop_r=1|T=0.1
+1,0.0448,0.04515,Patches 0.0448,patches,prop_r=2|T=0.1
+1,0.0448,0.0,Patches 0.0448,patches,prop_r=max|T=0.1
+1,0.0448,0.040225,Patches 0.0448,patches,prop_r=max|T=0.01
+1,0.0448,0.044925,Patches 0.0448,patches,prop_r=max|T=0.001
+1,0.14325,0.13096458333333336,Patches 0.14325,patches,mean_heat_d=1|r=1
+1,0.14325,0.1297150619604567,Patches 0.14325,patches,mean_heat_d=2|r=2
+1,0.14325,0.12922658235403706,Patches 0.14325,patches,mean_heat_d=1|r=2
+1,0.14325,0.13096458333333336,Patches 0.14325,patches,mean_heat_d=2|r=1
+1,0.14325,0.143175,Patches 0.14325,patches,prop_r=1|T=0.1
+1,0.14325,0.143475,Patches 0.14325,patches,prop_r=2|T=0.1
+1,0.14325,0.0,Patches 0.14325,patches,prop_r=max|T=0.1
+1,0.14325,0.105375,Patches 0.14325,patches,prop_r=max|T=0.01
+1,0.14325,0.143375,Patches 0.14325,patches,prop_r=max|T=0.001
+1,0.28935,0.257925,Patches 0.28935,patches,mean_heat_d=1|r=1
+1,0.28935,0.2547412437343358,Patches 0.28935,patches,mean_heat_d=2|r=2
+1,0.28935,0.25352805357468067,Patches 0.28935,patches,mean_heat_d=1|r=2
+1,0.28935,0.257925,Patches 0.28935,patches,mean_heat_d=2|r=1
+1,0.28935,0.2868,Patches 0.28935,patches,prop_r=1|T=0.1
+1,0.28935,0.2879,Patches 0.28935,patches,prop_r=2|T=0.1
+1,0.28935,0.0,Patches 0.28935,patches,prop_r=max|T=0.1
+1,0.28935,0.262775,Patches 0.28935,patches,prop_r=max|T=0.01
+1,0.28935,0.289675,Patches 0.28935,patches,prop_r=max|T=0.001
+1,0.09915,0.010331249999999998,Long range 0.09915,long_range,mean_heat_d=1|r=1
+1,0.09915,0.010134637608979714,Long range 0.09915,long_range,mean_heat_d=2|r=2
+1,0.09915,0.010080364168182745,Long range 0.09915,long_range,mean_heat_d=1|r=2
+1,0.09915,0.010331249999999998,Long range 0.09915,long_range,mean_heat_d=2|r=1
+1,0.09915,0.035225,Long range 0.09915,long_range,prop_r=1|T=0.1
+1,0.09915,0.070825,Long range 0.09915,long_range,prop_r=2|T=0.1
+1,0.09915,0.0,Long range 0.09915,long_range,prop_r=max|T=0.1
+1,0.09915,0.09915,Long range 0.09915,long_range,prop_r=max|T=0.01
+1,0.09915,0.09915,Long range 0.09915,long_range,prop_r=max|T=0.001
+1,0.496875,0.2477083333333333,Long range 0.496875,long_range,mean_heat_d=1|r=1
+1,0.496875,0.24689292863569182,Long range 0.496875,long_range,mean_heat_d=2|r=2
+1,0.496875,0.24669710944344225,Long range 0.496875,long_range,mean_heat_d=1|r=2
+1,0.496875,0.2477083333333333,Long range 0.496875,long_range,mean_heat_d=2|r=1
+1,0.496875,0.465075,Long range 0.496875,long_range,prop_r=1|T=0.1
+1,0.496875,0.49685,Long range 0.496875,long_range,prop_r=2|T=0.1
+1,0.496875,0.496875,Long range 0.496875,long_range,prop_r=max|T=0.1
+1,0.496875,0.496875,Long range 0.496875,long_range,prop_r=max|T=0.01
+1,0.496875,0.496875,Long range 0.496875,long_range,prop_r=max|T=0.001
+1,0.7513,0.5638645833333334,Long range 0.7513,long_range,mean_heat_d=1|r=1
+1,0.7513,0.5639631731572521,Long range 0.7513,long_range,mean_heat_d=2|r=2
+1,0.7513,0.5640497318214092,Long range 0.7513,long_range,mean_heat_d=1|r=2
+1,0.7513,0.5638645833333334,Long range 0.7513,long_range,mean_heat_d=2|r=1
+1,0.7513,0.74825,Long range 0.7513,long_range,prop_r=1|T=0.1
+1,0.7513,0.7513,Long range 0.7513,long_range,prop_r=2|T=0.1
+1,0.7513,0.7513,Long range 0.7513,long_range,prop_r=max|T=0.1
+1,0.7513,0.7513,Long range 0.7513,long_range,prop_r=max|T=0.01
+1,0.7513,0.7513,Long range 0.7513,long_range,prop_r=max|T=0.001
+2,0,2.5e-05,Full random,full_random,mean_heat_d=1|r=1
+2,0,2.3214285714285708e-05,Full random,full_random,mean_heat_d=2|r=2
+2,0,2.3827045983049322e-05,Full random,full_random,mean_heat_d=1|r=2
+2,0,2.5e-05,Full random,full_random,mean_heat_d=2|r=1
+2,0,0.0001,Full random,full_random,prop_r=1|T=0.1
+2,0,0.0003,Full random,full_random,prop_r=2|T=0.1
+2,0,0.0,Full random,full_random,prop_r=max|T=0.1
+2,0,0.0,Full random,full_random,prop_r=max|T=0.01
+2,0,0.0,Full random,full_random,prop_r=max|T=0.001
+2,1,1.0,Full verbatim,full_verbatim,mean_heat_d=1|r=1
+2,1,1.0,Full verbatim,full_verbatim,mean_heat_d=2|r=2
+2,1,1.0,Full verbatim,full_verbatim,mean_heat_d=1|r=2
+2,1,1.0,Full verbatim,full_verbatim,mean_heat_d=2|r=1
+2,1,1.0,Full verbatim,full_verbatim,prop_r=1|T=0.1
+2,1,1.0,Full verbatim,full_verbatim,prop_r=2|T=0.1
+2,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.1
+2,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.01
+2,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.001
+2,0.5,0.3344,Checkerboard 3x3,checkerboard,mean_heat_d=1|r=1
+2,0.5,0.294712708855472,Checkerboard 3x3,checkerboard,mean_heat_d=2|r=2
+2,0.5,0.2787584292294265,Checkerboard 3x3,checkerboard,mean_heat_d=1|r=2
+2,0.5,0.3344,Checkerboard 3x3,checkerboard,mean_heat_d=2|r=1
+2,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=1|T=0.1
+2,0.5,0.5,Checkerboard 3x3,checkerboard,prop_r=2|T=0.1
+2,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.1
+2,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.01
+2,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.001
+2,0.5,0.0,Checkerboard 1x1,checkerboard,mean_heat_d=1|r=1
+2,0.5,0.21347234967761283,Checkerboard 1x1,checkerboard,mean_heat_d=2|r=2
+2,0.5,0.2726443216917292,Checkerboard 1x1,checkerboard,mean_heat_d=1|r=2
+2,0.5,0.0,Checkerboard 1x1,checkerboard,mean_heat_d=2|r=1
+2,0.5,0.0,Checkerboard 1x1,checkerboard,prop_r=1|T=0.1
+2,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=2|T=0.1
+2,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.1
+2,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.01
+2,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.001
+2,0.5,0.3344,Checkerboard 5x5,checkerboard,mean_heat_d=1|r=1
+2,0.5,0.2947091374269005,Checkerboard 5x5,checkerboard,mean_heat_d=2|r=2
+2,0.5,0.27875442451391375,Checkerboard 5x5,checkerboard,mean_heat_d=1|r=2
+2,0.5,0.3344,Checkerboard 5x5,checkerboard,mean_heat_d=2|r=1
+2,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=1|T=0.1
+2,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=2|T=0.1
+2,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.1
+2,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.01
+2,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.001
+2,0.1326,0.12165208333333333,Patches 0.1326,patches,mean_heat_d=1|r=1
+2,0.1326,0.12067304720133668,Patches 0.1326,patches,mean_heat_d=2|r=2
+2,0.1326,0.12031089183589143,Patches 0.1326,patches,mean_heat_d=1|r=2
+2,0.1326,0.12165208333333333,Patches 0.1326,patches,mean_heat_d=2|r=1
+2,0.1326,0.132625,Patches 0.1326,patches,prop_r=1|T=0.1
+2,0.1326,0.1328,Patches 0.1326,patches,prop_r=2|T=0.1
+2,0.1326,0.0,Patches 0.1326,patches,prop_r=max|T=0.1
+2,0.1326,0.128075,Patches 0.1326,patches,prop_r=max|T=0.01
+2,0.1326,0.13275,Patches 0.1326,patches,prop_r=max|T=0.001
+2,0.13625,0.12342708333333333,Patches 0.13625,patches,mean_heat_d=1|r=1
+2,0.13625,0.1221149731968811,Patches 0.13625,patches,mean_heat_d=2|r=2
+2,0.13625,0.12161143901159314,Patches 0.13625,patches,mean_heat_d=1|r=2
+2,0.13625,0.12342708333333333,Patches 0.13625,patches,mean_heat_d=2|r=1
+2,0.13625,0.136175,Patches 0.13625,patches,prop_r=1|T=0.1
+2,0.13625,0.13655,Patches 0.13625,patches,prop_r=2|T=0.1
+2,0.13625,0.0,Patches 0.13625,patches,prop_r=max|T=0.1
+2,0.13625,0.1212,Patches 0.13625,patches,prop_r=max|T=0.01
+2,0.13625,0.136425,Patches 0.13625,patches,prop_r=max|T=0.001
+2,0.3521,0.31641458333333333,Patches 0.3521,patches,mean_heat_d=1|r=1
+2,0.3521,0.3128128098022835,Patches 0.3521,patches,mean_heat_d=2|r=2
+2,0.3521,0.31142786549732226,Patches 0.3521,patches,mean_heat_d=1|r=2
+2,0.3521,0.31641458333333333,Patches 0.3521,patches,mean_heat_d=2|r=1
+2,0.3521,0.349525,Patches 0.3521,patches,prop_r=1|T=0.1
+2,0.3521,0.350775,Patches 0.3521,patches,prop_r=2|T=0.1
+2,0.3521,0.0,Patches 0.3521,patches,prop_r=max|T=0.1
+2,0.3521,0.3221,Patches 0.3521,patches,prop_r=max|T=0.01
+2,0.3521,0.352375,Patches 0.3521,patches,prop_r=max|T=0.001
+2,0.098825,0.010095833333333333,Long range 0.098825,long_range,mean_heat_d=1|r=1
+2,0.098825,0.010017060011138957,Long range 0.098825,long_range,mean_heat_d=2|r=2
+2,0.098825,0.00999488532123395,Long range 0.098825,long_range,mean_heat_d=1|r=2
+2,0.098825,0.010095833333333333,Long range 0.098825,long_range,mean_heat_d=2|r=1
+2,0.098825,0.0349,Long range 0.098825,long_range,prop_r=1|T=0.1
+2,0.098825,0.0702,Long range 0.098825,long_range,prop_r=2|T=0.1
+2,0.098825,2.5e-05,Long range 0.098825,long_range,prop_r=max|T=0.1
+2,0.098825,0.098825,Long range 0.098825,long_range,prop_r=max|T=0.01
+2,0.098825,0.098825,Long range 0.098825,long_range,prop_r=max|T=0.001
+2,0.4977,0.24728125,Long range 0.4977,long_range,mean_heat_d=1|r=1
+2,0.4977,0.24703450868089025,Long range 0.4977,long_range,mean_heat_d=2|r=2
+2,0.4977,0.2469661419961734,Long range 0.4977,long_range,mean_heat_d=1|r=2
+2,0.4977,0.24728125,Long range 0.4977,long_range,mean_heat_d=2|r=1
+2,0.4977,0.465825,Long range 0.4977,long_range,prop_r=1|T=0.1
+2,0.4977,0.49755,Long range 0.4977,long_range,prop_r=2|T=0.1
+2,0.4977,0.497725,Long range 0.4977,long_range,prop_r=max|T=0.1
+2,0.4977,0.497725,Long range 0.4977,long_range,prop_r=max|T=0.01
+2,0.4977,0.497725,Long range 0.4977,long_range,prop_r=max|T=0.001
+2,0.74915,0.5600895833333334,Long range 0.74915,long_range,mean_heat_d=1|r=1
+2,0.74915,0.5607614930756378,Long range 0.74915,long_range,mean_heat_d=2|r=2
+2,0.74915,0.5609736144076171,Long range 0.74915,long_range,mean_heat_d=1|r=2
+2,0.74915,0.5600895833333334,Long range 0.74915,long_range,mean_heat_d=2|r=1
+2,0.74915,0.7461,Long range 0.74915,long_range,prop_r=1|T=0.1
+2,0.74915,0.7492,Long range 0.74915,long_range,prop_r=2|T=0.1
+2,0.74915,0.74915,Long range 0.74915,long_range,prop_r=max|T=0.1
+2,0.74915,0.74915,Long range 0.74915,long_range,prop_r=max|T=0.01
+2,0.74915,0.74915,Long range 0.74915,long_range,prop_r=max|T=0.001
+3,0,3.75e-05,Full random,full_random,mean_heat_d=1|r=1
+3,0,3.406084656084656e-05,Full random,full_random,mean_heat_d=2|r=2
+3,0,3.2006482788279086e-05,Full random,full_random,mean_heat_d=1|r=2
+3,0,3.75e-05,Full random,full_random,mean_heat_d=2|r=1
+3,0,0.00015,Full random,full_random,prop_r=1|T=0.1
+3,0,0.00035,Full random,full_random,prop_r=2|T=0.1
+3,0,0.0,Full random,full_random,prop_r=max|T=0.1
+3,0,0.0,Full random,full_random,prop_r=max|T=0.01
+3,0,0.0,Full random,full_random,prop_r=max|T=0.001
+3,1,1.0,Full verbatim,full_verbatim,mean_heat_d=1|r=1
+3,1,1.0,Full verbatim,full_verbatim,mean_heat_d=2|r=2
+3,1,1.0,Full verbatim,full_verbatim,mean_heat_d=1|r=2
+3,1,1.0,Full verbatim,full_verbatim,mean_heat_d=2|r=1
+3,1,1.0,Full verbatim,full_verbatim,prop_r=1|T=0.1
+3,1,1.0,Full verbatim,full_verbatim,prop_r=2|T=0.1
+3,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.1
+3,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.01
+3,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.001
+3,0.5,0.33443749999999994,Checkerboard 3x3,checkerboard,mean_heat_d=1|r=1
+3,0.5,0.29474663742690055,Checkerboard 3x3,checkerboard,mean_heat_d=2|r=2
+3,0.5,0.2787919245139138,Checkerboard 3x3,checkerboard,mean_heat_d=1|r=2
+3,0.5,0.33443749999999994,Checkerboard 3x3,checkerboard,mean_heat_d=2|r=1
+3,0.5,0.500075,Checkerboard 3x3,checkerboard,prop_r=1|T=0.1
+3,0.5,0.500125,Checkerboard 3x3,checkerboard,prop_r=2|T=0.1
+3,0.5,0.499975,Checkerboard 3x3,checkerboard,prop_r=max|T=0.1
+3,0.5,0.499975,Checkerboard 3x3,checkerboard,prop_r=max|T=0.01
+3,0.5,0.499975,Checkerboard 3x3,checkerboard,prop_r=max|T=0.001
+3,0.5,4.791666666666666e-05,Checkerboard 1x1,checkerboard,mean_heat_d=1|r=1
+3,0.5,0.21350951202793303,Checkerboard 1x1,checkerboard,mean_heat_d=2|r=2
+3,0.5,0.27267646841357557,Checkerboard 1x1,checkerboard,mean_heat_d=1|r=2
+3,0.5,4.791666666666666e-05,Checkerboard 1x1,checkerboard,mean_heat_d=2|r=1
+3,0.5,0.0001,Checkerboard 1x1,checkerboard,prop_r=1|T=0.1
+3,0.5,0.500125,Checkerboard 1x1,checkerboard,prop_r=2|T=0.1
+3,0.5,0.500025,Checkerboard 1x1,checkerboard,prop_r=max|T=0.1
+3,0.5,0.500025,Checkerboard 1x1,checkerboard,prop_r=max|T=0.01
+3,0.5,0.500025,Checkerboard 1x1,checkerboard,prop_r=max|T=0.001
+3,0.5,0.33444999999999997,Checkerboard 5x5,checkerboard,mean_heat_d=1|r=1
+3,0.5,0.29477520885547204,Checkerboard 5x5,checkerboard,mean_heat_d=2|r=2
+3,0.5,0.27882659275241806,Checkerboard 5x5,checkerboard,mean_heat_d=1|r=2
+3,0.5,0.33444999999999997,Checkerboard 5x5,checkerboard,mean_heat_d=2|r=1
+3,0.5,0.500075,Checkerboard 5x5,checkerboard,prop_r=1|T=0.1
+3,0.5,0.500075,Checkerboard 5x5,checkerboard,prop_r=2|T=0.1
+3,0.5,0.500025,Checkerboard 5x5,checkerboard,prop_r=max|T=0.1
+3,0.5,0.500025,Checkerboard 5x5,checkerboard,prop_r=max|T=0.01
+3,0.5,0.500025,Checkerboard 5x5,checkerboard,prop_r=max|T=0.001
+3,0.067925,0.0612375,Patches 0.067925,patches,mean_heat_d=1|r=1
+3,0.067925,0.06055386904761905,Patches 0.067925,patches,mean_heat_d=2|r=2
+3,0.067925,0.06029774703092883,Patches 0.067925,patches,mean_heat_d=1|r=2
+3,0.067925,0.0612375,Patches 0.067925,patches,mean_heat_d=2|r=1
+3,0.067925,0.06755,Patches 0.067925,patches,prop_r=1|T=0.1
+3,0.067925,0.067925,Patches 0.067925,patches,prop_r=2|T=0.1
+3,0.067925,0.0,Patches 0.067925,patches,prop_r=max|T=0.1
+3,0.067925,0.054625,Patches 0.067925,patches,prop_r=max|T=0.01
+3,0.067925,0.067975,Patches 0.067925,patches,prop_r=max|T=0.001
+3,0.1801,0.162925,Patches 0.1801,patches,mean_heat_d=1|r=1
+3,0.1801,0.16135922619047618,Patches 0.1801,patches,mean_heat_d=2|r=2
+3,0.1801,0.16075887282981863,Patches 0.1801,patches,mean_heat_d=1|r=2
+3,0.1801,0.162925,Patches 0.1801,patches,mean_heat_d=2|r=1
+3,0.1801,0.178925,Patches 0.1801,patches,prop_r=1|T=0.1
+3,0.1801,0.179775,Patches 0.1801,patches,prop_r=2|T=0.1
+3,0.1801,0.0,Patches 0.1801,patches,prop_r=max|T=0.1
+3,0.1801,0.1728,Patches 0.1801,patches,prop_r=max|T=0.01
+3,0.1801,0.17945,Patches 0.1801,patches,prop_r=max|T=0.001
+3,0.2553,0.2299020833333333,Patches 0.2553,patches,mean_heat_d=1|r=1
+3,0.2553,0.22744914021164023,Patches 0.2553,patches,mean_heat_d=2|r=2
+3,0.2553,0.22652136348035887,Patches 0.2553,patches,mean_heat_d=1|r=2
+3,0.2553,0.2299020833333333,Patches 0.2553,patches,mean_heat_d=2|r=1
+3,0.2553,0.25335,Patches 0.2553,patches,prop_r=1|T=0.1
+3,0.2553,0.254175,Patches 0.2553,patches,prop_r=2|T=0.1
+3,0.2553,0.0,Patches 0.2553,patches,prop_r=max|T=0.1
+3,0.2553,0.2086,Patches 0.2553,patches,prop_r=max|T=0.01
+3,0.2553,0.254975,Patches 0.2553,patches,prop_r=max|T=0.001
+3,0.0998,0.009658333333333333,Long range 0.0998,long_range,mean_heat_d=1|r=1
+3,0.0998,0.009798273461431355,Long range 0.0998,long_range,mean_heat_d=2|r=2
+3,0.0998,0.009855221065736327,Long range 0.0998,long_range,mean_heat_d=1|r=2
+3,0.0998,0.009658333333333333,Long range 0.0998,long_range,mean_heat_d=2|r=1
+3,0.0998,0.033075,Long range 0.0998,long_range,prop_r=1|T=0.1
+3,0.0998,0.070925,Long range 0.0998,long_range,prop_r=2|T=0.1
+3,0.0998,0.01895,Long range 0.0998,long_range,prop_r=max|T=0.1
+3,0.0998,0.099825,Long range 0.0998,long_range,prop_r=max|T=0.01
+3,0.0998,0.099825,Long range 0.0998,long_range,prop_r=max|T=0.001
+3,0.500625,0.2496,Long range 0.500625,long_range,mean_heat_d=1|r=1
+3,0.500625,0.24986293150076044,Long range 0.500625,long_range,mean_heat_d=2|r=2
+3,0.500625,0.2499053417014765,Long range 0.500625,long_range,mean_heat_d=1|r=2
+3,0.500625,0.2496,Long range 0.500625,long_range,mean_heat_d=2|r=1
+3,0.500625,0.46745,Long range 0.500625,long_range,prop_r=1|T=0.1
+3,0.500625,0.500425,Long range 0.500625,long_range,prop_r=2|T=0.1
+3,0.500625,0.50065,Long range 0.500625,long_range,prop_r=max|T=0.1
+3,0.500625,0.50065,Long range 0.500625,long_range,prop_r=max|T=0.01
+3,0.500625,0.50065,Long range 0.500625,long_range,prop_r=max|T=0.001
+3,0.7481,0.5588937499999999,Long range 0.7481,long_range,mean_heat_d=1|r=1
+3,0.7481,0.5593107362423152,Long range 0.7481,long_range,mean_heat_d=2|r=2
+3,0.7481,0.5594697655472043,Long range 0.7481,long_range,mean_heat_d=1|r=2
+3,0.7481,0.5588937499999999,Long range 0.7481,long_range,mean_heat_d=2|r=1
+3,0.7481,0.744425,Long range 0.7481,long_range,prop_r=1|T=0.1
+3,0.7481,0.748125,Long range 0.7481,long_range,prop_r=2|T=0.1
+3,0.7481,0.748125,Long range 0.7481,long_range,prop_r=max|T=0.1
+3,0.7481,0.748125,Long range 0.7481,long_range,prop_r=max|T=0.01
+3,0.7481,0.748125,Long range 0.7481,long_range,prop_r=max|T=0.001
+4,0,1.25e-05,Full random,full_random,mean_heat_d=1|r=1
+4,0,2.6818783068783068e-05,Full random,full_random,mean_heat_d=2|r=2
+4,0,3.1921479898377217e-05,Full random,full_random,mean_heat_d=1|r=2
+4,0,1.25e-05,Full random,full_random,mean_heat_d=2|r=1
+4,0,5e-05,Full random,full_random,prop_r=1|T=0.1
+4,0,0.00045,Full random,full_random,prop_r=2|T=0.1
+4,0,0.0,Full random,full_random,prop_r=max|T=0.1
+4,0,0.0,Full random,full_random,prop_r=max|T=0.01
+4,0,0.0,Full random,full_random,prop_r=max|T=0.001
+4,1,1.0,Full verbatim,full_verbatim,mean_heat_d=1|r=1
+4,1,1.0,Full verbatim,full_verbatim,mean_heat_d=2|r=2
+4,1,1.0,Full verbatim,full_verbatim,mean_heat_d=1|r=2
+4,1,1.0,Full verbatim,full_verbatim,mean_heat_d=2|r=1
+4,1,1.0,Full verbatim,full_verbatim,prop_r=1|T=0.1
+4,1,1.0,Full verbatim,full_verbatim,prop_r=2|T=0.1
+4,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.1
+4,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.01
+4,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.001
+4,0.5,0.33441249999999995,Checkerboard 3x3,checkerboard,mean_heat_d=1|r=1
+4,0.5,0.29472342314118627,Checkerboard 3x3,checkerboard,mean_heat_d=2|r=2
+4,0.5,0.27876809746793074,Checkerboard 3x3,checkerboard,mean_heat_d=1|r=2
+4,0.5,0.33441249999999995,Checkerboard 3x3,checkerboard,mean_heat_d=2|r=1
+4,0.5,0.5,Checkerboard 3x3,checkerboard,prop_r=1|T=0.1
+4,0.5,0.5001,Checkerboard 3x3,checkerboard,prop_r=2|T=0.1
+4,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.1
+4,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.01
+4,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.001
+4,0.5,0.0,Checkerboard 1x1,checkerboard,mean_heat_d=1|r=1
+4,0.5,0.21347770682047,Checkerboard 1x1,checkerboard,mean_heat_d=2|r=2
+4,0.5,0.2726528169762165,Checkerboard 1x1,checkerboard,mean_heat_d=1|r=2
+4,0.5,0.0,Checkerboard 1x1,checkerboard,mean_heat_d=2|r=1
+4,0.5,0.0,Checkerboard 1x1,checkerboard,prop_r=1|T=0.1
+4,0.5,0.50015,Checkerboard 1x1,checkerboard,prop_r=2|T=0.1
+4,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.1
+4,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.01
+4,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.001
+4,0.5,0.334425,Checkerboard 5x5,checkerboard,mean_heat_d=1|r=1
+4,0.5,0.29472342314118627,Checkerboard 5x5,checkerboard,mean_heat_d=2|r=2
+4,0.5,0.2787657515598968,Checkerboard 5x5,checkerboard,mean_heat_d=1|r=2
+4,0.5,0.334425,Checkerboard 5x5,checkerboard,mean_heat_d=2|r=1
+4,0.5,0.50005,Checkerboard 5x5,checkerboard,prop_r=1|T=0.1
+4,0.5,0.50005,Checkerboard 5x5,checkerboard,prop_r=2|T=0.1
+4,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.1
+4,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.01
+4,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.001
+4,0.069425,0.06342083333333333,Patches 0.069425,patches,mean_heat_d=1|r=1
+4,0.069425,0.06278445071010862,Patches 0.069425,patches,mean_heat_d=2|r=2
+4,0.069425,0.06254629722513866,Patches 0.069425,patches,mean_heat_d=1|r=2
+4,0.069425,0.06342083333333333,Patches 0.069425,patches,mean_heat_d=2|r=1
+4,0.069425,0.069375,Patches 0.069425,patches,prop_r=1|T=0.1
+4,0.069425,0.069475,Patches 0.069425,patches,prop_r=2|T=0.1
+4,0.069425,0.0,Patches 0.069425,patches,prop_r=max|T=0.1
+4,0.069425,0.061775,Patches 0.069425,patches,prop_r=max|T=0.01
+4,0.069425,0.069425,Patches 0.069425,patches,prop_r=max|T=0.001
+4,0.10265,0.092825,Patches 0.10265,patches,mean_heat_d=1|r=1
+4,0.10265,0.09160357142857145,Patches 0.10265,patches,mean_heat_d=2|r=2
+4,0.10265,0.0911352374512415,Patches 0.10265,patches,mean_heat_d=1|r=2
+4,0.10265,0.092825,Patches 0.10265,patches,mean_heat_d=2|r=1
+4,0.10265,0.10265,Patches 0.10265,patches,prop_r=1|T=0.1
+4,0.10265,0.102775,Patches 0.10265,patches,prop_r=2|T=0.1
+4,0.10265,0.0,Patches 0.10265,patches,prop_r=max|T=0.1
+4,0.10265,0.087325,Patches 0.10265,patches,prop_r=max|T=0.01
+4,0.10265,0.1028,Patches 0.10265,patches,prop_r=max|T=0.001
+4,0.341,0.30874999999999997,Patches 0.341,patches,mean_heat_d=1|r=1
+4,0.341,0.3056338519910888,Patches 0.341,patches,mean_heat_d=2|r=2
+4,0.341,0.3044644161416388,Patches 0.341,patches,mean_heat_d=1|r=2
+4,0.341,0.30874999999999997,Patches 0.341,patches,mean_heat_d=2|r=1
+4,0.341,0.339175,Patches 0.341,patches,prop_r=1|T=0.1
+4,0.341,0.34015,Patches 0.341,patches,prop_r=2|T=0.1
+4,0.341,0.0,Patches 0.341,patches,prop_r=max|T=0.1
+4,0.341,0.31655,Patches 0.341,patches,prop_r=max|T=0.01
+4,0.341,0.340175,Patches 0.341,patches,prop_r=max|T=0.001
+4,0.099875,0.010291666666666666,Long range 0.099875,long_range,mean_heat_d=1|r=1
+4,0.099875,0.010268697518368572,Long range 0.099875,long_range,mean_heat_d=2|r=2
+4,0.099875,0.01024049373300785,Long range 0.099875,long_range,mean_heat_d=1|r=2
+4,0.099875,0.010291666666666666,Long range 0.099875,long_range,mean_heat_d=2|r=1
+4,0.099875,0.035675,Long range 0.099875,long_range,prop_r=1|T=0.1
+4,0.099875,0.0727,Long range 0.099875,long_range,prop_r=2|T=0.1
+4,0.099875,0.0097,Long range 0.099875,long_range,prop_r=max|T=0.1
+4,0.099875,0.099925,Long range 0.099875,long_range,prop_r=max|T=0.01
+4,0.099875,0.099925,Long range 0.099875,long_range,prop_r=max|T=0.001
+4,0.5,0.24881666666666666,Long range 0.5,long_range,mean_heat_d=1|r=1
+4,0.5,0.24949551174945908,Long range 0.5,long_range,mean_heat_d=2|r=2
+4,0.5,0.2496357568925955,Long range 0.5,long_range,mean_heat_d=1|r=2
+4,0.5,0.24881666666666666,Long range 0.5,long_range,mean_heat_d=2|r=1
+4,0.5,0.46655,Long range 0.5,long_range,prop_r=1|T=0.1
+4,0.5,0.49985,Long range 0.5,long_range,prop_r=2|T=0.1
+4,0.5,0.5,Long range 0.5,long_range,prop_r=max|T=0.1
+4,0.5,0.5,Long range 0.5,long_range,prop_r=max|T=0.01
+4,0.5,0.5,Long range 0.5,long_range,prop_r=max|T=0.001
+4,0.752625,0.5660124999999999,Long range 0.752625,long_range,mean_heat_d=1|r=1
+4,0.752625,0.5663863921288264,Long range 0.752625,long_range,mean_heat_d=2|r=2
+4,0.752625,0.5664893880083167,Long range 0.752625,long_range,mean_heat_d=1|r=2
+4,0.752625,0.5660124999999999,Long range 0.752625,long_range,mean_heat_d=2|r=1
+4,0.752625,0.74945,Long range 0.752625,long_range,prop_r=1|T=0.1
+4,0.752625,0.752625,Long range 0.752625,long_range,prop_r=2|T=0.1
+4,0.752625,0.752625,Long range 0.752625,long_range,prop_r=max|T=0.1
+4,0.752625,0.752625,Long range 0.752625,long_range,prop_r=max|T=0.01
+4,0.752625,0.752625,Long range 0.752625,long_range,prop_r=max|T=0.001
+5,0,2.5e-05,Full random,full_random,mean_heat_d=1|r=1
+5,0,1.7857142857142855e-05,Full random,full_random,mean_heat_d=2|r=2
+5,0,1.6990568974573983e-05,Full random,full_random,mean_heat_d=1|r=2
+5,0,2.5e-05,Full random,full_random,mean_heat_d=2|r=1
+5,0,0.0001,Full random,full_random,prop_r=1|T=0.1
+5,0,0.0002,Full random,full_random,prop_r=2|T=0.1
+5,0,0.0,Full random,full_random,prop_r=max|T=0.1
+5,0,0.0,Full random,full_random,prop_r=max|T=0.01
+5,0,0.0,Full random,full_random,prop_r=max|T=0.001
+5,1,1.0,Full verbatim,full_verbatim,mean_heat_d=1|r=1
+5,1,1.0,Full verbatim,full_verbatim,mean_heat_d=2|r=2
+5,1,1.0,Full verbatim,full_verbatim,mean_heat_d=1|r=2
+5,1,1.0,Full verbatim,full_verbatim,mean_heat_d=2|r=1
+5,1,1.0,Full verbatim,full_verbatim,prop_r=1|T=0.1
+5,1,1.0,Full verbatim,full_verbatim,prop_r=2|T=0.1
+5,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.1
+5,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.01
+5,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.001
+5,0.5,0.33441249999999995,Checkerboard 3x3,checkerboard,mean_heat_d=1|r=1
+5,0.5,0.29472878028404337,Checkerboard 3x3,checkerboard,mean_heat_d=2|r=2
+5,0.5,0.27877659275241806,Checkerboard 3x3,checkerboard,mean_heat_d=1|r=2
+5,0.5,0.33441249999999995,Checkerboard 3x3,checkerboard,mean_heat_d=2|r=1
+5,0.5,0.499975,Checkerboard 3x3,checkerboard,prop_r=1|T=0.1
+5,0.5,0.499975,Checkerboard 3x3,checkerboard,prop_r=2|T=0.1
+5,0.5,0.499975,Checkerboard 3x3,checkerboard,prop_r=max|T=0.1
+5,0.5,0.499975,Checkerboard 3x3,checkerboard,prop_r=max|T=0.01
+5,0.5,0.499975,Checkerboard 3x3,checkerboard,prop_r=max|T=0.001
+5,0.5,4.791666666666666e-05,Checkerboard 1x1,checkerboard,mean_heat_d=1|r=1
+5,0.5,0.21350951202793308,Checkerboard 1x1,checkerboard,mean_heat_d=2|r=2
+5,0.5,0.2726781272210544,Checkerboard 1x1,checkerboard,mean_heat_d=1|r=2
+5,0.5,4.791666666666666e-05,Checkerboard 1x1,checkerboard,mean_heat_d=2|r=1
+5,0.5,0.0001,Checkerboard 1x1,checkerboard,prop_r=1|T=0.1
+5,0.5,0.500175,Checkerboard 1x1,checkerboard,prop_r=2|T=0.1
+5,0.5,0.500025,Checkerboard 1x1,checkerboard,prop_r=max|T=0.1
+5,0.5,0.500025,Checkerboard 1x1,checkerboard,prop_r=max|T=0.01
+5,0.5,0.500025,Checkerboard 1x1,checkerboard,prop_r=max|T=0.001
+5,0.5,0.3344,Checkerboard 5x5,checkerboard,mean_heat_d=1|r=1
+5,0.5,0.2947091374269005,Checkerboard 5x5,checkerboard,mean_heat_d=2|r=2
+5,0.5,0.27875442451391375,Checkerboard 5x5,checkerboard,mean_heat_d=1|r=2
+5,0.5,0.3344,Checkerboard 5x5,checkerboard,mean_heat_d=2|r=1
+5,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=1|T=0.1
+5,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=2|T=0.1
+5,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.1
+5,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.01
+5,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.001
+5,0.1049,0.09616041666666668,Patches 0.1049,patches,mean_heat_d=1|r=1
+5,0.1049,0.09529585769980506,Patches 0.1049,patches,mean_heat_d=2|r=2
+5,0.1049,0.09496988770579218,Patches 0.1049,patches,mean_heat_d=1|r=2
+5,0.1049,0.09616041666666668,Patches 0.1049,patches,mean_heat_d=2|r=1
+5,0.1049,0.1049,Patches 0.1049,patches,prop_r=1|T=0.1
+5,0.1049,0.10505,Patches 0.1049,patches,prop_r=2|T=0.1
+5,0.1049,0.0,Patches 0.1049,patches,prop_r=max|T=0.1
+5,0.1049,0.09325,Patches 0.1049,patches,prop_r=max|T=0.01
+5,0.1049,0.10495,Patches 0.1049,patches,prop_r=max|T=0.001
+5,0.164025,0.14803333333333332,Patches 0.164025,patches,mean_heat_d=1|r=1
+5,0.164025,0.1466459516847675,Patches 0.164025,patches,mean_heat_d=2|r=2
+5,0.164025,0.1461003252583466,Patches 0.164025,patches,mean_heat_d=1|r=2
+5,0.164025,0.14803333333333332,Patches 0.164025,patches,mean_heat_d=2|r=1
+5,0.164025,0.162825,Patches 0.164025,patches,prop_r=1|T=0.1
+5,0.164025,0.163325,Patches 0.164025,patches,prop_r=2|T=0.1
+5,0.164025,0.0,Patches 0.164025,patches,prop_r=max|T=0.1
+5,0.164025,0.140675,Patches 0.164025,patches,prop_r=max|T=0.01
+5,0.164025,0.164125,Patches 0.164025,patches,prop_r=max|T=0.001
+5,0.317325,0.28798125,Patches 0.317325,patches,mean_heat_d=1|r=1
+5,0.317325,0.2850707380095538,Patches 0.317325,patches,mean_heat_d=2|r=2
+5,0.317325,0.2839510319660334,Patches 0.317325,patches,mean_heat_d=1|r=2
+5,0.317325,0.28798125,Patches 0.317325,patches,mean_heat_d=2|r=1
+5,0.317325,0.316375,Patches 0.317325,patches,prop_r=1|T=0.1
+5,0.317325,0.316675,Patches 0.317325,patches,prop_r=2|T=0.1
+5,0.317325,0.0,Patches 0.317325,patches,prop_r=max|T=0.1
+5,0.317325,0.3077,Patches 0.317325,patches,prop_r=max|T=0.01
+5,0.317325,0.317475,Patches 0.317325,patches,prop_r=max|T=0.001
+5,0.1013,0.01078125,Long range 0.1013,long_range,mean_heat_d=1|r=1
+5,0.1013,0.010572038938157358,Long range 0.1013,long_range,mean_heat_d=2|r=2
+5,0.1013,0.010509810810461519,Long range 0.1013,long_range,mean_heat_d=1|r=2
+5,0.1013,0.01078125,Long range 0.1013,long_range,mean_heat_d=2|r=1
+5,0.1013,0.0367,Long range 0.1013,long_range,prop_r=1|T=0.1
+5,0.1013,0.0744,Long range 0.1013,long_range,prop_r=2|T=0.1
+5,0.1013,0.101325,Long range 0.1013,long_range,prop_r=max|T=0.1
+5,0.1013,0.101325,Long range 0.1013,long_range,prop_r=max|T=0.01
+5,0.1013,0.101325,Long range 0.1013,long_range,prop_r=max|T=0.001
+5,0.5006,0.25054583333333336,Long range 0.5006,long_range,mean_heat_d=1|r=1
+5,0.5006,0.25066111834072363,Long range 0.5006,long_range,mean_heat_d=2|r=2
+5,0.5006,0.25075966238423186,Long range 0.5006,long_range,mean_heat_d=1|r=2
+5,0.5006,0.25054583333333336,Long range 0.5006,long_range,mean_heat_d=2|r=1
+5,0.5006,0.46895,Long range 0.5006,long_range,prop_r=1|T=0.1
+5,0.5006,0.500525,Long range 0.5006,long_range,prop_r=2|T=0.1
+5,0.5006,0.5006,Long range 0.5006,long_range,prop_r=max|T=0.1
+5,0.5006,0.5006,Long range 0.5006,long_range,prop_r=max|T=0.01
+5,0.5006,0.5006,Long range 0.5006,long_range,prop_r=max|T=0.001
+5,0.75035,0.5625229166666667,Long range 0.75035,long_range,mean_heat_d=1|r=1
+5,0.75035,0.5628410007390271,Long range 0.75035,long_range,mean_heat_d=2|r=2
+5,0.75035,0.5628901607243799,Long range 0.75035,long_range,mean_heat_d=1|r=2
+5,0.75035,0.5625229166666667,Long range 0.75035,long_range,mean_heat_d=2|r=1
+5,0.75035,0.74695,Long range 0.75035,long_range,prop_r=1|T=0.1
+5,0.75035,0.75035,Long range 0.75035,long_range,prop_r=2|T=0.1
+5,0.75035,0.75035,Long range 0.75035,long_range,prop_r=max|T=0.1
+5,0.75035,0.75035,Long range 0.75035,long_range,prop_r=max|T=0.01
+5,0.75035,0.75035,Long range 0.75035,long_range,prop_r=max|T=0.001
+6,0,2.5e-05,Full random,full_random,mean_heat_d=1|r=1
+6,0,2.1428571428571428e-05,Full random,full_random,mean_heat_d=2|r=2
+6,0,2.099528448728699e-05,Full random,full_random,mean_heat_d=1|r=2
+6,0,2.5e-05,Full random,full_random,mean_heat_d=2|r=1
+6,0,0.0001,Full random,full_random,prop_r=1|T=0.1
+6,0,0.00025,Full random,full_random,prop_r=2|T=0.1
+6,0,0.0,Full random,full_random,prop_r=max|T=0.1
+6,0,0.0,Full random,full_random,prop_r=max|T=0.01
+6,0,0.0,Full random,full_random,prop_r=max|T=0.001
+6,1,1.0,Full verbatim,full_verbatim,mean_heat_d=1|r=1
+6,1,1.0,Full verbatim,full_verbatim,mean_heat_d=2|r=2
+6,1,1.0,Full verbatim,full_verbatim,mean_heat_d=1|r=2
+6,1,1.0,Full verbatim,full_verbatim,mean_heat_d=2|r=1
+6,1,1.0,Full verbatim,full_verbatim,prop_r=1|T=0.1
+6,1,1.0,Full verbatim,full_verbatim,prop_r=2|T=0.1
+6,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.1
+6,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.01
+6,1,1.0,Full verbatim,full_verbatim,prop_r=max|T=0.001
+6,0.5,0.3344,Checkerboard 3x3,checkerboard,mean_heat_d=1|r=1
+6,0.5,0.2947091374269005,Checkerboard 3x3,checkerboard,mean_heat_d=2|r=2
+6,0.5,0.27875442451391375,Checkerboard 3x3,checkerboard,mean_heat_d=1|r=2
+6,0.5,0.3344,Checkerboard 3x3,checkerboard,mean_heat_d=2|r=1
+6,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=1|T=0.1
+6,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=2|T=0.1
+6,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.1
+6,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.01
+6,0.5,0.49995,Checkerboard 3x3,checkerboard,prop_r=max|T=0.001
+6,0.5,0.0,Checkerboard 1x1,checkerboard,mean_heat_d=1|r=1
+6,0.5,0.21347592110618424,Checkerboard 1x1,checkerboard,mean_heat_d=2|r=2
+6,0.5,0.2726499852147207,Checkerboard 1x1,checkerboard,mean_heat_d=1|r=2
+6,0.5,0.0,Checkerboard 1x1,checkerboard,mean_heat_d=2|r=1
+6,0.5,0.0,Checkerboard 1x1,checkerboard,prop_r=1|T=0.1
+6,0.5,0.5001,Checkerboard 1x1,checkerboard,prop_r=2|T=0.1
+6,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.1
+6,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.01
+6,0.5,0.5,Checkerboard 1x1,checkerboard,prop_r=max|T=0.001
+6,0.5,0.3344,Checkerboard 5x5,checkerboard,mean_heat_d=1|r=1
+6,0.5,0.2947091374269005,Checkerboard 5x5,checkerboard,mean_heat_d=2|r=2
+6,0.5,0.27875442451391375,Checkerboard 5x5,checkerboard,mean_heat_d=1|r=2
+6,0.5,0.3344,Checkerboard 5x5,checkerboard,mean_heat_d=2|r=1
+6,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=1|T=0.1
+6,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=2|T=0.1
+6,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.1
+6,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.01
+6,0.5,0.49995,Checkerboard 5x5,checkerboard,prop_r=max|T=0.001
+6,0.0503,0.04577083333333332,Patches 0.0503,patches,mean_heat_d=1|r=1
+6,0.0503,0.045243776106934,Patches 0.0503,patches,mean_heat_d=2|r=2
+6,0.0503,0.04504698253067,Patches 0.0503,patches,mean_heat_d=1|r=2
+6,0.0503,0.04577083333333332,Patches 0.0503,patches,mean_heat_d=2|r=1
+6,0.0503,0.0506,Patches 0.0503,patches,prop_r=1|T=0.1
+6,0.0503,0.0508,Patches 0.0503,patches,prop_r=2|T=0.1
+6,0.0503,0.0,Patches 0.0503,patches,prop_r=max|T=0.1
+6,0.0503,0.0339,Patches 0.0503,patches,prop_r=max|T=0.01
+6,0.0503,0.050475,Patches 0.0503,patches,prop_r=max|T=0.001
