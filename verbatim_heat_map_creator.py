@@ -9,10 +9,8 @@ import scipy.ndimage
 
 class VerbatimHeatMapCreator:
 
-    def __init__(self, index_map, simulation):
+    def __init__(self, index_map):
         self.index_map = index_map.astype(np.int32)
-        self.simulation = simulation
-        assert (self.index_map.shape == self.simulation.shape)
 
     def get_verbatim_heat_map_filter_basis(self, filter_radius, inv_dist_weight_exp, include_neighbors_radius=0,
                                            neighbor_inv_dist_weight=1, inverse_distance_weighted=False):
