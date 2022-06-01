@@ -1,5 +1,5 @@
 from math import sqrt
-
+from tqdm import tqdm
 import pandas as pd
 
 from src.dummy_index_map_creator import DummyIndexMapCreator
@@ -11,7 +11,7 @@ max_range = int(sqrt(200 ** 2 + 200 * 2))
 result_df = pd.read_csv('output/results.csv')
 
 # Do 10 replications
-for run in range(10):
+for run in tqdm(range(10)):
     patches_05, copy_proportion_05 = index_map_creator.create_patch_map(num_patches=5)
     patches_10, copy_proportion_10 = index_map_creator.create_patch_map(num_patches=10)
     patches_20, copy_proportion_20 = index_map_creator.create_patch_map(num_patches=20)
@@ -134,8 +134,9 @@ for run in range(10):
         )
 
         # Proportional neighbour analysis algorithms
-        prop_r_1_p_0_05 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=1, inv_dist_weight_exp=0)).above_treshold_heat_index(0.05)
-        prop_r_2_p_0_05 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=2, inv_dist_weight_exp=0)).above_treshold_heat_index(0.05)
+        prop_r_1_p_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=1, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
+        prop_r_2_p_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=2, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
+        prop_r_3_p_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=3, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
         max_range_heat_map = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=max_range, inv_dist_weight_exp=0))
         prop_r_max_p_01 = max_range_heat_map.above_treshold_heat_index(0.1)
         prop_r_max_p_0_01 = max_range_heat_map.above_treshold_heat_index(0.01)
@@ -143,14 +144,20 @@ for run in range(10):
 
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "prop_r=1|T=0.1",
-                'predicted_verbatim': prop_r_1_p_0_05,
+                'algorithm_name': "prop_r=1|T=0.001",
+                'predicted_verbatim': prop_r_1_p_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "prop_r=2|T=0.1",
-                'predicted_verbatim': prop_r_2_p_0_05,
+                'algorithm_name': "prop_r=2|T=0.001",
+                'predicted_verbatim': prop_r_2_p_0_001,
+            }), ignore_index=True
+        )
+        result_df = result_df.append(
+            dict(test_case_info, **{
+                'algorithm_name': "prop_r=3|T=0.001",
+                'predicted_verbatim': prop_r_3_p_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
