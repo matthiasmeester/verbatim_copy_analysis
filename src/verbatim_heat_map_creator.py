@@ -184,5 +184,4 @@ class VerbatimHeatMapCreator:
 
         mean_heat /= replications
 
-        # If we are larger than 100 times the top 1 percent of heat values we assume verbatim copy
-        return mean_heat, 100 * np.mean(max_heat_thresholds_1_percent)
+        return mean_heat, np.mean(max_heat_thresholds_1_percent)

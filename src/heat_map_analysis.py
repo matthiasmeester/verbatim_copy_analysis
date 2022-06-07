@@ -40,4 +40,6 @@ class HeatMapAnalysis:
             plt.title(f'Verbatim patches with size >= {patch_size_treshold} pix, heat_treshold >= {heat_treshold}')
             plt.axis('off')
             plt.imshow(rgb_pixel_map)
+
         return n_labels - 1, largest_patch_size
+

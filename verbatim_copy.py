@@ -66,6 +66,8 @@ for path in os.listdir(directory):
             heat_map_normalizer, max_heat_threshold = heat_map_creator.noise_heat_statistics(filter_radius, inv_dist_weight_exp)
             non_weighted_heat_map = heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, 0)
             non_weighted_normalizer, nw_max_heat_threshold = heat_map_creator.noise_heat_statistics(filter_radius, 0)
+            noise_scalar = 100
+            nw_max_heat_threshold *= noise_scalar
             # heat_map_including_neighbours = \
             #    heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, inv_dist_weight_exp, 2, 1)
             long_range_heat_map = \
