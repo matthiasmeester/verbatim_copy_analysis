@@ -8,6 +8,7 @@ from src.verbatim_heat_map_creator import VerbatimHeatMapCreator
 
 index_map_creator = DummyIndexMapCreator((200, 200))
 max_range = int(sqrt(200 ** 2 + 200 * 2))
+_, max_noise_heat = VerbatimHeatMapCreator.noise_heat_statistics((200, 200), max_range, 0)
 result_df = pd.read_csv('output/results.csv')
 
 # Do 10 replications
@@ -134,48 +135,68 @@ for run in tqdm(range(10)):
         )
 
         # Proportional neighbour analysis algorithms
-        prop_r_1_p_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=1, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
-        prop_r_2_p_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=2, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
-        prop_r_3_p_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=3, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
+        prop_r_1_T_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=1, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
+        prop_r_2_T_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=2, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
+        prop_r_3_T_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=3, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
         max_range_heat_map = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=max_range, inv_dist_weight_exp=0))
-        prop_r_max_p_01 = max_range_heat_map.above_treshold_heat_index(0.1)
-        prop_r_max_p_0_01 = max_range_heat_map.above_treshold_heat_index(0.01)
-        prop_r_max_p_0_001 = max_range_heat_map.above_treshold_heat_index(0.001)
+        prop_r_max_T_01 = max_range_heat_map.above_treshold_heat_index(0.1)
+        prop_r_max_T_0_01 = max_range_heat_map.above_treshold_heat_index(0.01)
+        prop_r_max_T_0_001 = max_range_heat_map.above_treshold_heat_index(0.001)
+        prop_r_max_T_10mnh = max_range_heat_map.above_treshold_heat_index(10 * max_noise_heat)
+        prop_r_max_T_100mnh = max_range_heat_map.above_treshold_heat_index(100 * max_noise_heat)
 
         result_df = result_df.append(
             dict(test_case_info, **{
                 'algorithm_name': "prop_r=1|T=0.001",
-                'predicted_verbatim': prop_r_1_p_0_001,
+                'predicted_verbatim': prop_r_1_T_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
                 'algorithm_name': "prop_r=2|T=0.001",
-                'predicted_verbatim': prop_r_2_p_0_001,
+                'predicted_verbatim': prop_r_2_T_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
                 'algorithm_name': "prop_r=3|T=0.001",
-                'predicted_verbatim': prop_r_3_p_0_001,
+                'predicted_verbatim': prop_r_3_T_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
                 'algorithm_name': "prop_r=max|T=0.1",
-                'predicted_verbatim': prop_r_max_p_01,
+                'predicted_verbatim': prop_r_max_T_01,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
                 'algorithm_name': "prop_r=max|T=0.01",
-                'predicted_verbatim': prop_r_max_p_0_01,
+                'predicted_verbatim': prop_r_max_T_0_01,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
                 'algorithm_name': "prop_r=max|T=0.001",
-                'predicted_verbatim': prop_r_max_p_0_001,
+                'predicted_verbatim': prop_r_max_T_0_001,
+            }), ignore_index=True
+        )
+        result_df = result_df.append(
+            dict(test_case_info, **{
+                'algorithm_name': "prop_r=max|T=0.001",
+                'predicted_verbatim': prop_r_max_T_0_001,
+            }), ignore_index=True
+        )
+        result_df = result_df.append(
+            dict(test_case_info, **{
+                'algorithm_name': "prop_r=max|T=10mnh",
+                'predicted_verbatim': prop_r_max_T_10mnh,
+            }), ignore_index=True
+        )
+        result_df = result_df.append(
+            dict(test_case_info, **{
+                'algorithm_name': "prop_r=max|T=100mnh",
+                'predicted_verbatim': prop_r_max_T_100mnh,
             }), ignore_index=True
         )
 

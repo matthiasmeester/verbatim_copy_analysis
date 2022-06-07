@@ -160,13 +160,14 @@ class VerbatimHeatMapCreator:
         heat_map = sp.ndimage.filters.convolve(heat_map, smooth_weights / np.sum(smooth_weights), mode='constant')
         return heat_map
 
-    def noise_heat_statistics(self, filter_radius, inv_dist_weight_exp, include_neighbors_radius=0,
+    @staticmethod
+    def noise_heat_statistics(shape, filter_radius, inv_dist_weight_exp, include_neighbors_radius=0,
                               neighbor_inv_dist_weight=1, inverse_distance_weighted=False):
         # Calculate the heat that noise would generate in this shape
         mean_heat = 0
-        noise_creator = DummyIndexMapCreator(self.index_map.shape)
+        noise_creator = DummyIndexMapCreator(shape)
         # Sample the maximal 1 percent of heat values
-        n_samples_max = int(self.index_map.shape[0] * self.index_map.shape[1] / 100)
+        n_samples_max = int(shape[0] * shape[1] / 100)
         replications = math.ceil(100 / filter_radius) + 5
         max_heat_thresholds_1_percent = np.array([])
 
