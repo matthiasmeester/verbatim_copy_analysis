@@ -63,7 +63,7 @@ for path in os.listdir(directory):
         for filter_radius in filter_radi:
             # --- Do simulations ---
             heat_map = heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, inv_dist_weight_exp)
-            heat_map_normalizer, max_heat_threshold = heat_map_creator.noise_heat_statistics(filter_radius, inv_dist_weight_exp)
+            heat_map_normalizer, max_heat_threshold = heat_map_creator.noise_heat_statistics(index_map.shape, filter_radius, inv_dist_weight_exp)
             non_weighted_heat_map = heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, 0)
             non_weighted_normalizer, nw_max_heat_threshold = heat_map_creator.noise_heat_statistics(index_map.shape, filter_radius, 0)
             noise_scalar = 100
