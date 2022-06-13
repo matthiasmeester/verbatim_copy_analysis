@@ -1,4 +1,4 @@
-name,full_random,full_verbatim,checkerboard,patches,long_range
+Name,Full Random,Full Verbatim,Checkerboard,Patches,Long Range
 Mean Heat: d=1 | r=1,0.0,0.0,0.555,0.096,0.9
 Mean Heat: d=2 | r=2,0.0,0.0,0.464,0.104,0.899
 Mean Heat: d=1 | r=2,0.0,0.0,0.446,0.107,0.9

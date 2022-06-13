@@ -1,4 +1,4 @@
-run,real_verbatim,predicted_verbatim,test_case,category,algorithm_name
+run,Real Verbatim,Predicted Verbatim,Test Case,Category,Algor
 0,0,1.25e-05,Full random,full_random,Mean Heat: d=1 | r=1
 0,0,2.4999999999999998e-05,Full random,full_random,Mean Heat: d=2 | r=2
 0,0,2.5687100555089703e-05,Full random,full_random,Mean Heat: d=1 | r=2
