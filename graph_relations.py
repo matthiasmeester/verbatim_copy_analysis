@@ -18,7 +18,7 @@ k_props_100mnh = []
 k_max_patch_sizes = []
 k_mean_patch_sizes = []
 ks = []
-ns = list(range(0, 199, 40))
+ns = list(range(0, 199, 10))
 
 n_heat_values = [0] * len(ns)
 n_props_10mnh = [0] * len(ns)
