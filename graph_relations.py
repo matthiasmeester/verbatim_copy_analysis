@@ -18,7 +18,9 @@ k_props_100mnh = []
 k_max_patch_sizes = []
 k_mean_patch_sizes = []
 ks = []
-ns = list(range(0, 199, 10))
+ns = list(range(0, 199, 10)) + [199, 3, 5, 7]
+ns.sort()
+print(ns)
 
 n_heat_values = [0] * len(ns)
 n_props_10mnh = [0] * len(ns)
@@ -140,35 +142,35 @@ plt.title(f'Relation of k to max patch size')
 plt.savefig('output/relations/Relation of k to max patch size.png', dpi=150)
 plt.show()
 
-plt.scatter(ns, n_heat_values, color="b")
+plt.scatter(ns, n_heat_values, color="r")
 plt.xlabel('n')
 plt.ylabel('Mean heat value')
 plt.title(f'Relation of n to MHV')
 plt.savefig('output/relations/Relation of n to MHV.png', dpi=150)
 plt.show()
 
-plt.scatter(ns, n_props_10mnh, color="b")
+plt.scatter(ns, n_props_10mnh, color="r")
 plt.xlabel('n')
 plt.ylabel('Proportion of pixels >=T')
 plt.title(f'Relation of n to PNA, T=10mnh')
 plt.savefig('output/relations/Relation of n to PNA, T=10mnh.png', dpi=150)
 plt.show()
 
-plt.scatter(ns, n_props_100mnh, color="b")
+plt.scatter(ns, n_props_100mnh, color="r")
 plt.xlabel('n')
 plt.ylabel('Proportion of pixels >=T')
 plt.title(f'Relation of n to PNA, T=100mnh')
 plt.savefig('output/relations/Relation of n to PNA, T=100mnh.png', dpi=150)
 plt.show()
 
-plt.scatter(ns, n_mean_patch_sizes, color="b")
+plt.scatter(ns, n_mean_patch_sizes, color="r")
 plt.xlabel('n')
 plt.ylabel('Patch proportion')
 plt.title(f'Relation of n to mean patch size')
 plt.savefig('output/relations/Relation of n to mean patch size.png', dpi=150)
 plt.show()
 
-plt.scatter(ns, n_max_patch_sizes, color="b")
+plt.scatter(ns, n_max_patch_sizes, color="r")
 plt.xlabel('n')
 plt.ylabel('Patch proportion')
 plt.title(f'Relation of n to max patch size')
