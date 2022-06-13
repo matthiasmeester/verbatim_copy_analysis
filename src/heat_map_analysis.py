@@ -25,10 +25,14 @@ class HeatMapAnalysis:
         n_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(thresh)
 
         largest_patch_size = 0
+        mean_patch_size = 0
+        patch_count = 0
         for i in range(1, n_labels):
             patch_area = stats[i, cv2.CC_STAT_AREA]
             if patch_area >= patch_size_treshold:
+                patch_count += 1
                 largest_patch_size = max(patch_area, largest_patch_size)
+                mean_patch_size += patch_area
                 if plot:
                     x = stats[i, cv2.CC_STAT_LEFT]
                     y = stats[i, cv2.CC_STAT_TOP]
@@ -41,5 +45,8 @@ class HeatMapAnalysis:
             plt.axis('off')
             plt.imshow(rgb_pixel_map)
 
-        return n_labels - 1, largest_patch_size
+        if patch_count > 0:
+            mean_patch_size /= patch_count
+
+        return patch_count, largest_patch_size, mean_patch_size
 
