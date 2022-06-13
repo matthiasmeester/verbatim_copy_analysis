@@ -40,6 +40,7 @@ for path in os.listdir(directory):
                 np.ones_like(ti)], axis=-1)
 
         # index_map, patch_percentage = index_map_creator.create_patch_map(10, plot=True)
+        # index_map, patch_percentage = index_map_creator.create_long_range_map(0.10)
 
         heat_map_creator = VerbatimHeatMapCreator(index_map)
 

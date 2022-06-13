@@ -1,6 +1,7 @@
 from math import sqrt
-from tqdm import tqdm
+
 import pandas as pd
+from tqdm import tqdm
 
 from src.dummy_index_map_creator import DummyIndexMapCreator
 from src.heat_map_analysis import HeatMapAnalysis
@@ -9,7 +10,7 @@ from src.verbatim_heat_map_creator import VerbatimHeatMapCreator
 index_map_creator = DummyIndexMapCreator((200, 200))
 max_range = int(sqrt(200 ** 2 + 200 * 2))
 _, max_noise_heat = VerbatimHeatMapCreator.noise_heat_statistics((200, 200), max_range, 0)
-result_df = pd.read_csv('output/results.csv')
+result_df = pd.DataFrame(columns=['run', 'real_verbatim', 'predicted_verbatim', 'test_case', 'category', 'algorithm_name'])
 
 # Do 10 replications
 for run in tqdm(range(10)):
@@ -26,67 +27,67 @@ for run in tqdm(range(10)):
             'map': index_map_creator.create_full_random_map(),
             'real_verbatim': 0,
             'name': 'Full random',
-            'category': 'full_random'
+            'category': 'Full Random'
         },
         {
             'map': index_map_creator.create_full_verbatim_map(),
             'real_verbatim': 1,
             'name': 'Full verbatim',
-            'category': 'full_verbatim'
+            'category': 'Full Verbatim'
         },
         {
             'map': index_map_creator.create_checkerboard_map(square_size=3),
             'real_verbatim': 0.5,
             'name': 'Checkerboard 3x3',
-            'category': 'checkerboard'
+            'category': 'Checkerboard'
         },
         {
             'map': index_map_creator.create_checkerboard_map(square_size=1),
             'real_verbatim': 0.5,
             'name': 'Checkerboard 1x1',
-            'category': 'checkerboard'
+            'category': 'Checkerboard'
         },
         {
             'map': index_map_creator.create_checkerboard_map(square_size=3),
             'real_verbatim': 0.5,
             'name': 'Checkerboard 5x5',
-            'category': 'checkerboard'
+            'category': 'Checkerboard'
         },
         {
             'map': patches_05,
             'real_verbatim': copy_proportion_05,
             'name': f'Patches 5',
-            'category': 'patches'
+            'category': 'Patches'
         },
         {
             'map': patches_10,
             'real_verbatim': copy_proportion_10,
             'name': f'Patches 10',
-            'category': 'patches'
+            'category': 'Patches'
         },
         {
             'map': patches_20,
             'real_verbatim': copy_proportion_20,
             'name': f'Patches 20',
-            'category': 'patches'
+            'category': 'Patches'
         },
         {
             'map': long_range_05,
             'real_verbatim': proportion_05,
             'name': f'Long range 0.05',
-            'category': 'long_range'
+            'category': 'Long Range'
         },
         {
             'map': long_range_10,
             'real_verbatim': proportion_10,
             'name': f'Long range 0.10',
-            'category': 'long_range'
+            'category': 'Long Range'
         },
         {
             'map': long_range_15,
             'real_verbatim': proportion_15,
             'name': f'Long range 0.15',
-            'category': 'long_range'
+            'category': 'Long Range'
         }
     ]
 
@@ -111,25 +112,25 @@ for run in tqdm(range(10)):
         mean_heat_d2_r2 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(inv_dist_weight_exp=2, filter_radius=2)).mean_heat_value()
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "mean_heat_d=1|r=1",
+                'algorithm_name': "Mean Heat: d=1 | r=1",
                 'predicted_verbatim': mean_heat_d1_r1,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "mean_heat_d=2|r=2",
+                'algorithm_name': "Mean Heat: d=2 | r=2",
                 'predicted_verbatim': mean_heat_d2_r2,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "mean_heat_d=1|r=2",
+                'algorithm_name': "Mean Heat: d=1 | r=2",
                 'predicted_verbatim': mean_heat_d1_r2,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "mean_heat_d=2|r=1",
+                'algorithm_name': "Mean Heat: d=2 | r=1",
                 'predicted_verbatim': mean_heat_d2_r1,
             }), ignore_index=True
         )
@@ -147,55 +148,55 @@ for run in tqdm(range(10)):
 
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "prop_r=1|T=0.001",
+                'algorithm_name': "Prop Neigh r=1 | T=0.001",
                 'predicted_verbatim': prop_r_1_T_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "prop_r=2|T=0.001",
+                'algorithm_name': "Prop Neigh r=2 | T=0.001",
                 'predicted_verbatim': prop_r_2_T_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "prop_r=3|T=0.001",
+                'algorithm_name': "Prop Neigh r=3 | T=0.001",
                 'predicted_verbatim': prop_r_3_T_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "prop_r=max|T=0.1",
+                'algorithm_name': "Prop Neigh r=max | T=0.1",
                 'predicted_verbatim': prop_r_max_T_01,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "prop_r=max|T=0.01",
+                'algorithm_name': "Prop Neigh r=max | T=0.01",
                 'predicted_verbatim': prop_r_max_T_0_01,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "prop_r=max|T=0.001",
+                'algorithm_name': "Prop Neigh r=max | T=0.001",
                 'predicted_verbatim': prop_r_max_T_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "prop_r=max|T=0.001",
+                'algorithm_name': "Prop Neigh r=max | T=0.001",
                 'predicted_verbatim': prop_r_max_T_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "prop_r=max|T=10mnh",
+                'algorithm_name': "Prop Neigh r=max | T=10mnh",
                 'predicted_verbatim': prop_r_max_T_10mnh,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "prop_r=max|T=100mnh",
+                'algorithm_name': "Prop Neigh r=max | T=100mnh",
                 'predicted_verbatim': prop_r_max_T_100mnh,
             }), ignore_index=True
         )
