@@ -1,13 +1,13 @@
 name,full_random,full_verbatim,checkerboard,patches,long_range
-Mean Heat: d=1|r=1,0.0,0.0,0.555,0.096,0.9
-Mean Heat: d=2|r=2,0.0,0.0,0.464,0.104,0.899
-Mean Heat: d=1|r=2,0.0,0.0,0.446,0.107,0.9
-Mean Heat: d=2|r=1,0.0,0.0,0.555,0.096,0.9
-Prop Neigh r=1|T=0.001,0.0,0.0,0.333,0.003,0.666
-Prop Neigh r=2|T=0.001,0.0,0.0,0.0,0.003,0.323
-Prop Neigh r=3|T=0.001,0.001,0.0,0.0,0.004,0.096
-Prop Neigh r=max|T=0.1,0.0,0.0,0.0,1.0,0.596
-Prop Neigh r=max|T=0.01,0.0,0.0,0.0,0.152,0.0
-Prop Neigh r=max|T=0.001,0.0,0.0,0.0,0.001,0.0
-Prop Neigh r=max|T=10mnh,0.0,0.0,0.0,0.001,0.0
-Prop Neigh r=max|T=100mnh,0.0,0.0,0.0,0.153,0.0
+Mean Heat: d=1 | r=1,0.0,0.0,0.555,0.096,0.9
+Mean Heat: d=2 | r=2,0.0,0.0,0.464,0.104,0.899
+Mean Heat: d=1 | r=2,0.0,0.0,0.446,0.107,0.9
+Mean Heat: d=2 | r=1,0.0,0.0,0.555,0.096,0.9
+Prop Neigh r=1 | T=0.001,0.0,0.0,0.333,0.003,0.666
+Prop Neigh r=2 | T=0.001,0.0,0.0,0.0,0.003,0.323
+Prop Neigh r=3 | T=0.001,0.001,0.0,0.0,0.004,0.096
+Prop Neigh r=max | T=0.1,0.0,0.0,0.0,1.0,0.596
+Prop Neigh r=max | T=0.01,0.0,0.0,0.0,0.152,0.0
+Prop Neigh r=max | T=0.001,0.0,0.0,0.0,0.001,0.0
+Prop Neigh r=max | T=10mnh,0.0,0.0,0.0,0.001,0.0
+Prop Neigh r=max | T=100mnh,0.0,0.0,0.0,0.153,0.0

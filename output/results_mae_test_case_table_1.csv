@@ -1,13 +1,13 @@
 name,Full random,Full verbatim,Checkerboard 3x3,Checkerboard 1x1,Checkerboard 5x5
-Mean Heat: d=1|r=1,0.0,0.0,0.332,1.0,0.332
-Mean Heat: d=2|r=2,0.0,0.0,0.41,0.573,0.41
-Mean Heat: d=1|r=2,0.0,0.0,0.442,0.454,0.442
-Mean Heat: d=2|r=1,0.0,0.0,0.332,1.0,0.332
-Prop Neigh r=1|T=0.001,0.0,0.0,0.0,1.0,0.0
-Prop Neigh r=2|T=0.001,0.0,0.0,0.0,0.0,0.0
-Prop Neigh r=3|T=0.001,0.001,0.0,0.0,0.0,0.0
-Prop Neigh r=max|T=0.1,0.0,0.0,0.0,0.0,0.0
-Prop Neigh r=max|T=0.01,0.0,0.0,0.0,0.0,0.0
-Prop Neigh r=max|T=0.001,0.0,0.0,0.0,0.0,0.0
-Prop Neigh r=max|T=10mnh,0.0,0.0,0.0,0.0,0.0
-Prop Neigh r=max|T=100mnh,0.0,0.0,0.0,0.0,0.0
+Mean Heat: d=1 | r=1,0.0,0.0,0.332,1.0,0.332
+Mean Heat: d=2 | r=2,0.0,0.0,0.41,0.573,0.41
+Mean Heat: d=1 | r=2,0.0,0.0,0.442,0.454,0.442
+Mean Heat: d=2 | r=1,0.0,0.0,0.332,1.0,0.332
+Prop Neigh r=1 | T=0.001,0.0,0.0,0.0,1.0,0.0
+Prop Neigh r=2 | T=0.001,0.0,0.0,0.0,0.0,0.0
+Prop Neigh r=3 | T=0.001,0.001,0.0,0.0,0.0,0.0
+Prop Neigh r=max | T=0.1,0.0,0.0,0.0,0.0,0.0
+Prop Neigh r=max | T=0.01,0.0,0.0,0.0,0.0,0.0
+Prop Neigh r=max | T=0.001,0.0,0.0,0.0,0.0,0.0
+Prop Neigh r=max | T=10mnh,0.0,0.0,0.0,0.0,0.0
+Prop Neigh r=max | T=100mnh,0.0,0.0,0.0,0.0,0.0
