@@ -18,7 +18,7 @@ k_props_100mnh = []
 k_max_patch_sizes = []
 k_mean_patch_sizes = []
 ks = []
-ns = list(range(0, 199, 40))
+ns = list(range(0, 199, 10))
 
 n_heat_values = [0] * len(ns)
 n_props_10mnh = [0] * len(ns)
@@ -62,8 +62,10 @@ for path in tqdm(os.listdir(directory)):
             _, max_patch_size, mean_patch_size = HeatMapAnalysis(non_weighted_heat_map).patch_stats(
                 heat_treshold=100 * max_noise_heat,
                 patch_size_treshold=5,
-                plot=True
+                plot=False
             )
+            max_patch_size /= simulation_size
+            mean_patch_size /= simulation_size
 
             mean_heat += heat
             mean_10mnh += prop_10mnh
@@ -93,11 +95,15 @@ print('ks', ks)
 print('heat_values', k_heat_values)
 print('props_10mnh', k_props_10mnh)
 print('props_100mnh', k_props_100mnh)
+print('k_max_patch_sizes', k_max_patch_sizes)
+print('k_mean_patch_sizes', k_mean_patch_sizes)
 
 print('ns', ns)
 print('n_data_heat_values', n_heat_values)
 print('n_data_props_10mnh', n_props_10mnh)
 print('n_data_props_100mnh', n_props_100mnh)
+print('n_max_patch_sizes', n_max_patch_sizes)
+print('n_mean_patch_sizes', n_mean_patch_sizes)
 
 plt.scatter(ks, k_heat_values, color="red")
 plt.xlabel('k')
@@ -122,9 +128,9 @@ plt.show()
 
 plt.scatter(ks, k_mean_patch_sizes, color="r", label="Mean patch size")
 plt.scatter(ks, k_max_patch_sizes, color="b", label="Max patch size")
-plt.legend(loc='upper left')
+plt.legend(loc='upper right')
 plt.xlabel('k')
-plt.ylabel('patch proportion')
+plt.ylabel('Patch proportion')
 plt.title(f'Relation of k to patch size proportions')
 plt.savefig('output/relations/Relation of k to patch size proportions.png', dpi=150)
 plt.show()
@@ -154,7 +160,7 @@ plt.scatter(ns, n_mean_patch_sizes, color="r", label="Mean patch size")
 plt.scatter(ns, n_max_patch_sizes, color="b", label="Max patch size")
 plt.legend(loc='upper left')
 plt.xlabel('n')
-plt.ylabel('patch proportion')
+plt.ylabel('Patch proportion')
 plt.title(f'Relation of n to patch size proportions')
 plt.savefig('output/relations/Relation of n to patch size proportions.png', dpi=150)
 plt.show()
