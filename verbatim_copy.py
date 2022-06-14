@@ -15,7 +15,6 @@ inv_dist_weight_exp = 2
 # seed(123456)
 # ---
 
-# From: https://stackoverflow.com/questions/38083788/turn-grid-into-a-checkerboard-pattern-in-python
 
 index_map_creator = DummyIndexMapCreator((200, 200))
 
@@ -39,7 +38,7 @@ for path in os.listdir(directory):
             np.meshgrid(np.arange(ti.shape[0]) / ti.shape[0], np.arange(ti.shape[1]) / ti.shape[1]) + [
                 np.ones_like(ti)], axis=-1)
 
-        index_map, patch_percentage = index_map_creator.create_patch_map(10, plot=True)
+        # index_map, patch_percentage = index_map_creator.create_patch_map(10, plot=True)
         # index_map, patch_percentage = index_map_creator.create_long_range_map(0.10)
 
         heat_map_creator = VerbatimHeatMapCreator(index_map)
