@@ -18,7 +18,7 @@ k_props_100mnh = []
 k_max_patch_sizes = []
 k_mean_patch_sizes = []
 ks = []
-ns = list(range(0, 199, 10)) + [199, 3, 5, 7]
+ns = list(range(0, 199))
 ns.sort()
 print(ns)
 
