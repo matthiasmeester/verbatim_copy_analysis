@@ -10,15 +10,27 @@ from src.verbatim_heat_map_creator import VerbatimHeatMapCreator
 max_range = int(sqrt(200 ** 2 + 200 * 2))
 threshold_range = 3
 # _, max_noise_heat = VerbatimHeatMapCreator.noise_heat_statistics((200, 200), max_range, 0)
-# print(max_noise_heat)
+# table_str +=max_noise_heat)
 max_noise_heat_s = 0.00246278367601897
 max_noise_heat_l = 0.00010004966211932229
 filter_radius = 1
 inv_dist_weight_exp = 1
 sim_type = 'stone'
 
-ns = [1, 5, 10, 50, 198]
+ns = [1, 5, 10, 50, 100, 198]
 ks = ['1.0', '1.5', '2.5', '3.0', '10.0']
+
+# ns = [1, 5]
+# ks = ['1.0', '1.5']
+
+
+n_columns = ''.join([f'& \\textbf{{n={n}}}' for n in ns])
+column_defs = ''.join(['l|' for _ in range(len(ns) + 1)])
+table_str = "\\newcommand\\rowincludegraphics[2][]{\\raisebox{-0.45\\height}{\\includegraphics[#1]{#2}}}\n" \
+            "\\begin{table}[t]\n" \
+            f"\\begin{{tabular}}{{|{column_defs}}}\n" \
+            "\\hline\n" \
+            f"\\textbf{{}} {n_columns}\\\\ \\hline\n"
 
 for k in ks:
     mhvs = []
@@ -52,30 +64,36 @@ for k in ks:
         # fig = plt.figure(figsize=(5, 5))
         plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
         plt.axis('off')
-        plt.savefig(f'output/table/k={k.replace(".", "_")},n={n}.png', bbox_inches='tight', dpi=150)
+        plt.savefig(f'output/table/k{k.replace(".", "x")}n{n}.png', bbox_inches='tight', dpi=150)
         plt.clf()
         mhvs.append(dist_weighted_mean_heat_value)
         propls.append(proportion_above_stat_l)
         propss.append(proportion_above_stat_s)
-        row_images.append(f'results/figures/table/k={k.replace(".", "_")},n={n}')
+        row_images.append(f'sections/results/figures/table/k{k.replace(".", "x")}n{n}')
 
-    table_str = ""
-    print(f"k={k}", end="")
+    # Create table rows
+    table_str += f"k={k}"
     for row_images in row_images:
-        print(f" & \\rowincludegraphics[scale=0.2]{{{row_images}}}", end="")
-    print("\\\\ \\hline")
+        table_str += f" & \\rowincludegraphics[scale=0.2]{{{row_images}.png}}"
+    table_str += "\\\\ \\hline\n"
 
-    print(f"MHV", end="")
+    table_str += f"MHV"
     for val in mhvs:
-        print(f" & {round(val, 3)}", end="")
-    print("\\\\ \\hline")
+        table_str += f" & {round(val, 3)}"
+    table_str += "\\\\ \\hline\n"
 
-    print(f"PNA l", end="")
+    table_str += f"PNA l"
     for val in propls:
-        print(f" & {round(val, 3)}", end="")
-    print("\\\\ \\hline")
+        table_str += f" & {round(val, 3)}"
+    table_str += "\\\\ \\hline\n"
 
-    print(f"PNA s", end="")
+    table_str += f"PNA s"
     for val in propss:
-        print(f" & {round(val, 3)}", end="")
-    print("\\\\ \\hline")
+        table_str += f" & {round(val, 3)}"
+    table_str += "\\\\ \\hline\n"
+
+table_str += " \n\\end{tabular}" \
+            "\\caption{\\label{tab:Simulation results}Statistics on various types of simulations, with varying $n$ and $k$.}" \
+             "\n\\end{table}\n"
+with open("output/table/table.tex", "w") as text_file:
+    text_file.write(table_str)

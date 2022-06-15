@@ -20,7 +20,7 @@ k_props_100mnh_l = []
 k_max_patch_sizes = []
 k_mean_patch_sizes = []
 ks = []
-ns = list(range(0, 199, 10))
+ns = list(range(0, 199))
 ns.sort()
 print(ns)
 
@@ -56,7 +56,7 @@ for path in tqdm(os.listdir(directory)):
 
             heat_map_creator = VerbatimHeatMapCreator(index_map)
             non_weighted_heat_map_r_3 = heat_map_creator.get_verbatim_heat_map_filter_basis(3, 0)
-            non_weighted_heat_map_r_max = heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, 0)
+            non_weighted_heat_map_r_max = heat_map_creator.get_verbatim_heat_map_filter_basis(max_range, 0)
             heat_map = heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, inv_dist_weight_exp)
             heat = round(HeatMapAnalysis(heat_map).mean_heat_value(), 10)
 
