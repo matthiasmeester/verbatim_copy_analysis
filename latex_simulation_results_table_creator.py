@@ -27,7 +27,8 @@ ks = ['1.0', '1.5', '2.5', '3.0', '10.0']
 n_columns = ''.join([f'& \\textbf{{n={n}}}' for n in ns])
 column_defs = ''.join(['l|' for _ in range(len(ns) + 1)])
 table_str = "\\newcommand\\rowincludegraphics[2][]{\\raisebox{-0.45\\height}{\\includegraphics[#1]{#2}}}\n" \
-            "\\begin{table}[t]\n" \
+            "\\begin{table}[ht]\n" \
+            "\\centering\n" \
             f"\\begin{{tabular}}{{|{column_defs}}}\n" \
             "\\hline\n" \
             f"\\textbf{{}} {n_columns}\\\\ \\hline\n"
@@ -64,7 +65,7 @@ for k in ks:
         # fig = plt.figure(figsize=(5, 5))
         plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
         plt.axis('off')
-        plt.savefig(f'output/table/k{k.replace(".", "x")}n{n}.png', bbox_inches='tight', dpi=150)
+        plt.savefig(f'output/table/k{k.replace(".", "x")}n{n}.png', bbox_inches='tight', dpi=50)
         plt.clf()
         mhvs.append(dist_weighted_mean_heat_value)
         propls.append(proportion_above_stat_l)
