@@ -21,7 +21,6 @@ k_max_patch_sizes = []
 k_mean_patch_sizes = []
 ks = []
 ns = list(range(1, 200))
-print(len(ns))
 
 n_heat_values = [0] * len(ns)
 n_props_100mnh_s = [0] * len(ns)
