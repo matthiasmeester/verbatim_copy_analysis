@@ -2,9 +2,17 @@ from math import sqrt
 
 import matplotlib.pyplot as plt
 import numpy as np
+from tqdm import tqdm
 
 from src.heat_map_analysis import HeatMapAnalysis
 from src.verbatim_heat_map_creator import VerbatimHeatMapCreator
+
+
+def get_cel_color(val):
+    if val == 0:
+        return ""
+    return f"\\cellcolor[gray]{{{1 - val}}}"
+
 
 #  --- Variables ---
 max_range = int(sqrt(200 ** 2 + 200 * 2))
@@ -24,7 +32,7 @@ ks = ['1.0', '1.5', '2.5', '3.0', '10.0']
 # ks = ['1.0', '1.5']
 
 
-n_columns = ''.join([f'& \\textbf{{n={n}}}' for n in ns])
+n_columns = ''.join([f'& \\textbf{{$n={n}$}}' for n in ns])
 column_defs = ''.join(['l|' for _ in range(len(ns) + 1)])
 table_str = "\\newcommand\\rowincludegraphics[2][]{\\raisebox{-0.45\\height}{\\includegraphics[#1]{#2}}}\n" \
             "\\begin{table}[ht]\n" \
@@ -33,7 +41,7 @@ table_str = "\\newcommand\\rowincludegraphics[2][]{\\raisebox{-0.45\\height}{\\i
             "\\hline\n" \
             f"\\textbf{{}} {n_columns}\\\\ \\hline\n"
 
-for k in ks:
+for k in tqdm(ks):
     mhvs = []
     propls = []
     propss = []
@@ -65,15 +73,19 @@ for k in ks:
         # fig = plt.figure(figsize=(5, 5))
         plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
         plt.axis('off')
-        plt.savefig(f'output/table/k{k.replace(".", "x")}n{n}.png', bbox_inches='tight', dpi=50)
+        plt.savefig(f'output/table/index_maps/k{k.replace(".", "x")}n{n}.png', bbox_inches='tight', dpi=50)
+        plt.clf()
+        plt.imshow(simulation)
+        plt.axis('off')
+        plt.savefig(f'output/table/simulation_maps/k{k.replace(".", "x")}n{n}.png', bbox_inches='tight', dpi=50)
         plt.clf()
         mhvs.append(dist_weighted_mean_heat_value)
         propls.append(proportion_above_stat_l)
         propss.append(proportion_above_stat_s)
-        row_images.append(f'sections/results/figures/table/k{k.replace(".", "x")}n{n}')
+        row_images.append(f'sections/results/figures/table/index_maps/k{k.replace(".", "x")}n{n}')
 
     # Create table rows
-    table_str += f"k={k}"
+    table_str += f"$k={k}$"
     for row_images in row_images:
         table_str += f" & \\rowincludegraphics[scale=0.2]{{{row_images}.png}}"
     table_str += "\\\\ \\hline\n"
@@ -94,7 +106,11 @@ for k in ks:
     table_str += "\\\\ \\hline\n"
 
 table_str += " \n\\end{tabular}" \
-            "\\caption{\\label{tab:Simulation results}Statistics on various types of simulations, with varying $n$ and $k$.}" \
+             "\\caption{\\label{tab:Simulation results}Statistics on various types of simulations, with varying $n$ and $k$.}" \
              "\n\\end{table}\n"
-with open("output/table/table.tex", "w") as text_file:
+
+with open("output/table/table_index_maps.tex", "w") as text_file:
     text_file.write(table_str)
+
+with open("output/table/table_simulation_maps.tex", "w") as text_file:
+    text_file.write(table_str.replace('index_maps', 'simulation_maps'))
