@@ -105,32 +105,39 @@ for run in tqdm(range(10)):
             'run': run
         }
 
-        # Mean heat algorithms
+        # MHV algorithms
         mean_heat_d1_r1 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(inv_dist_weight_exp=1, filter_radius=1)).mean_heat_value()
+        mean_heat_d0_r1 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(inv_dist_weight_exp=0, filter_radius=1)).mean_heat_value()
         mean_heat_d2_r1 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(inv_dist_weight_exp=2, filter_radius=1)).mean_heat_value()
         mean_heat_d1_r2 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(inv_dist_weight_exp=1, filter_radius=2)).mean_heat_value()
         mean_heat_d2_r2 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(inv_dist_weight_exp=2, filter_radius=2)).mean_heat_value()
+        # result_df = result_df.append(
+        #     dict(test_case_info, **{
+        #         'algorithm_name': "MHV: d=0 ; r=1",
+        #         'predicted_verbatim': mean_heat_d0_r1,
+        #     }), ignore_index=True
+        # )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "Mean Heat: d=1 | r=1",
+                'algorithm_name': "MHV($d=1 \\comma r=1$)",
                 'predicted_verbatim': mean_heat_d1_r1,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "Mean Heat: d=2 | r=2",
+                'algorithm_name': "MHV($d=2 \\comma r=2$)",
                 'predicted_verbatim': mean_heat_d2_r2,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "Mean Heat: d=1 | r=2",
+                'algorithm_name': "MHV($d=1 \\comma r=2$)",
                 'predicted_verbatim': mean_heat_d1_r2,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "Mean Heat: d=2 | r=1",
+                'algorithm_name': "MHV($d=2 \\comma r=1$)",
                 'predicted_verbatim': mean_heat_d2_r1,
             }), ignore_index=True
         )
@@ -139,6 +146,7 @@ for run in tqdm(range(10)):
         prop_r_1_T_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=1, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
         prop_r_2_T_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=2, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
         prop_r_3_T_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=3, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
+        prop_r_3_T_100mnh = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=3, inv_dist_weight_exp=0)).above_treshold_heat_index(100 * max_noise_heat)
         max_range_heat_map = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=max_range, inv_dist_weight_exp=0))
         prop_r_max_T_01 = max_range_heat_map.above_treshold_heat_index(0.1)
         prop_r_max_T_0_01 = max_range_heat_map.above_treshold_heat_index(0.01)
@@ -148,55 +156,61 @@ for run in tqdm(range(10)):
 
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "Prop Neigh r=1 | T=0.001",
+                'algorithm_name': "TNA($r=1 \\comma T=0.001$)",
                 'predicted_verbatim': prop_r_1_T_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "Prop Neigh r=2 | T=0.001",
+                'algorithm_name': "TNA($r=2 \\comma T=0.001$)",
                 'predicted_verbatim': prop_r_2_T_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "Prop Neigh r=3 | T=0.001",
+                'algorithm_name': "TNA($r=3 \\comma T=0.001$)",
                 'predicted_verbatim': prop_r_3_T_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "Prop Neigh r=max | T=0.1",
+                'algorithm_name': "TNA($r=3 \\comma T=100m_{nh}$)",
+                'predicted_verbatim': prop_r_3_T_100mnh,
+            }), ignore_index=True
+        )
+        result_df = result_df.append(
+            dict(test_case_info, **{
+                'algorithm_name': "TNA($r=r_{max} \\comma T=0.1$)",
                 'predicted_verbatim': prop_r_max_T_01,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "Prop Neigh r=max | T=0.01",
+                'algorithm_name': "TNA($r=r_{max} \\comma T=0.01$)",
                 'predicted_verbatim': prop_r_max_T_0_01,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "Prop Neigh r=max | T=0.001",
+                'algorithm_name': "TNA($r=r_{max} \\comma T=0.001$)",
                 'predicted_verbatim': prop_r_max_T_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "Prop Neigh r=max | T=0.001",
+                'algorithm_name': "TNA($r=r_{max} \\comma T=0.001$)",
                 'predicted_verbatim': prop_r_max_T_0_001,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "Prop Neigh r=max | T=10mnh",
+                'algorithm_name': "TNA($r=r_{max} \\comma T=10m_{nh}$)",
                 'predicted_verbatim': prop_r_max_T_10mnh,
             }), ignore_index=True
         )
         result_df = result_df.append(
             dict(test_case_info, **{
-                'algorithm_name': "Prop Neigh r=max | T=100mnh",
+                'algorithm_name': "TNA($r=r_{max} \\comma T=100m_{nh}$)",
                 'predicted_verbatim': prop_r_max_T_100mnh,
             }), ignore_index=True
         )

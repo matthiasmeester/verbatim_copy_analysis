@@ -65,8 +65,8 @@ for k in tqdm(ks):
 
         # --- Calculate statistics ---
         dist_weighted_mean_heat_value = HeatMapAnalysis(heat_map).mean_heat_value()
-        proportion_above_stat_s = HeatMapAnalysis(non_weighted_heat_map_s).above_treshold_heat_index(100 * max_noise_heat_s)
-        proportion_above_stat_l = HeatMapAnalysis(non_weighted_heat_map_l).above_treshold_heat_index(100 * max_noise_heat_l)
+        proportion_above_stat_s = HeatMapAnalysis(non_weighted_heat_map_s).above_treshold_heat_index(10 * max_noise_heat_s)
+        proportion_above_stat_l = HeatMapAnalysis(non_weighted_heat_map_l).above_treshold_heat_index(10 * max_noise_heat_l)
 
         # fig = plt.figure(figsize=(5, 5))
         plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
@@ -93,19 +93,19 @@ for k in tqdm(ks):
         table_str += f" & {round(val, 3)}"
     table_str += "\\\\ \\hline\n"
 
-    table_str += f"$PNA_l$"
+    table_str += f"$TNA_l$"
     for val in propls:
         table_str += f" & {round(val, 3)}"
     table_str += "\\\\ \\hline\n"
 
-    table_str += f"$PNA_s$"
+    table_str += f"$TNA_s$"
     for val in propss:
         table_str += f" & {round(val, 3)}"
     table_str += "\\\\ \\hline\n"
 
 table_str += " \n\\end{tabular}" \
              "\\caption{\\label{tab:simulation index map results}Statistics on various types of simulations, with varying $n$ and $k$. " \
-             "Showing the $MHV$, $PNA_l$ and $PNA_s$ and the simulation index map.}" \
+             "Showing the $MHV$, $TNA_l$ and $TNA_s$ and the simulation index map.}" \
              "\n\\end{table}\n"
 
 with open("output/table/table_index_maps.tex", "w") as text_file:
