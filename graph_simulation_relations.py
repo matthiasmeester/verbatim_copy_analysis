@@ -48,8 +48,8 @@ for path in tqdm(os.listdir(directory)):
         for i, n in enumerate(ns):
             filter_radius = 1
             file_name = f"{fn} {fn2}"
-            index_map = file['indexMap'][n, :, :]
-            simulation = file['sim'][n, :, :]
+            index_map = file['indexMap'][n - 1, :, :]
+            simulation = file['sim'][n - 1, :, :]
             simulation_size = index_map.shape[0] * index_map.shape[1]
             ti = file['ti']
             original_size = ti.shape[0] * ti.shape[1]

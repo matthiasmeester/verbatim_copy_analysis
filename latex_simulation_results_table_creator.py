@@ -25,17 +25,15 @@ filter_radius = 1
 inv_dist_weight_exp = 1
 sim_type = 'stone'
 
-ns = [1, 5, 10, 50, 100, 198]
+ns = [1, 5, 10, 50, 100, 199]
 ks = ['1.0', '1.5', '2.5', '3.0', '10.0']
 
 # ns = [1, 5]
 # ks = ['1.0', '1.5']
 
-
 n_columns = ''.join([f'& \\textbf{{$n={n}$}}' for n in ns])
 column_defs = ''.join(['l|' for _ in range(len(ns) + 1)])
-table_str = "\\newcommand\\rowincludegraphics[2][]{\\raisebox{-0.45\\height}{\\includegraphics[#1]{#2}}}\n" \
-            "\\begin{table}[ht]\n" \
+table_str = "\\begin{table}[ht]\n" \
             "\\centering\n" \
             f"\\begin{{tabular}}{{|{column_defs}}}\n" \
             "\\hline\n" \
@@ -55,8 +53,8 @@ for k in tqdm(ks):
             np.ones_like(ti)], axis=-1)
 
     for n in ns:
-        index_map = file['indexMap'][n, :, :]
-        simulation = file['sim'][n, :, :]
+        index_map = file['indexMap'][n - 1, :, :]
+        simulation = file['sim'][n - 1, :, :]
         simulation_size = index_map.shape[0] * index_map.shape[1]
 
         # --- Do filter analysis ---
@@ -90,27 +88,28 @@ for k in tqdm(ks):
         table_str += f" & \\rowincludegraphics[scale=0.2]{{{row_images}.png}}"
     table_str += "\\\\ \\hline\n"
 
-    table_str += f"MHV"
+    table_str += f"$MHV$"
     for val in mhvs:
         table_str += f" & {round(val, 3)}"
     table_str += "\\\\ \\hline\n"
 
-    table_str += f"PNA l"
+    table_str += f"$PNA_l$"
     for val in propls:
         table_str += f" & {round(val, 3)}"
     table_str += "\\\\ \\hline\n"
 
-    table_str += f"PNA s"
+    table_str += f"$PNA_s$"
     for val in propss:
         table_str += f" & {round(val, 3)}"
     table_str += "\\\\ \\hline\n"
 
 table_str += " \n\\end{tabular}" \
-             "\\caption{\\label{tab:Simulation results}Statistics on various types of simulations, with varying $n$ and $k$.}" \
+             "\\caption{\\label{tab:simulation index map results}Statistics on various types of simulations, with varying $n$ and $k$. " \
+             "Showing the $MHV$, $PNA_l$ and $PNA_s$ and the simulation index map.}" \
              "\n\\end{table}\n"
 
 with open("output/table/table_index_maps.tex", "w") as text_file:
     text_file.write(table_str)
 
 with open("output/table/table_simulation_maps.tex", "w") as text_file:
-    text_file.write(table_str.replace('index_maps', 'simulation_maps'))
+    text_file.write(table_str.replace('index_maps', 'simulation_maps').replace('simulation index map', 'simulation').replace('scale=0.2', 'scale=0.16'))
