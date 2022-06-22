@@ -20,7 +20,6 @@ filter_radius = 1
 max_noise_heat_l = 0.00010004966211932229
 max_noise_heat_s = 0.00246278367601897
 
-sim = "qsSim_stone"
 file = np.load(f'simulations/qsSim_{sim_type}_{k}.npz')
 ti = file['ti']
 
@@ -76,12 +75,12 @@ ax4.axis('off')
 ax2.imshow(simulation, interpolation='none')
 ax2.set_title(f'QSsim \'{sim_type}\' $k={k}$, $n={n}$')
 
-ax3.set_title('Source verbatim areas')
+ax3.set_title('Source verbatim patches')
 ax3.imshow(np.where(ti_indices, ti, 0), interpolation='none')
 
 ax4.imshow(filtered_sim, interpolation='none')
-ax4.set_title('Simulation verbatim areas')
+ax4.set_title('Simulation verbatim patches')
 
 fig.suptitle('Visual validation of verbatim patches, $HV > 0.3, TNA_s > 0.3, TNA_l > 0.3$')
-plt.savefig(f'output/visual_validation.png', bbox_inches='tight', dpi=150)
+plt.savefig(f'output/visual_validation/k={k}, n={n}.png', bbox_inches='tight', dpi=150)
 plt.show()

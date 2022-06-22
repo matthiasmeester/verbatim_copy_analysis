@@ -23,7 +23,7 @@ for path in os.listdir(directory):
     full_path = os.path.join(directory, path)
     if os.path.isfile(full_path):
         file = np.load(full_path)
-        n = randrange(199)
+        n = 4
         verbatim_indices = []
         filter_radi = range(1, 51)
         filter_radi = [1]
@@ -43,24 +43,6 @@ for path in os.listdir(directory):
         # index_map, patch_percentage = index_map_creator.create_long_range_map(0.10)
 
         heat_map_creator = VerbatimHeatMapCreator(index_map)
-
-        n_fr = 150
-        neighbourhood_verbatim, distances = heat_map_creator.spatial_dependency_analysis(
-            filter_radius=n_fr)
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(11, 5))
-        fig.suptitle(f'SDA - {file_name}, k={k}, n={n}', size='xx-large')
-        ax1.set_title('Probability verbatim at distance histogram')
-        ax1.set_xlabel('Distance')
-        ax1.set_ylabel('Probability')
-        # ax1.scatter(list(distances.keys()), list(distances.values()))
-        ax1.bar(list(distances.keys()), list(distances.values()))
-        # ax1.plot(range(40), [math.sqrt(2 * x ** 2) for x in range(40)], 'r--')
-        neigh_img = ax2.imshow(neighbourhood_verbatim, extent=[-n_fr, n_fr, -n_fr, n_fr])
-        fig.colorbar(neigh_img, ax=ax2)
-        ax2.set_title('Mean kernel verbatim pattern')
-        ax2.set_xlabel('X distance')
-        ax2.set_ylabel('Y distance')
-        plt.show()
 
         for filter_radius in filter_radi:
             # --- Do simulations ---
