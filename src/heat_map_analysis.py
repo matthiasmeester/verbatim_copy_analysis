@@ -11,8 +11,11 @@ class HeatMapAnalysis:
     def mean_heat_value(self):
         return np.mean(self.heat_map)
 
-    def above_treshold_heat_index(self, threshold=0.7):
-        return np.sum(self.heat_map >= threshold) / self.heat_map.size
+    def above_treshold_heat_proportion(self, threshold=0.7):
+        return np.sum(self.above_treshold_heat_map(threshold)) / self.heat_map.size
+
+    def above_treshold_heat_map(self, threshold=0.7):
+        return self.heat_map >= threshold
 
     def patch_stats(self, heat_treshold=1.0, patch_size_treshold=1, plot=False):
         # Todo smooth heat map with a self made function that takes edges in to account
@@ -22,7 +25,7 @@ class HeatMapAnalysis:
         rgb_pixel_map = cv2.cvtColor(pixel_map, cv2.COLOR_GRAY2RGB)
 
         ret, thresh = cv2.threshold(pixel_map, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-        n_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(thresh)
+        n_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(thresh, connectivity=8)
 
         largest_patch_size = 0
         mean_patch_size = 0

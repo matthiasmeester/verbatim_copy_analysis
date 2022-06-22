@@ -13,6 +13,7 @@ class VerbatimHeatMapCreator:
 
     def __init__(self, index_map):
         self.index_map = index_map.astype(np.int32)
+        self.index_map_size = self.index_map.shape[0] * self.index_map.shape[1]
 
     def get_verbatim_heat_map_filter_basis(self, filter_radius, inv_dist_weight_exp, include_neighbors_radius=0,
                                            neighbor_inv_dist_weight=1, inverse_distance_weighted=False):
@@ -46,7 +47,7 @@ class VerbatimHeatMapCreator:
         sum_adj_weight_slice.cache_clear()
         return heat_map
 
-    def neighbourhood_verbatim_analysis(self, filter_radius):
+    def spatial_dependency_analysis(self, filter_radius):
         neighbourhood_verbatim = np.zeros((filter_radius * 2 + 1, filter_radius * 2 + 1))
         verbatim_adj_matrix = self._create_verbatim_adj_matrix(filter_radius)
         normalization = np.zeros((filter_radius * 2 + 1, filter_radius * 2 + 1))
@@ -61,23 +62,21 @@ class VerbatimHeatMapCreator:
             normalization[wy0:wy1 + 1, wx0:wx1 + 1] += 1
 
         neighbourhood_verbatim[filter_radius, filter_radius] = 0
-        neighbourhood_verbatim /= normalization
         distances = defaultdict(list)
 
         # Calculate average verbatim distance
         for iy, ix in np.ndindex(neighbourhood_verbatim.shape):
-            distance_to_center = int(math.sqrt((iy - filter_radius) ** 2 + (ix - filter_radius) ** 2))
+            distance_to_center = math.sqrt((iy - filter_radius) ** 2 + (ix - filter_radius) ** 2)
             if neighbourhood_verbatim[iy][ix] != 0 and distance_to_center <= filter_radius:
                 distances[distance_to_center].append(neighbourhood_verbatim[iy][ix])
 
+        max_key = 0
         for key in distances.keys():
-            distances[key] = np.mean(distances[key])
+            distances[key] = np.mean(distances[key]) / self.index_map_size
+            max_key = max(key, max_key)
 
+        neighbourhood_verbatim /= normalization
         return neighbourhood_verbatim, distances
-
-    @staticmethod
-    def _sigmoid(m):
-        return 1 / (1 + np.exp(-m))
 
     def _create_verbatim_adj_matrix(self, filter_radius):
         # Verbatim adjacency matrix initialisation
@@ -107,8 +106,7 @@ class VerbatimHeatMapCreator:
     @lru_cache(maxsize=4096)
     def _index_to_coord(self, index):
         index = int(index)
-        import math
-        y = math.floor(index / self.index_map.shape[1])
+        y = math.floor(index / self.index_map.shape[0])
         x = index - y * self.index_map.shape[1]
         return int(x), int(y)
 

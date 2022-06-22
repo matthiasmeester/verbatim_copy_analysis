@@ -143,16 +143,16 @@ for run in tqdm(range(10)):
         )
 
         # Proportional neighbour analysis algorithms
-        prop_r_1_T_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=1, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
-        prop_r_2_T_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=2, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
-        prop_r_3_T_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=3, inv_dist_weight_exp=0)).above_treshold_heat_index(0.001)
-        prop_r_3_T_100mnh = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=3, inv_dist_weight_exp=0)).above_treshold_heat_index(100 * max_noise_heat)
+        prop_r_1_T_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=1, inv_dist_weight_exp=0)).above_treshold_heat_proportion(0.001)
+        prop_r_2_T_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=2, inv_dist_weight_exp=0)).above_treshold_heat_proportion(0.001)
+        prop_r_3_T_0_001 = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=3, inv_dist_weight_exp=0)).above_treshold_heat_proportion(0.001)
+        prop_r_3_T_100mnh = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=3, inv_dist_weight_exp=0)).above_treshold_heat_proportion(100 * max_noise_heat)
         max_range_heat_map = HeatMapAnalysis(heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius=max_range, inv_dist_weight_exp=0))
-        prop_r_max_T_01 = max_range_heat_map.above_treshold_heat_index(0.1)
-        prop_r_max_T_0_01 = max_range_heat_map.above_treshold_heat_index(0.01)
-        prop_r_max_T_0_001 = max_range_heat_map.above_treshold_heat_index(0.001)
-        prop_r_max_T_10mnh = max_range_heat_map.above_treshold_heat_index(10 * max_noise_heat)
-        prop_r_max_T_100mnh = max_range_heat_map.above_treshold_heat_index(100 * max_noise_heat)
+        prop_r_max_T_01 = max_range_heat_map.above_treshold_heat_proportion(0.1)
+        prop_r_max_T_0_01 = max_range_heat_map.above_treshold_heat_proportion(0.01)
+        prop_r_max_T_0_001 = max_range_heat_map.above_treshold_heat_proportion(0.001)
+        prop_r_max_T_10mnh = max_range_heat_map.above_treshold_heat_proportion(10 * max_noise_heat)
+        prop_r_max_T_100mnh = max_range_heat_map.above_treshold_heat_proportion(100 * max_noise_heat)
 
         result_df = result_df.append(
             dict(test_case_info, **{

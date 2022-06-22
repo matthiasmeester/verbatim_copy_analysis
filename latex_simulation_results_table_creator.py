@@ -67,11 +67,11 @@ for sim_type in ['stone', 'strebelle']:
 
             # --- Calculate statistics ---
             dist_weighted_mean_heat_value = HeatMapAnalysis(heat_map).mean_heat_value()
-            proportion_above_stat_s = HeatMapAnalysis(non_weighted_heat_map_s).above_treshold_heat_index(10 * max_noise_heat_s)
-            proportion_above_stat_l = HeatMapAnalysis(non_weighted_heat_map_l).above_treshold_heat_index(10 * max_noise_heat_l)
+            proportion_above_stat_s = HeatMapAnalysis(non_weighted_heat_map_s).above_treshold_heat_proportion(100 * max_noise_heat_s)
+            proportion_above_stat_l = HeatMapAnalysis(non_weighted_heat_map_l).above_treshold_heat_proportion(100 * max_noise_heat_l)
 
             # fig = plt.figure(figsize=(5, 5))
-            plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map],interpolation='none')
+            plt.imshow(np.reshape(sourceIndex, (-1, 3))[index_map], interpolation='none')
             plt.axis('off')
             plt.savefig(f'output/{sim_type}_table/index_maps/k{k.replace(".", "x")}n{n}.png', bbox_inches='tight', dpi=50)
             plt.clf()
