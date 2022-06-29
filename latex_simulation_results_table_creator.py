@@ -8,28 +8,27 @@ from src.heat_map_analysis import HeatMapAnalysis
 from src.verbatim_heat_map_creator import VerbatimHeatMapCreator
 
 
-def get_cel_color(val):
-    if val == 0:
-        return ""
-    return f"\\cellcolor[gray]{{{1 - val}}}"
-
-
 #  --- Variables ---
-max_range = int(sqrt(200 ** 2 + 200 * 2))
 threshold_range = 3
 # _, max_noise_heat = VerbatimHeatMapCreator.noise_heat_statistics((200, 200), max_range, 0)
-# table_str +=max_noise_heat)
-max_noise_heat_s = 0.00246278367601897
-max_noise_heat_l = 0.00010004966211932229
+# table_str += max_noise_heat)
 filter_radius = 1
 inv_dist_weight_exp = 1
-sim_type = 'strebelle'
 
 ns = [1, 5, 10, 50, 100, 199]
 ks = ['1.0', '1.5', '2.5', '3.0', '10.0']
 
-for sim_type in ['stone', 'strebelle']:
-
+for sim_type in ['strebelle', 'stone']:
+    if sim_type == 'stone':
+        max_noise_heat_s = 0.00246278367601897
+        max_noise_heat_l = 0.00010004966211932229
+        max_range = int(sqrt(200 ** 2 + 200 * 2))
+    else:
+        max_range = int(sqrt(250 ** 2 + 250 * 2))
+        # _, max_noise_heat_l = VerbatimHeatMapCreator.noise_heat_statistics((250, 250), max_range, 0)
+        # _, max_noise_heat_s = VerbatimHeatMapCreator.noise_heat_statistics((250, 250), threshold_range, 0)
+        max_noise_heat_l = 6.328545606945977e-05
+        max_noise_heat_s = 0.0016353507059389412
     # ns = [1, 5]
     # ks = ['1.0', '1.5']
 

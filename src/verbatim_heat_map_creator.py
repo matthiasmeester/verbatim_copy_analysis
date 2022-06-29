@@ -166,8 +166,7 @@ class VerbatimHeatMapCreator:
         noise_creator = DummyIndexMapCreator(shape)
         # Sample the maximal 1 percent of heat values
         n_samples_max = int(shape[0] * shape[1] / 100)
-        replications = math.ceil(100 / filter_radius) + 5
-        print(f"Noise heat replications: {replications}")
+        replications = 10
         max_heat_thresholds_1_percent = np.array([])
 
         # Add random noise
