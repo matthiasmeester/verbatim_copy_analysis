@@ -23,7 +23,7 @@ for path in os.listdir(directory):
     full_path = os.path.join(directory, path)
     if os.path.isfile(full_path):
         file = np.load(full_path)
-        n = 4
+        n = 170
         verbatim_indices = []
         filter_radi = range(1, 51)
         filter_radi = [1]
@@ -41,6 +41,24 @@ for path in os.listdir(directory):
         # index_map, patch_percentage = index_map_creator.create_patch_map(10, plot=True)
         # index_map = index_map_creator.create_full_random_map()
         # index_map, patch_percentage = index_map_creator.create_long_range_map(0.10)
+
+        fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(6, 6))
+        fig.suptitle(f'QS \'stone\', k={k}, n={n}', size='xx-large')
+        ax1.imshow(ti)
+        ax1.set_title('Training image')
+        ax1.axis('off')
+        ax2.imshow(simulation)
+        ax2.set_title('Simulation')
+        ax2.axis('off')
+
+        ax3.imshow(sourceIndex)
+        ax3.set_title('Training image index map')
+        ax3.axis('off')
+        ax4.imshow(np.reshape(sourceIndex, (-1, 3))[index_map])
+        ax4.set_title('Simulation index map')
+        ax4.axis('off')
+        plt.savefig('output/input_example', dpi=150)
+        plt.show()
 
         heat_map_creator = VerbatimHeatMapCreator(index_map)
 
@@ -73,16 +91,17 @@ for path in os.listdir(directory):
                 plot=True
             )
 
-            fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 4))
+            fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(13, 4))
             ax1.imshow(np.reshape(sourceIndex, (-1, 3))[index_map], interpolation='none')
             ax1.set_title(f'Simulation index map')
             ax1.axis('off')
             ax2.imshow(heat_map, interpolation='none')
             ax2.set_title(f'Verbatim heat map, $r={filter_radius}$, $d={inv_dist_weight_exp}$')
             ax2.axis('off')
-            ax3.imshow(heat_map_including_neighbours, interpolation='none')
-            ax3.set_title(f'Neighbour verbatim heat map, $r={filter_radius}$, $d={inv_dist_weight_exp}$, $r_{{cl}}={2}$, $d_{{cl}}={1}$')
+            heat_map_im = ax3.imshow(heat_map_including_neighbours, interpolation='none')
+            ax3.set_title(f'Neighbour verbatim heat map,\n $r={filter_radius}$, $d={inv_dist_weight_exp}$, $r_{{cl}}={2}$, $d_{{cl}}={1}$')
             ax3.axis('off')
+            fig.colorbar(heat_map_im, ax=ax3)
             plt.savefig(f'output/heat_map_example.png', bbox_inches='tight', dpi=150)
             plt.show()
 
