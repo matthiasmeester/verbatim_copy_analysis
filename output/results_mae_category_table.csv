@@ -1,4 +1,4 @@
-Name,Full Random,Full Verbatim,Checkerboard,Patches,Long Range
+Name,MAE Full Random,MRE Full Verbatim,MRE Checkerboard,MRE Patches,MRE Long Range
 MHV($d=1 \comma r=1$),0.0,0.0,0.555,0.093,0.9
 MHV($d=2 \comma r=2$),0.0,0.0,0.464,0.104,0.899
 MHV($d=1 \comma r=2$),0.0,0.0,0.446,0.107,0.899

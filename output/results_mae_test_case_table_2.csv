@@ -1,4 +1,4 @@
-name,Patches 5,Patches 10,Patches 20,Long range 0.05,Long range 0.10,Long range 0.15
+name,MRE Patches 5,MRE Patches 10,MRE Patches 20,MRE Long range 0.05,MRE Long range 0.10,MRE Long range 0.15
 MHV($d=1 \comma r=1$),0.09,0.091,0.099,0.95,0.901,0.848
 MHV($d=2 \comma r=2$),0.103,0.099,0.109,0.95,0.9,0.848
 MHV($d=1 \comma r=2$),0.106,0.102,0.113,0.95,0.9,0.848

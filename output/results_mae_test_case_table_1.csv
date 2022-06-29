@@ -1,4 +1,4 @@
-name,Full random,Full verbatim,Checkerboard 3x3,Checkerboard 1x1,Checkerboard 5x5
+name,MAE Full random,MRE Full verbatim,MRE Checkerboard 3x3,MRE Checkerboard 1x1,MRE Checkerboard 5x5
 MHV($d=1 \comma r=1$),0.0,0.0,0.332,1.0,0.332
 MHV($d=2 \comma r=2$),0.0,0.0,0.41,0.573,0.41
 MHV($d=1 \comma r=2$),0.0,0.0,0.442,0.454,0.442

@@ -58,6 +58,8 @@ non_weighted_heat_map_l = heat_map_creator.get_verbatim_heat_map_filter_basis(ma
 proportion_above_stat_s = HeatMapAnalysis(non_weighted_heat_map_s).above_treshold_heat_map(100 * max_noise_heat_s)
 proportion_above_stat_l = HeatMapAnalysis(non_weighted_heat_map_l).above_treshold_heat_map(100 * max_noise_heat_l)
 
+
+print(proportion_above_stat_s)
 # Critical area:
 critical_verbatim_area = (proportion_above_stat_l > 0.3) & (proportion_above_stat_s > 0.3) & (heat_map > 0.3)
 
@@ -74,13 +76,12 @@ ax3.axis('off')
 ax4.axis('off')
 ax2.imshow(simulation, interpolation='none')
 ax2.set_title(f'QSsim \'{sim_type}\' $k={k}$, $n={n}$')
-
 ax3.set_title('Source verbatim patches')
 ax3.imshow(np.where(ti_indices, ti, 0), interpolation='none')
 
 ax4.imshow(filtered_sim, interpolation='none')
 ax4.set_title('Simulation verbatim patches')
 
-fig.suptitle('Visual validation of verbatim patches, $HV > 0.3, TNA_s > 0.3, TNA_l > 0.3$')
+fig.suptitle('Visual validation of verbatim patches, $HV > 0.3, TNA_s = 1, TNA_l = 1$')
 plt.savefig(f'output/visual_validation/k={k}, n={n}.png', bbox_inches='tight', dpi=150)
 plt.show()

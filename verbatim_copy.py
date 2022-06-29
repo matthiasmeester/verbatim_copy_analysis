@@ -10,7 +10,7 @@ from src.verbatim_heat_map_creator import VerbatimHeatMapCreator
 
 # ----- Verbatim copy statistic: -----
 # --- Custom variables ---
-inv_dist_weight_exp = 1
+inv_dist_weight_exp = 0
 
 # seed(123456)
 # ---
@@ -25,8 +25,7 @@ for path in os.listdir(directory):
         file = np.load(full_path)
         n = 170
         verbatim_indices = []
-        filter_radi = range(1, 51)
-        filter_radi = [1]
+        filter_radi = [1, 2, 3, 4, 5, 7, 10, 15, 20, 30, 45, 50]
         fn, fn2, k = path.replace('.npz', '').split('_')
         file_name = f"{fn} {fn2}"
         index_map = file['indexMap'][n, :, :]
@@ -43,7 +42,7 @@ for path in os.listdir(directory):
         # index_map, patch_percentage = index_map_creator.create_long_range_map(0.10)
 
         fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(6, 6))
-        fig.suptitle(f'QS \'stone\', k={k}, n={n}', size='xx-large')
+        fig.suptitle(f'QS \'stone\', $k={k}$, $n={n}$', size='xx-large')
         ax1.imshow(ti)
         ax1.set_title('Training image')
         ax1.axis('off')
@@ -71,8 +70,8 @@ for path in os.listdir(directory):
             # _, nw_max_heat_threshold = heat_map_creator.noise_heat_statistics(index_map.shape, filter_radius, 0)
             noise_scalar = 100
             nw_max_heat_threshold *= noise_scalar
-            heat_map_including_neighbours = \
-               heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, inv_dist_weight_exp, 2, 1)
+            # heat_map_including_neighbours = \
+            #    heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, inv_dist_weight_exp, 2, 1)
             long_range_heat_map = \
                 heat_map_creator.get_verbatim_heat_map_filter_basis(filter_radius, 1, inverse_distance_weighted=True)
 
@@ -88,22 +87,22 @@ for path in os.listdir(directory):
             patch_number, largest_patch_size, mean_patch_size = HeatMapAnalysis(non_weighted_heat_map).patch_stats(
                 heat_treshold=nw_max_heat_threshold,
                 patch_size_treshold=5,
-                plot=True
+                plot=False
             )
 
-            fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(13, 4))
-            ax1.imshow(np.reshape(sourceIndex, (-1, 3))[index_map], interpolation='none')
-            ax1.set_title(f'Simulation index map')
-            ax1.axis('off')
-            ax2.imshow(heat_map, interpolation='none')
-            ax2.set_title(f'Verbatim heat map, $r={filter_radius}$, $d={inv_dist_weight_exp}$')
-            ax2.axis('off')
-            heat_map_im = ax3.imshow(heat_map_including_neighbours, interpolation='none')
-            ax3.set_title(f'Neighbour verbatim heat map,\n $r={filter_radius}$, $d={inv_dist_weight_exp}$, $r_{{cl}}={2}$, $d_{{cl}}={1}$')
-            ax3.axis('off')
-            fig.colorbar(heat_map_im, ax=ax3)
-            plt.savefig(f'output/heat_map_example.png', bbox_inches='tight', dpi=150)
-            plt.show()
+            # fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(13, 4))
+            # ax1.imshow(np.reshape(sourceIndex, (-1, 3))[index_map], interpolation='none')
+            # ax1.set_title(f'Simulation index map')
+            # ax1.axis('off')
+            # ax2.imshow(heat_map, interpolation='none')
+            # ax2.set_title(f'Verbatim heat map, $r={filter_radius}$, $d={inv_dist_weight_exp}$')
+            # ax2.axis('off')
+            # heat_map_im = ax3.imshow(heat_map_including_neighbours, interpolation='none')
+            # ax3.set_title(f'Neighbour verbatim heat map,\n $r={filter_radius}$, $d={inv_dist_weight_exp}$, $r_{{cl}}={2}$, $d_{{cl}}={1}$')
+            # ax3.axis('off')
+            # fig.colorbar(heat_map_im, ax=ax3)
+            # plt.savefig(f'output/heat_map_example.png', bbox_inches='tight', dpi=150)
+            # plt.show()
 
             print(f"--- Filter_radius: {filter_radius} ---")
             print(f"Global statistics:")
@@ -120,27 +119,29 @@ for path in os.listdir(directory):
             print("---\n")
 
             #  --- Do plotting ---
-            fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(11, 4))
-            fig.suptitle(f'{file_name}, k={k}, r={filter_radius}, d={inv_dist_weight_exp}', size='xx-large')
-            ax1.imshow(ti)
-            ax1.set_title('Training image')
-            ax1.axis('off')
-            ax2.imshow(simulation)
-            ax2.set_title('Simulation')
-            # ax2.imshow(long_range_heat_map)
-            # ax2.set_title(f'LR mean heat value={long_range_mean_heat_value}')
-            ax2.axis('off')
-            sim_img = ax3.imshow(heat_map, interpolation='none')
-            ax3.set_title(f'MHV={round(dist_weighted_mean_heat_value, 3)}, PROP={round(proportion_above_stat, 3)}')
-            ax3.axis('off')
-            fig.colorbar(sim_img, ax=ax3)
-            plt.show()
+            # fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(11, 4))
+            # fig.suptitle(f'{file_name}, $k={k}$, $r={filter_radius}$, $d={inv_dist_weight_exp}$', size='xx-large')
+            # ax1.imshow(ti)
+            # ax1.set_title('Training image')
+            # ax1.axis('off')
+            # ax2.imshow(simulation)
+            # ax2.set_title('Simulation')
+            # # ax2.imshow(long_range_heat_map)
+            # # ax2.set_title(f'LR mean heat value={long_range_mean_heat_value}')
+            # ax2.axis('off')
+            # sim_img = ax3.imshow(heat_map, interpolation='none')
+            # ax3.set_title(f'MHV={round(dist_weighted_mean_heat_value, 3)}, PROP={round(proportion_above_stat, 3)}')
+            # ax3.axis('off')
+            # fig.colorbar(sim_img, ax=ax3)
+            # plt.show()
 
             # plt.hist(list(heat_map.reshape(40000)), bins=100)
             # plt.show()
 
         plt.scatter(filter_radi, verbatim_indices, color="red")
-        plt.xlabel('Filter radius')
-        plt.ylabel('Verbatim index')
-        plt.title(f'Filter radius to verbatim index - {file_name}, k={k}, d={inv_dist_weight_exp}')
+        plt.xlabel('$r$')
+        plt.ylabel('$MHV$')
+        file_name_pretty = file_name.replace("stone", "'stone'")
+        plt.title(f'Filter radius to $MHV$ - {file_name_pretty} $k={k}$, $n={n}$, $d={inv_dist_weight_exp}$')
+        plt.savefig(f'output/filter_radius_to_mhv.png', bbox_inches='tight', dpi=150)
         plt.show()
