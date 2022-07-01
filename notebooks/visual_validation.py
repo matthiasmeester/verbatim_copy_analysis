@@ -32,7 +32,7 @@ simulation_size = index_map.shape[0] * index_map.shape[1]
 
 def _index_to_coord(index):
     index = int(index)
-    y = math.floor(index / index_map.shape[1])
+    y = math.floor(index / index_map.shape[0])
     x = index - y * index_map.shape[1]
     return int(x), int(y)
 
@@ -57,11 +57,8 @@ non_weighted_heat_map_l = heat_map_creator.get_verbatim_heat_map_filter_basis(ma
 # dist_weighted_mean_heat_value = HeatMapAnalysis(heat_map).mean_heat_value()
 proportion_above_stat_s = HeatMapAnalysis(non_weighted_heat_map_s).above_treshold_heat_map(100 * max_noise_heat_s)
 proportion_above_stat_l = HeatMapAnalysis(non_weighted_heat_map_l).above_treshold_heat_map(100 * max_noise_heat_l)
-
-
-print(proportion_above_stat_s)
 # Critical area:
-critical_verbatim_area = (proportion_above_stat_l > 0.3) & (proportion_above_stat_s > 0.3) & (heat_map > 0.3)
+critical_verbatim_area = (proportion_above_stat_l == 1) & (proportion_above_stat_s == 1)
 
 filtered_sim = np.where(critical_verbatim_area, simulation, 0)
 ti_indices = simulation_indices_to_training_indices(np.where(critical_verbatim_area, index_map, 0))
@@ -82,6 +79,6 @@ ax3.imshow(np.where(ti_indices, ti, 0), interpolation='none')
 ax4.imshow(filtered_sim, interpolation='none')
 ax4.set_title('Simulation verbatim patches')
 
-fig.suptitle('Visual validation of verbatim patches, $HV > 0.3, TNA_s = 1, TNA_l = 1$')
+fig.suptitle('Visual validation of verbatim patches, $TNA_s = 1, TNA_l = 1$')
 plt.savefig(f'output/visual_validation/k={k}, n={n}.png', bbox_inches='tight', dpi=150)
 plt.show()
