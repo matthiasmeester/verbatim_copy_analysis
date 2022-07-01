@@ -9,6 +9,8 @@ from src.dummy_index_map_creator import DummyIndexMapCreator
 from src.heat_map_analysis import HeatMapAnalysis
 
 
+NOISE_HEAT_REPLICATIONS = 10
+
 class VerbatimHeatMapCreator:
 
     def __init__(self, index_map):
@@ -41,8 +43,8 @@ class VerbatimHeatMapCreator:
                                                               neighbor_inv_dist_weight)
             else:
                 equality_matrix = np.equal(im_selection, verb_selection)
-            similarity_adj_matrix = equality_matrix * weight_selection
-            heat_map[iy][ix] = np.sum(similarity_adj_matrix) / sum_adj_weight_slice(wy0, wy1, wx0, wx1)
+
+            heat_map[iy][ix] = np.sum(equality_matrix * weight_selection) / sum_adj_weight_slice(wy0, wy1, wx0, wx1)
 
         sum_adj_weight_slice.cache_clear()
         return heat_map
@@ -166,11 +168,10 @@ class VerbatimHeatMapCreator:
         noise_creator = DummyIndexMapCreator(shape)
         # Sample the maximal 1 percent of heat values
         n_samples_max = int(shape[0] * shape[1] / 100)
-        replications = 10
         max_heat_thresholds_1_percent = np.array([])
 
         # Add random noise
-        for _ in range(replications):
+        for _ in range(NOISE_HEAT_REPLICATIONS):
             noise_map = noise_creator.create_full_random_map()
             noise_heat_map = VerbatimHeatMapCreator(noise_map). \
                 get_verbatim_heat_map_filter_basis(filter_radius, inv_dist_weight_exp, include_neighbors_radius, neighbor_inv_dist_weight, inverse_distance_weighted)
@@ -181,6 +182,6 @@ class VerbatimHeatMapCreator:
             top_1_percent = -temp[:n_samples_max]
             max_heat_thresholds_1_percent = np.append(max_heat_thresholds_1_percent, top_1_percent)
 
-        mean_heat /= replications
+        mean_heat /= NOISE_HEAT_REPLICATIONS
 
         return mean_heat, np.mean(max_heat_thresholds_1_percent)
