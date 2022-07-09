@@ -84,12 +84,12 @@ class DummyIndexMapCreator:
 
         for (iy, ix) in indices:
             if pixels_left_in_group == 0:
-                pixels_left_in_group = randint(20, 100)
+                pixels_left_in_group = randint(100, 200)
                 group_index += total_size
             if random.random() < proportion:
                 is_verbatim[iy, ix] = True
                 result[iy, ix] = full_verbatim[iy, ix] + group_index
-            pixels_left_in_group -= 1
+                pixels_left_in_group -= 1
 
         verbatim_copy_proportion = is_verbatim.sum() / total_size
 
