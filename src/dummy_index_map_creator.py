@@ -1,6 +1,7 @@
 import random
 from random import randint
 from random import randrange
+from random import shuffle
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -74,14 +75,21 @@ class DummyIndexMapCreator:
         group_index = 0
         pixels_left_in_group = 0
         total_size = is_verbatim.shape[0] * is_verbatim.shape[1]
+        indices = []
 
-        for iy, ix in np.ndindex(result.shape):
+        for iy in range(result.shape[0]):
+            for ix in range(result.shape[1]):
+                indices.append((iy, ix))
+        shuffle(indices)
+
+        for (iy, ix) in indices:
             if pixels_left_in_group == 0:
                 pixels_left_in_group = randint(20, 100)
-                group_index += 100000
+                group_index += total_size
             if random.random() < proportion:
                 is_verbatim[iy, ix] = True
                 result[iy, ix] = full_verbatim[iy, ix] + group_index
+            pixels_left_in_group -= 1
 
         verbatim_copy_proportion = is_verbatim.sum() / total_size
 
